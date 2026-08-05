@@ -5,748 +5,648 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FalaAí, Estudante! | Colégio Visconde de Guarapuava</title>
     
-    <!-- Fontes fofas e legíveis -->
+    <!-- Fonte Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
     <style>
-        /* --- RESET E ESTILOS GERAIS --- */
+        :root {
+            --bg-gradient: linear-gradient(135deg, #a8c0ff 0%, #3f2b96 100%);
+            --glass-bg: rgba(255, 255, 255, 0.75);
+            --glass-border: rgba(255, 255, 255, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            --text-primary: #1e293b;
+            --text-secondary: #475569;
+            --accent-color: #6366f1;
+            --accent-hover: #4f46e5;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Quicksand', sans-serif;
-            background-color: #fcf8f2; /* Fundo bege bem claro e aconchegante */
-            color: #4a4e69;
-            line-height: 1.6;
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding-bottom: 80px;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 600;
-        }
-
-        /* --- HEADER E NAVEGAÇÃO --- */
-        header {
-            background: linear-gradient(135deg, #f2a69d, #8ecae6);
-            color: white;
-            padding: 30px 20px 20px;
-            border-bottom-left-radius: 35px;
-            border-bottom-right-radius: 35px;
-            text-align: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
-
-        .logo-area h1 {
-            font-size: 2.3rem;
-            color: #ffffff;
-            text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1);
-            letter-spacing: 0.5px;
-        }
-
-        .logo-area p {
-            font-size: 1rem;
-            font-weight: 600;
-            opacity: 0.95;
-            margin-top: 2px;
-        }
-
-        nav {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 20px;
-        }
-
-        nav button {
-            background: rgba(255, 255, 255, 0.4);
-            border: none;
-            color: #3d405b;
-            font-family: 'Fredoka', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            padding: 10px 20px;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        nav button:hover, nav button.active {
-            background: #ffffff;
-            color: #e07a5f;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-            transform: translateY(-2px);
-        }
-
-        /* --- SEÇÕES / ABAS --- */
-        .aba-conteudo {
-            display: none;
-            animation: fadeIn 0.4s ease-in-out;
-        }
-
-        .aba-conteudo.ativa {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* --- HERO (PÁGINA INICIAL) --- */
-        .hero {
+        /* Menu Flutuante Estilo Pílula */
+        .navbar-floating {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 100;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            padding: 10px 24px;
+            border-radius: 50px;
+            box-shadow: var(--glass-shadow);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 30px;
-            padding: 40px 8%;
+            gap: 20px;
         }
 
-        .hero-text {
-            max-width: 500px;
+        .navbar-brand {
+            font-weight: 800;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+            text-decoration: none;
         }
 
-        .badge {
-            display: inline-block;
-            background: #f2cc8f;
-            color: #6d4c41;
-            font-family: 'Fredoka', sans-serif;
+        .nav-links {
+            display: flex;
+            gap: 15px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
             font-weight: 600;
-            padding: 6px 14px;
-            border-radius: 15px;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Container Principal */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 120px 20px 40px 20px;
+        }
+
+        /* Cards Glassmorphism */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 35px;
+            margin-bottom: 30px;
+            box-shadow: var(--glass-shadow);
+        }
+
+        /* Banner Hero */
+        .hero {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .hero-badge {
+            display: inline-block;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-color);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-weight: 700;
             font-size: 0.85rem;
             margin-bottom: 15px;
         }
 
-        .hero-text h2 {
-            font-size: 2.1rem;
-            color: #3d405b;
-            line-height: 1.3;
+        .hero h1 {
+            font-size: 2.5rem;
+            line-height: 1.2;
             margin-bottom: 15px;
         }
 
-        .hero-text p {
+        .hero p {
+            color: var(--text-secondary);
             font-size: 1.05rem;
-            color: #6c757d;
-            margin-bottom: 25px;
-            font-weight: 600;
-        }
-
-        .hero-botoes {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .botao {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: 22px;
-            text-decoration: none;
-            font-family: 'Fredoka', sans-serif;
-            font-weight: 500;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-        }
-
-        .botao.principal {
-            background: #e07a5f;
-            color: white;
-            box-shadow: 0 5px 15px rgba(224, 122, 95, 0.25);
-        }
-
-        .botao.principal:hover {
-            background: #d0694e;
-            transform: translateY(-2px);
-        }
-
-        .botao.secundario {
-            background: #81b29a;
-            color: white;
-            box-shadow: 0 5px 15px rgba(129, 178, 154, 0.25);
-        }
-
-        .botao.secundario:hover {
-            background: #6f9f87;
-            transform: translateY(-2px);
-        }
-
-        .hero-img-container {
-            flex: 1;
-            display: flex;
-            justify-content: center;
+            line-height: 1.6;
         }
 
         .hero-img {
             width: 100%;
-            max-width: 380px;
-            border-radius: 30px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border-radius: 20px;
             object-fit: cover;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
 
-        /* --- CARDS --- */
-        .cards {
-            display: flex;
-            justify-content: center;
+        /* Grid de Cartões Informativos */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
-            padding: 10px 8% 30px;
-            flex-wrap: wrap;
+            margin-top: 20px;
         }
 
-        .card {
-            background: #ffffff;
-            border-radius: 22px;
-            padding: 25px;
-            flex: 1;
-            min-width: 250px;
-            max-width: 320px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.03);
-            border-top: 6px solid #e07a5f;
-            transition: transform 0.3s ease;
+        .info-box {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 18px;
+            padding: 20px;
+            transition: transform 0.2s ease;
         }
 
-        .card-2 { border-top-color: #81b29a; }
-        .card-3 { border-top-color: #f2cc8f; }
-
-        .card:hover {
+        .info-box:hover {
             transform: translateY(-5px);
         }
 
-        .card-icon {
-            font-size: 2.2rem;
-            margin-bottom: 10px;
-        }
-
-        .card h3 {
-            color: #3d405b;
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-        }
-
-        .card p {
-            font-weight: 600;
-            color: #707793;
-            font-size: 0.95rem;
-        }
-
-        /* --- MENSAGEM FOFA --- */
-        .mensagem {
-            background: #ffffff;
-            margin: 20px 8% 40px;
-            padding: 30px;
-            border-radius: 25px;
-            border: 2px dashed #81b29a;
-            text-align: center;
-        }
-
-        .mensagem h2 {
-            color: #81b29a;
-            margin-bottom: 10px;
-        }
-
-        .mensagem p {
-            font-weight: 600;
-            color: #5c6278;
-        }
-
-        /* --- ABA AJUDA --- */
-        .page-title {
-            text-align: center;
-            padding: 30px 8% 10px;
-        }
-
-        .page-title h2 {
+        .info-box .icon {
             font-size: 2rem;
-            color: #3d405b;
+            margin-bottom: 10px;
         }
 
-        .secao-ajuda {
-            padding: 20px 8%;
-        }
-
-        .secao-ajuda h3 {
-            color: #e07a5f;
-            margin-bottom: 15px;
-            font-size: 1.4rem;
-        }
-
-        .grid-opcoes {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 18px;
-        }
-
-        .opcao-card {
-            background: white;
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.03);
-        }
-
-        .opcao-card h4 {
-            color: #3d405b;
-            margin-bottom: 6px;
+        .info-box h3 {
+            margin-bottom: 8px;
             font-size: 1.1rem;
         }
 
-        .opcao-card p {
-            font-weight: 600;
-            color: #6a7085;
+        .info-box p {
+            color: var(--text-secondary);
             font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        .dicas-conversa {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .dica {
-            background: white;
-            padding: 14px 18px;
-            border-radius: 16px;
-            border-left: 5px solid #81b29a;
-            font-weight: 600;
-            color: #555;
-        }
-
-        .dica span {
-            font-family: 'Fredoka', sans-serif;
-            color: #81b29a;
-        }
-
-        .canais-urgencia {
-            background: #3d405b;
-            color: white;
-            margin: 20px 8% 40px;
-            padding: 30px;
-            border-radius: 25px;
+        /* Seção Bateria Emocional */
+        .battery-widget {
             text-align: center;
         }
 
-        .canais-urgencia h2 {
-            color: #f2cc8f;
-            margin-bottom: 20px;
-        }
-
-        .lista-contatos {
+        .battery-options {
             display: flex;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
+            margin-top: 20px;
             flex-wrap: wrap;
         }
 
-        .contato {
-            background: rgba(255, 255, 255, 0.08);
-            padding: 20px;
-            border-radius: 18px;
-            max-width: 300px;
-        }
-
-        .contato h3 {
-            color: white;
-            margin-bottom: 6px;
-        }
-
-        .contato p {
-            font-size: 0.9rem;
-            opacity: 0.9;
-        }
-
-        .botao-tel {
-            display: inline-block;
-            background: #e07a5f;
-            color: white;
-            padding: 8px 18px;
-            border-radius: 15px;
-            text-decoration: none;
-            font-family: 'Fredoka', sans-serif;
-            margin-top: 10px;
-        }
-
-        /* --- FORMULÁRIOS & QUIZ --- */
-        .form-container, .quiz-container {
+        .battery-btn {
             background: white;
-            max-width: 600px;
-            margin: 30px auto 40px;
-            padding: 35px;
-            border-radius: 25px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.04);
+            border: 2px solid #e2e8f0;
+            padding: 12px 24px;
+            border-radius: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
         }
 
+        .battery-btn:hover {
+            border-color: var(--accent-color);
+            transform: scale(1.05);
+        }
+
+        #battery-result {
+            margin-top: 20px;
+            font-weight: 600;
+            color: var(--accent-color);
+            min-height: 24px;
+        }
+
+        /* Canais de Apoio */
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .support-card {
+            background: white;
+            padding: 20px;
+            border-radius: 16px;
+            text-align: center;
+        }
+
+        .support-card a {
+            display: inline-block;
+            margin-top: 10px;
+            background: var(--accent-color);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* Formulário de Escuta */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
 
         .form-group label {
             display: block;
-            font-family: 'Fredoka', sans-serif;
             margin-bottom: 6px;
-            color: #3d405b;
-        }
-
-        .form-group input, .form-group select, .form-group textarea {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #eaeaea;
-            border-radius: 15px;
-            font-family: 'Quicksand', sans-serif;
             font-weight: 600;
-            font-size: 0.95rem;
-            outline: none;
-            background: #fafafa;
-        }
-
-        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #81b29a;
-            background: white;
-        }
-
-        .btn-block {
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .pergunta-box {
-            background: #fcf8f2;
-            padding: 18px;
-            border-radius: 18px;
-            margin-bottom: 15px;
-        }
-
-        .pergunta-box h4 {
-            color: #3d405b;
-            margin-bottom: 10px;
-            font-size: 1.05rem;
-        }
-
-        .pergunta-box label {
-            display: block;
-            margin-bottom: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 0.95rem;
-            color: #555;
-        }
-
-        .feedback-sucesso, .resultado-box {
-            text-align: center;
-            padding: 20px;
-            background: #f4f1de;
-            border-radius: 18px;
-        }
-
-        /* --- FOOTER --- */
-        footer {
-            background: #3d405b;
-            color: white;
-            text-align: center;
-            padding: 20px;
             font-size: 0.9rem;
-            font-weight: 600;
         }
 
-        /* --- RESPONSIVIDADE --- */
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            border: 1px solid #cbd5e1;
+            background: rgba(255, 255, 255, 0.9);
+            font-size: 0.95rem;
+        }
+
+        .submit-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+            width: 100%;
+            transition: background 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: var(--accent-hover);
+        }
+
+        /* MASCOTE VIRTUAL (FLUTUANTE) */
+        #pet-widget {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 2px solid white;
+            border-radius: 24px;
+            padding: 12px 18px;
+            text-align: center;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+
+        #pet-widget:hover {
+            transform: scale(1.08);
+        }
+
+        #pet-speech-bubble {
+            font-size: 0.75rem;
+            background: #fef08a;
+            color: #713f12;
+            padding: 5px 10px;
+            border-radius: 12px;
+            margin-bottom: 6px;
+            font-weight: 700;
+            max-width: 140px;
+        }
+
+        #pet-avatar-display {
+            position: relative;
+            font-size: 2.8rem;
+            line-height: 1;
+            display: inline-block;
+        }
+
+        #pet-outfit-display {
+            position: absolute;
+            top: -14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            pointer-events: none;
+        }
+
+        #pet-name-display {
+            font-size: 0.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-top: 4px;
+        }
+
+        /* MODAL DE CUSTOMIZAÇÃO DO MASCOTE */
+        #pet-modal-bg {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(4px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-hidden {
+            display: none !important;
+        }
+
+        .pet-modal-card {
+            background: white;
+            padding: 30px;
+            border-radius: 24px;
+            max-width: 380px;
+            width: 90%;
+            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1);
+        }
+
+        .pet-modal-card h2 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .option-group-title {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            margin: 12px 0 6px 0;
+        }
+
+        .options-flex {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .option-btn {
+            flex: 1;
+            min-width: 60px;
+            padding: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            background: #f8fafc;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .option-btn:hover {
+            background: #e0e7ff;
+            border-color: var(--accent-color);
+        }
+
+        #pet-name-input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #cbd5e1;
+            margin-top: 4px;
+        }
+
         @media (max-width: 768px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .hero-botoes {
-                justify-content: center;
-            }
-
-            nav {
-                flex-direction: column;
-                width: 100%;
-            }
-
-            nav button {
-                width: 100%;
-            }
+            .hero { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="logo-area">
-            <h1>FalaAí, Estudante! 👋</h1>
-            <p>Colégio Estadual Visconde de Guarapuava</p>
+    <!-- Navegação Flutuante -->
+    <nav class="navbar-floating">
+        <a href="#" class="navbar-brand">FalaAí! 💛</a>
+        <ul class="nav-links">
+            <li><a href="#inicio">Início</a></li>
+            <li><a href="#bateria">Bateria</a></li>
+            <li><a href="#ajuda">Ajuda</a></li>
+            <li><a href="#escuta">Portal de Escuta</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        
+        <!-- Hero Section -->
+        <section id="inicio" class="glass-card hero">
+            <div>
+                <span class="hero-badge">Colégio Est. Visconde de Guarapuava</span>
+                <h1>Sua mente importa. Você não está só! 💛</h1>
+                <p>Dias difíceis acontecem com todo mundo. Este é o seu cantinho seguro para respirar, desabafar e encontrar caminhos para se sentir bem na escola.</p>
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80" alt="Estudantes unidos" class="hero-img">
+            </div>
+        </section>
+
+        <!-- Grid de Recursos/Pilares -->
+        <div class="grid-3">
+            <div class="info-box">
+                <div class="icon">🧠</div>
+                <h3>Tudo Bem Não Estar Bem</h3>
+                <p>Ansiedade ou cansaço com as provas? Aprenda a reconhecer seus sentimentos sem se julgar.</p>
+            </div>
+            <div class="info-box">
+                <div class="icon">🤝</div>
+                <h3>Conexão & Empatia</h3>
+                <p>Apoiar um colega muda o dia. Respeito e escuta ativa fortalecem nossa comunidade escolar.</p>
+            </div>
+            <div class="info-box">
+                <div class="icon">⚡</div>
+                <h3>Autoestima & Hábitos</h3>
+                <p>Pequenas rotinas diárias ajudam a organizar os estudos e manter a saúde mental em dia.</p>
+            </div>
         </div>
 
-        <nav>
-            <button class="nav-btn active" onclick="mostrarAba('inicio', this)">Início</button>
-            <button class="nav-btn" onclick="mostrarAba('ajuda', this)">Como Pedir Ajuda</button>
-            <button class="nav-btn" onclick="mostrarAba('portal', this)">Portal de Escuta</button>
-            <button class="nav-btn" onclick="mostrarAba('quiz', this)">Quiz de Vibe</button>
-        </nav>
-    </header>
+        <br>
 
-    <main>
-        <!-- ABA 1: INÍCIO -->
-        <div id="inicio" class="aba-conteudo ativa">
-            <section class="hero">
-                <div class="hero-text">
-                    <span class="badge">Espaço Seguro & Acolhedor 💛</span>
-                    <h2>Sua mente importa. Você não precisa passar por nada sozinho(a)!</h2>
-                    <p>
-                        Dias ruins acontecem com todo mundo. Este portal é o seu cantinho seguro no colégio para respirar, desabafar e encontrar caminhos para ficar bem.
-                    </p>
-                    <div class="hero-botoes">
-                        <button onclick="mostrarAba('ajuda', document.querySelectorAll('.nav-btn')[1])" class="botao principal">Quero Pedir Ajuda 🆘</button>
-                        <button onclick="mostrarAba('portal', document.querySelectorAll('.nav-btn')[2])" class="botao secundario">Mandar um Desabafo ✍️</button>
-                    </div>
+        <!-- Widget Bateria Emocional -->
+        <section id="bateria" class="glass-card battery-widget">
+            <h2>Como está sua bateria hoje? 🔋</h2>
+            <p style="color: var(--text-secondary); margin-top: 5px;">Clique no nível que melhor representa seu sentimento agora:</p>
+            
+            <div class="battery-options">
+                <button class="battery-btn" onclick="checkBattery('100% 🪫 Full! Radiante!')">🟢 100% - Super Bem</button>
+                <button class="battery-btn" onclick="checkBattery('50% 🔋 Na média, levando!')">🟡 50% - Ok / Cansado(a)</button>
+                <button class="battery-btn" onclick="checkBattery('10% 🪫 Esgotado(a)... preciso de pausa.')">🔴 10% - Exausto(a)</button>
+            </div>
+
+            <div id="battery-result"></div>
+        </section>
+
+        <!-- Guia de Ajuda & Telefones -->
+        <section id="ajuda" class="glass-card">
+            <h2>Como e para quem pedir ajuda? 🆘</h2>
+            <p style="color: var(--text-secondary); margin-top: 5px;">Passar por momentos difíceis é normal. O segredo é não guardar tudo só para você.</p>
+            
+            <div class="grid-3" style="margin-top: 25px;">
+                <div class="info-box">
+                    <h4>🏫 Na Escola</h4>
+                    <p>Professores de confiança, equipe pedagógica e direção estão prontos para ouvir você com sigilo e carinho.</p>
                 </div>
-
-                <div class="hero-img-container">
-                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=800&auto=format&fit=crop&q=80" alt="Jovens sorrindo e se apoiando" class="hero-img">
+                <div class="info-box">
+                    <h4>🏠 Em Casa</h4>
+                    <p>Pais, responsáveis, irmãos ou avós. Falar abertamente sobre o que sente em casa traz alívio.</p>
                 </div>
-            </section>
-
-            <section class="cards">
-                <div class="card card-1">
-                    <div class="card-icon">🧠</div>
-                    <h3>Tudo Bem Não Estar Bem</h3>
-                    <p>Ansiedade, cansaço ou pressão das provas? Entenda seus sentimentos sem julgamentos.</p>
+                <div class="info-box">
+                    <h4>🩺 Profissionais</h4>
+                    <p>Psicólogos e médicos dos postos de saúde (UBS). Cuidar da mente é tão vital quanto cuidar do corpo!</p>
                 </div>
+            </div>
 
-                <div class="card card-2">
-                    <div class="card-icon">🤝</div>
-                    <h3>Conexão & Empatia</h3>
-                    <p>Pequenos gestos mudam o dia no colégio. Respeito e escuta fortalecem a nossa galera.</p>
+            <h3 style="margin-top: 30px;">Canais Gratuitos 24h ☎️</h3>
+            <div class="support-grid">
+                <div class="support-card">
+                    <h4>CVV (Valorização da Vida)</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Apoio emocional sigiloso</p>
+                    <a href="tel:188">Ligar 188</a>
                 </div>
-
-                <div class="card card-3">
-                    <div class="card-icon">⚡</div>
-                    <h3>Sua Autoestima</h3>
-                    <p>Descubra hábitos diários para organizar os estudos e cuidar da sua saúde mental.</p>
+                <div class="support-card">
+                    <h4>Pode Falar (UNICEF)</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 4px;">Ajuda para adolescentes (13-24 anos)</p>
+                    <a href="https://www.podefalar.org.br/" target="_blank">Acessar Site</a>
                 </div>
-            </section>
+            </div>
+        </section>
 
-            <section class="mensagem">
-                <h2>Lembrete do Dia ✨</h2>
-                <p>
-                    A vida escolar é cheia de desafios, descobertas e mudanças. Se tudo parecer pesado demais, lembre-se: <strong>pedir ajuda é um ato de extrema coragem</strong>, não de fraqueza.
-                </p>
-            </section>
+        <!-- Form de Escuta -->
+        <section id="escuta" class="glass-card">
+            <h2>Portal de Escuta 📩</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Quer desabafar, tirar uma dúvida ou pedir apoio à equipe pedagógica? Escreva abaixo. Você pode se identificar ou enviar de forma anônima.</p>
+
+            <form id="escuta-form" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label>Seu Nome (Opcional):</label>
+                    <input type="text" placeholder="Deixe em branco se quiser ser anônimo(a)">
+                </div>
+                <div class="form-group">
+                    <label>Sua Mensagem:</label>
+                    <textarea rows="4" placeholder="Escreva aqui com toda a liberdade..." required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Enviar Mensagem 💚</button>
+            </form>
+            <div id="form-feedback" style="display:none; color: #16a34a; font-weight:700; margin-top:15px; text-align:center;">
+                Mensagem enviada com sucesso! Lembre-se: você é importante. ✨
+            </div>
+        </section>
+
+    </div>
+
+    <!-- ================= MASCOTE VIRTUAL (FORA DO SCRIPT) ================= -->
+    <div id="pet-widget" onclick="openPetModal()">
+        <div id="pet-speech-bubble">Clique em mim!</div>
+        <div id="pet-avatar-display">
+            <span id="pet-outfit-display"></span>
+            <span id="pet-body-display">🐱</span>
         </div>
+        <div id="pet-name-display">Meu Amigo</div>
+    </div>
 
-        <!-- ABA 2: COMO PEDIR AJUDA -->
-        <div id="ajuda" class="aba-conteudo">
-            <section class="page-title">
-                <h2>Como e para quem pedir ajuda? 🆘</h2>
-                <p style="font-weight: 600; color: #666;">Passar por momentos difíceis é normal. O segredo é não guardar tudo só para você.</p>
-            </section>
+    <!-- MODAL DE CUSTOMIZAÇÃO -->
+    <div id="pet-modal-bg" class="modal-hidden">
+        <div class="pet-modal-card">
+            <h2>Monte seu Companheiro 🐾</h2>
+            
+            <div class="option-group-title">Escolha o Animal:</div>
+            <div class="options-flex">
+                <button class="option-btn" onclick="selectPet('🐱')">🐱 Gato</button>
+                <button class="option-btn" onclick="selectPet('🐶')">🐶 Cão</button>
+                <button class="option-btn" onclick="selectPet('🐰')">🐰 Coelho</button>
+                <button class="option-btn" onclick="selectPet('🦜')">🦜 Pássaro</button>
+            </div>
 
-            <section class="secao-ajuda">
-                <h3>1. Para quem você pode recorrer? 👥</h3>
-                <div class="grid-opcoes">
-                    <div class="opcao-card">
-                        <h4>🏫 Na Escola</h4>
-                        <p>Professores de confiança, equipe pedagógica, pedagogos(as) e a direção. Eles estão preparados para te ouvir com sigilo e carinho.</p>
-                    </div>
-                    <div class="opcao-card">
-                        <h4>🏠 Em Casa ou Família</h4>
-                        <p>Pais, responsáveis, irmãos mais velhos, tios ou avós. Falar sobre como você se sente em casa pode mudar tudo.</p>
-                    </div>
-                    <div class="opcao-card">
-                        <h4>🩺 Profissionais de Saúde</h4>
-                        <p>Psicólogos e médicos dos postos de saúde (UBS). Cuidar da mente é tão importante quanto cuidar do corpo!</p>
-                    </div>
-                    <div class="opcao-card">
-                        <h4>📞 Canais Gratuitos</h4>
-                        <p>Você pode conversar sem precisar se identificar a qualquer hora do dia ou da noite.</p>
-                    </div>
-                </div>
-            </section>
+            <div class="option-group-title">Nome do Mascote:</div>
+            <input type="text" id="pet-name-input" placeholder="Ex: Bolinha, Pipoca...">
 
-            <section class="secao-ajuda">
-                <h3>2. Como iniciar essa conversa? 💬</h3>
-                <div class="dicas-conversa">
-                    <div class="dica">
-                        <span>💡 Frase 1:</span> "Eu não estou me sentindo muito bem ultimamente e preciso conversar."
-                    </div>
-                    <div class="dica">
-                        <span>💡 Frase 2:</span> "As coisas na escola/vida estão me deixando sobrecarregado(a), pode me ouvir?"
-                    </div>
-                    <div class="dica">
-                        <span>💡 Frase 3:</span> "Estou passando por uma fase difícil e gostaria de ajuda para procurar um psicólogo."
-                    </div>
-                </div>
-            </section>
+            <div class="option-group-title">Escolha o Acessório:</div>
+            <div class="options-flex">
+                <button class="option-btn" onclick="selectOutfit('')">Nenhum</button>
+                <button class="option-btn" onclick="selectOutfit('👑')">👑 Coroa</button>
+                <button class="option-btn" onclick="selectOutfit('🧢')">🧢 Boné</button>
+                <button class="option-btn" onclick="selectOutfit('👓')">👓 Óculos</button>
+                <button class="option-btn" onclick="selectOutfit('🎀')">🎀 Laço</button>
+            </div>
 
-            <section class="canais-urgencia">
-                <h2>Telefones de Apoio Gratuito 24h ☎️</h2>
-                <div class="lista-contatos">
-                    <div class="contato">
-                        <h3>CVV (Valorização da Vida)</h3>
-                        <p>Atendimento emocional gratuito e sigiloso.</p>
-                        <a href="tel:188" class="botao-tel">Ligar 188</a>
-                    </div>
-                    <div class="contato">
-                        <h3>Pode Falar (UNICEF)</h3>
-                        <p>Canal de ajuda em saúde mental para adolescentes (13 a 24 anos).</p>
-                        <a href="https://www.podefalar.org.br/" target="_blank" class="botao-tel">Acessar Site</a>
-                    </div>
-                </div>
-            </section>
+            <button class="submit-btn" style="margin-top: 20px;" onclick="savePetConfig()">Salvar Companheiro ✨</button>
         </div>
+    </div>
 
-        <!-- ABA 3: PORTAL DE ESCUTA -->
-        <div id="portal" class="aba-conteudo">
-            <section class="form-container">
-                <h2 style="color: #3d405b; margin-bottom: 10px; font-size: 1.8rem;">Portal de Escuta 📩</h2>
-                <p style="font-weight: 600; color: #6a7085; margin-bottom: 20px;">Precisa desabafar, tirar dúvidas ou pedir ajuda para a equipe pedagógica? Mande sua mensagem abaixo. Você pode se identificar ou enviar de forma anônima.</p>
-
-                <form id="escutaForm">
-                    <div class="form-group">
-                        <label for="nome">Seu Nome (opcional):</label>
-                        <input type="text" id="nome" placeholder="Deixe em branco para enviar anonimamente">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="turma">Sua Turma/Ano (opcional):</label>
-                        <input type="text" id="turma" placeholder="Ex: 1º Ano B">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="assunto">Sobre o que deseja falar?</label>
-                        <select id="assunto" required>
-                            <option value="">Selecione uma opção...</option>
-                            <option value="estresse">Estresse com provas e estudos</option>
-                            <option value="ansiedade">Ansiedade ou tristeza</option>
-                            <option value="convivencia">Problemas de convivência / Bullying</option>
-                            <option value="orientacao">Preciso de orientação escolar</option>
-                            <option value="outro">Apenas um desabafo</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="mensagem">Escreva aqui sua mensagem:</label>
-                        <textarea id="mensagem" rows="5" placeholder="Sinta-se à vontade para escrever o que quiser..." required></textarea>
-                    </div>
-
-                    <button type="submit" class="botao principal btn-block">Enviar Mensagem 🚀</button>
-                </form>
-
-                <div id="feedbackMensagem" class="feedback-sucesso" style="display: none;">
-                    <h3 style="color: #81b29a; margin-bottom: 8px;">Mensagem enviada com sucesso! 💚</h3>
-                    <p style="font-weight: 600; color: #555;">Obrigado por se expressar. Lembre-se que nossa equipe está sempre por aqui para acolher você!</p>
-                </div>
-            </section>
-        </div>
-
-        <!-- ABA 4: QUIZ DE VIBE -->
-        <div id="quiz" class="aba-conteudo">
-            <section class="quiz-container">
-                <h2 style="color: #3d405b; margin-bottom: 10px; font-size: 1.8rem;">Como está sua bateria hoje? 🔋</h2>
-                <p style="font-weight: 600; color: #6a7085; margin-bottom: 20px;">Responda 3 perguntas rápidas para checar como você está se sentindo!</p>
-
-                <form id="quizForm">
-                    <div class="pergunta-box">
-                        <h4>1. Como tem sido o seu sono ultimamente?</h4>
-                        <label><input type="radio" name="p1" value="1" required> Durmo muito mal ou acordo exausto(a).</label>
-                        <label><input type="radio" name="p1" value="2"> Mais ou menos, oscila bastante.</label>
-                        <label><input type="radio" name="p1" value="3"> Durmo super bem e acordo renovado(a).</label>
-                    </div>
-
-                    <div class="pergunta-box">
-                        <h4>2. Como você se sente com as tarefas e provas do colégio?</h4>
-                        <label><input type="radio" name="p2" value="1" required> Muito ansioso(a) e sobrecarregado(a).</label>
-                        <label><input type="radio" name="p2" value="2"> Um pouco estressado(a), mas dando conta.</label>
-                        <label><input type="radio" name="p2" value="3"> Tranquilo(a) e organizado(a).</label>
-                    </div>
-
-                    <div class="pergunta-box">
-                        <h4>3. Quando precisa conversar, tem alguém com quem desabafar?</h4>
-                        <label><input type="radio" name="p3" value="1" required> Sinto que estou totalmente sozinho(a).</label>
-                        <label><input type="radio" name="p3" value="2"> Às vezes guardo para mim, mas tenho com quem falar.</label>
-                        <label><input type="radio" name="p3" value="3"> Sim! Sempre desabafo com amigos, família ou escola.</label>
-                    </div>
-
-                    <button type="submit" class="botao principal btn-block">Ver Meu Resultado ✨</button>
-                </form>
-
-                <div id="resultadoQuiz" class="resultado-box" style="display: none;">
-                    <h3 id="resultadoTitulo" style="color: #e07a5f; margin-bottom: 8px;"></h3>
-                    <p id="resultadoTexto" style="font-weight: 600; color: #555;"></p>
-                    <button onclick="mostrarAba('ajuda', document.querySelectorAll('.nav-btn')[1])" class="botao secundario" style="margin-top: 15px;">Ver Canais de Ajuda</button>
-                </div>
-            </section>
-        </div>
-    </main>
-
-    <footer>
-        <p>Portal de Apoio ao Estudante • Colégio Estadual Visconde de Guarapuava</p>
-    </footer>
-
-    <!-- SCRIPT DE NAVEGAÇÃO E INTERAÇÃO -->
+    <!-- ================= APENAS CÓDIGO JAVASCRIPT AQUI ================= -->
     <script>
-        // Função para alternar entre as abas sem recarregar a página
-        function mostrarAba(idAba, botaoClicado) {
-            // Esconde todas as abas
-            const abas = document.querySelectorAll('.aba-conteudo');
-            abas.forEach(aba => aba.classList.remove('ativa'));
+        // ESTADO DO MASCOTE
+        let currentPet = '🐱';
+        let currentOutfit = '';
+        let currentName = 'Meu Amigo';
 
-            // Remove classe ativa dos botões do menu
-            const botoes = document.querySelectorAll('.nav-btn');
-            botoes.forEach(btn => btn.classList.remove('active'));
+        const speechMessages = [
+            "Lembre-se de beber água! 💧",
+            "Você é capaz de tudo! ✨",
+            "Precisa desabafar? Manda no formulário! 💚",
+            "Tudo bem fazer uma pausa. ☕",
+            "Tô aqui torcendo por você! 🌟"
+        ];
 
-            // Mostra a aba selecionada
-            document.getElementById(idAba).classList.add('ativa');
-
-            // Ativa o botão correspondente se fornecido
-            if (botaoClicado) {
-                botaoClicado.classList.add('active');
-            }
-
-            // Rola até o topo suavemente
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        function openPetModal() {
+            document.getElementById('pet-modal-bg').classList.remove('modal-hidden');
         }
 
-        // Lógica do formulário de escuta
-        document.getElementById('escutaForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            this.style.display = 'none';
-            document.getElementById('feedbackMensagem').style.display = 'block';
-        });
+        function selectPet(petEmoji) {
+            currentPet = petEmoji;
+        }
 
-        // Lógica do Quiz
-        document.getElementById('quizForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const p1 = parseInt(document.querySelector('input[name="p1"]:checked').value);
-            const p2 = parseInt(document.querySelector('input[name="p2"]:checked').value);
-            const p3 = parseInt(document.querySelector('input[name="p3"]:checked').value);
-            const total = p1 + p2 + p3;
+        function selectOutfit(outfitEmoji) {
+            currentOutfit = outfitEmoji;
+        }
 
-            const resBox = document.getElementById('resultadoQuiz');
-            const resTitulo = document.getElementById('resultadoTitulo');
-            const resTexto = document.getElementById('resultadoTexto');
-
-            if (total <= 4) {
-                resTitulo.innerText = "Bateria Baixa 🪫";
-                resTexto.innerText = "Sua energia parece estar no limite. Não guarde isso só para você! Que tal conversar com alguém da escola ou dar uma olhada na nossa aba de Ajuda?";
-            } else if (total <= 7) {
-                resTitulo.innerText = "Bateria Mediana 🔋";
-                resTexto.innerText = "Você está conseguindo seguir em frente, mas tem dias difíceis. Lembre-se de reservar momentos de descanso e lazer!";
-            } else {
-                resTitulo.innerText = "Bateria Cheia! ⚡";
-                resTexto.innerText = "Que ótimo! Você está conseguindo equilibrar bem sua rotina. Continue cuidando de você e apoie seus amigos!";
+        function savePetConfig() {
+            const inputName = document.getElementById('pet-name-input').value.trim();
+            if (inputName !== "") {
+                currentName = inputName;
             }
 
-            this.style.display = 'none';
-            resBox.style.display = 'block';
-        });
+            // Salva no navegador do usuário
+            localStorage.setItem('userPet', currentPet);
+            localStorage.setItem('userOutfit', currentOutfit);
+            localStorage.setItem('userPetName', currentName);
+
+            updatePetDisplay();
+            document.getElementById('pet-modal-bg').classList.add('modal-hidden');
+        }
+
+        function updatePetDisplay() {
+            document.getElementById('pet-body-display').innerText = currentPet;
+            document.getElementById('pet-outfit-display').innerText = currentOutfit;
+            document.getElementById('pet-name-display').innerText = currentName;
+        }
+
+        function loadSavedPet() {
+            const savedPet = localStorage.getItem('userPet');
+            const savedOutfit = localStorage.getItem('userOutfit');
+            const savedName = localStorage.getItem('userPetName');
+
+            if (savedPet) currentPet = savedPet;
+            if (savedOutfit !== null) currentOutfit = savedOutfit;
+            if (savedName) currentName = savedName;
+
+            updatePetDisplay();
+        }
+
+        // Troca de frases aleatórias a cada 8 segundos
+        setInterval(() => {
+            const randomMsg = speechMessages[Math.floor(Math.random() * speechMessages.length)];
+            const bubble = document.getElementById('pet-speech-bubble');
+            if (bubble) bubble.innerText = randomMsg;
+        }, 8000);
+
+        // Bateria Emocional Interativa
+        function checkBattery(level) {
+            const res = document.getElementById('battery-result');
+            res.innerText = `Você selecionou: ${level}. Lembre-se de respeitar o seu próprio ritmo hoje! 💛`;
+        }
+
+        // Envio do formulário
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            document.getElementById('escuta-form').reset();
+            document.getElementById('form-feedback').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('form-feedback').style.display = 'none';
+            }, 5000);
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', loadSavedPet);
     </script>
 </body>
 </html>
