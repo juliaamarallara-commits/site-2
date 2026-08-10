@@ -1,788 +1,3199 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Refúgio - Seu Cantinho de Conforto</title>
-
-  <!-- Google Fonts & Three.js -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-
-  <style>
-    :root {
-      /* Paleta Acolhedora e Quente/Pastel */
-      --bg-site: #fcf8f2;
-      --card-bg: #ffffff;
-      --cor-texto: #4a403a;
-      --cor-subtexto: #7d7067;
-      
-      --pastel-rosa: #fde2e4;
-      --pastel-pêssego: #ffcad4;
-      --pastel-lavanda: #e8dff5;
-      --pastel-menta: #e2ece9;
-      --pastel-azul: #d8e2dc;
-      --pastel-amarelo: #fff1e6;
-
-      --sombra-card: 0 12px 30px rgba(125, 112, 103, 0.07);
-      --borda-card: 1px solid rgba(230, 220, 210, 0.6);
-      --raio: 24px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      background-color: var(--bg-site);
-      color: var(--cor-texto);
-      font-family: 'Nunito', sans-serif;
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    /* Cabeçalho */
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      background: rgba(252, 248, 242, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: var(--borda-card);
-      padding: 1.1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.4rem;
-      font-weight: 800;
-      color: #6b5b52;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    nav {
-      display: flex;
-      gap: 1.2rem;
-    }
-
-    nav a {
-      text-decoration: none;
-      color: var(--cor-subtexto);
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 0.4rem 0.8rem;
-      border-radius: 12px;
-      transition: all 0.2s ease;
-    }
-
-    nav a:hover {
-      background: var(--pastel-lavanda);
-      color: var(--cor-texto);
-    }
-
-    /* Layout Principal */
-    .container {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 2.5rem 1.5rem 5rem;
-      display: flex;
-      flex-direction: column;
-      gap: 3.5rem;
-    }
-
-    /* Banner de Acolhimento */
-    .welcome-banner {
-      background: linear-gradient(135deg, var(--pastel-amarelo) 0%, var(--pastel-rosa) 100%);
-      border-radius: var(--raio);
-      padding: 2.5rem 2rem;
-      text-align: center;
-      box-shadow: var(--sombra-card);
-      border: var(--borda-card);
-    }
-
-    .welcome-banner h1 {
-      font-size: 2rem;
-      font-weight: 800;
-      color: #5a4a42;
-      margin-bottom: 0.6rem;
-    }
-
-    .welcome-banner p {
-      font-size: 1.1rem;
-      color: var(--cor-subtexto);
-      max-width: 650px;
-      margin: 0 auto;
-    }
-
-    /* Seção do Mascot 3D */
-    .pet-section {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2rem;
-      align-items: center;
-      background: var(--card-bg);
-      border-radius: var(--raio);
-      padding: 2rem;
-      box-shadow: var(--sombra-card);
-      border: var(--borda-card);
-    }
-
-    .pet-info h2 {
-      font-size: 1.6rem;
-      font-weight: 700;
-      margin-bottom: 0.8rem;
-      color: #5a4a42;
-    }
-
-    .pet-info p {
-      color: var(--cor-subtexto);
-      margin-bottom: 1.5rem;
-      font-size: 1rem;
-    }
-
-    .pet-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.8rem;
-    }
-
-    .btn-pet {
-      background: var(--pastel-amarelo);
-      border: 1px solid #f2e3d5;
-      padding: 0.7rem 1.2rem;
-      border-radius: 16px;
-      font-family: inherit;
-      font-weight: 700;
-      color: var(--cor-texto);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-    }
-
-    .btn-pet:hover {
-      transform: translateY(-2px);
-      background: var(--pastel-pêssego);
-    }
-
-    .pet-display {
-      position: relative;
-      width: 100%;
-      height: 320px;
-      background: radial-gradient(circle, #ffffff 0%, #f7f0e8 100%);
-      border-radius: 20px;
-      overflow: hidden;
-    }
-
-    #canvas-container {
-      width: 100%;
-      height: 100%;
-      cursor: grab;
-    }
-
-    #canvas-container:active {
-      cursor: grabbing;
-    }
-
-    .pet-status {
-      position: absolute;
-      bottom: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      background: rgba(255, 255, 255, 0.9);
-      padding: 0.4rem 1rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--cor-subtexto);
-      pointer-events: none;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-    }
-
-    /* Grid de Conteúdo */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 2rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--raio);
-      padding: 2rem;
-      box-shadow: var(--sombra-card);
-      border: var(--borda-card);
-    }
-
-    .card h2 {
-      font-size: 1.35rem;
-      font-weight: 700;
-      margin-bottom: 1rem;
-      color: #5a4a42;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    /* Exercício de Respiração */
-    .breath-box {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 1rem 0;
-    }
-
-    .breath-circle {
-      width: 130px;
-      height: 130px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, var(--pastel-menta), var(--pastel-lavanda));
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-weight: 700;
-      color: #4a403a;
-      margin: 1.5rem 0;
-      animation: breatheAnimation 8s infinite ease-in-out;
-      box-shadow: 0 8px 25px rgba(226, 236, 233, 0.8);
-    }
-
-    @keyframes breatheAnimation {
-      0%, 100% { transform: scale(1); opacity: 0.8; }
-      50% { transform: scale(1.4); opacity: 1; background: linear-gradient(135deg, var(--pastel-rosa), var(--pastel-pêssego)); }
-    }
-
-    /* Diário de Desabafo */
-    .journal-tags {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-      flex-wrap: wrap;
-    }
-
-    .tag-btn {
-      background: var(--bg-site);
-      border: 1px solid #eae0d5;
-      padding: 0.3rem 0.8rem;
-      border-radius: 12px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--cor-subtexto);
-      cursor: pointer;
-    }
-
-    .tag-btn.active {
-      background: var(--pastel-lavanda);
-      color: var(--cor-texto);
-      border-color: #d8cde5;
-    }
-
-    textarea.journal-input {
-      width: 100%;
-      height: 120px;
-      border: 1px solid #eee5dc;
-      border-radius: 16px;
-      padding: 1rem;
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--cor-texto);
-      background: #faf6f0;
-      resize: none;
-      outline: none;
-      transition: border 0.2s;
-    }
-
-    textarea.journal-input:focus {
-      border-color: #d0c2b4;
-      background: #ffffff;
-    }
-
-    .btn-submit {
-      margin-top: 0.8rem;
-      background: var(--pastel-menta);
-      border: none;
-      padding: 0.7rem 1.4rem;
-      border-radius: 14px;
-      font-family: inherit;
-      font-weight: 700;
-      color: var(--cor-texto);
-      cursor: pointer;
-      float: right;
-      transition: all 0.2s;
-    }
-
-    .btn-submit:hover {
-      background: #cbdcd7;
-    }
-
-    /* Lista de Guias & Dicas de Autocuidado */
-    .dicas-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .dica-item {
-      background: var(--bg-site);
-      padding: 1rem 1.2rem;
-      border-radius: 16px;
-      border-left: 4px solid var(--pastel-pêssego);
-    }
-
-    .dica-item h3 {
-      font-size: 1rem;
-      font-weight: 700;
-      margin-bottom: 0.2rem;
-    }
-
-    .dica-item p {
-      font-size: 0.9rem;
-      color: var(--cor-subtexto);
-    }
-
-    /* Seção de Playlist / Conforto Sonoro */
-    .sounds-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-
-    .sound-card {
-      background: var(--bg-site);
-      padding: 0.8rem;
-      border-radius: 14px;
-      text-align: center;
-      cursor: pointer;
-      font-weight: 600;
-      font-size: 0.9rem;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-
-    .sound-card:hover {
-      background: var(--pastel-azul);
-      border-color: #c0d4c8;
-    }
-
-    /* Suporte & Apoio */
-    .support-card {
-      background: linear-gradient(135deg, var(--pastel-lavanda) 0%, var(--pastel-azul) 100%);
-    }
-
-    .support-info {
-      background: rgba(255, 255, 255, 0.7);
-      padding: 1rem 1.2rem;
-      border-radius: 16px;
-      margin-top: 1rem;
-    }
-
-    .support-info strong {
-      display: block;
-      color: #4a403a;
-      font-size: 1.05rem;
-    }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 2rem;
-      color: var(--cor-subtexto);
-      font-size: 0.9rem;
-      border-top: var(--borda-card);
-    }
-
-    @media (max-width: 768px) {
-      .pet-section {
-        grid-template-columns: 1fr;
-      }
-      header {
-        padding: 1rem;
-      }
-      nav {
-        gap: 0.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Apoio ao Estudante - Bem-vindo</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+    <!-- Botão para aumentar fonte -->
+    <div class="accessibility-controls">
+        <button id="increaseFontBtn" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+            <i class="fas fa-plus"></i> A+
+        </button>
+        <button id="decreaseFontBtn" aria-label="Diminuir tamanho da fonte" title="Diminuir fonte">
+            <i class="fas fa-minus"></i> A-
+        </button>
+        <button id="toggleDarkMode" aria-label="Alternar modo escuro" title="Modo escuro">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="toggleContrast" aria-label="Alto contraste" title="Alto contraste">
+            <i class="fas fa-adjust"></i>
+        </button>
+    </div>
 
-  <!-- Navegação superior -->
-  <header>
-    <div class="logo">🌿 Refúgio</div>
-    <nav>
-      <a href="#mascote">Mascote</a>
-      <a href="#calma">Calma</a>
-      <a href="#diario">Desabafo</a>
-      <a href="#autocuidado">Dicas</a>
+    <!-- Botão voltar ao topo -->
+    <button id="backToTopBtn" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <span>Portal de Apoio</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html" class="active">Início</a></li>
+                <li><a href="escuta.html">Portal de Escuta</a></li>
+                <li><a href="quiz.html">Quiz Interativo</a></li>
+                <li><a href="referencias.html">Referências</a></li>
+            </ul>
+        </div>
     </nav>
-  </header>
 
-  <div class="container">
-
-    <!-- Mensagem de Boas-Vindas -->
-    <section class="welcome-banner">
-      <h1>Você está em um lugar seguro 💛</h1>
-      <p>Não há pressa, julgamentos ou cobranças aqui. Respire fundo, interaja com o seu mascote e fique o tempo que precisar.</p>
+    <!-- Seção Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Bem-vindo ao Portal de Apoio ao Estudante</h1>
+            <p class="subtitle">Um espaço de acolhimento, respeito e empatia</p>
+            <p class="welcome-message">
+                Aqui você encontrará informações, orientações e apoio sobre situações vivenciadas no ambiente escolar. 
+                Nosso objetivo é criar um ambiente virtual que incentive o respeito, a empatia e o acolhimento, 
+                oferecendo suporte para sua saúde emocional e bem-estar.
+            </p>
+            <div class="hero-buttons">
+                <a href="escuta.html" class="btn btn-primary">
+                    <i class="fas fa-comments"></i> Portal de Escuta
+                </a>
+                <a href="quiz.html" class="btn btn-secondary">
+                    <i class="fas fa-question-circle"></i> Fazer Quiz
+                </a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <div class="hero-illustration">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
     </section>
 
-    <!-- Seção do Mascote 3D Interativo -->
-    <section id="mascote" class="pet-section">
-      <div class="pet-info">
-        <h2>Seu Companheiro 3D 🐾</h2>
-        <p>Este é o seu amiguinho virtual. Ele reagirá ao seu carinho e atenção. Mova o cursor para interagir!</p>
-
-        <div class="pet-actions">
-          <button class="btn-pet" onclick="fazerCarinho()">✨ Carinho</button>
-          <button class="btn-pet" onclick="alimentarPet()">🍎 Dar Lanchinho</button>
-          <button class="btn-pet" onclick="brincarPet()">🎈 Brincar</button>
+    <!-- Carrossel de Temas -->
+    <section class="carousel-section">
+        <h2>Temas Importantes para Você</h2>
+        <div class="carousel">
+            <div class="carousel-item">
+                <div class="carousel-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Saúde Emocional</h3>
+                <p>Entenda a importância de cuidar de sua saúde mental e emocional durante a adolescência.</p>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-icon">
+                    <i class="fas fa-hand-fist"></i>
+                </div>
+                <h3>Bullying</h3>
+                <p>Reconheça, compreenda e saiba como lidar com situações de bullying na escola.</p>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <h3>Empatia e Respeito</h3>
+                <p>Aprenda como construir relacionamentos baseados em empatia e respeito mútuo.</p>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Segurança Digital</h3>
+                <p>Dicas importantes para manter sua privacidade e segurança na internet.</p>
+            </div>
         </div>
-      </div>
-
-      <div class="pet-display">
-        <div id="canvas-container"></div>
-        <div class="pet-status" id="pet-status-text">O mascote está calmo e feliz</div>
-      </div>
     </section>
 
-    <!-- Grid de Ferramentas: Respiração & Diário -->
-    <div class="grid-2">
-      
-      <!-- Cantinho da Respiração -->
-      <section id="calma" class="card">
-        <h2>🫁 Respire sem Pressa</h2>
-        <p style="color: var(--cor-subtexto); font-size: 0.95rem;">Acompanhe o ritmo do círculo para desacelerar seus pensamentos:</p>
-        
-        <div class="breath-box">
-          <div class="breath-circle" id="breath-text">Inspire...</div>
-          <p style="font-size: 0.85rem; color: var(--cor-subtexto);" id="breath-sub">Sinta o ar encher o seu peito com calma.</p>
+    <!-- Seção de Informações -->
+    <section class="info-section">
+        <div class="info-container">
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-lightbulb"></i>
+                </div>
+                <h3>Por que este portal existe?</h3>
+                <p>
+                    A saúde mental é fundamental para o desenvolvimento saudável de adolescentes. 
+                    Pesquisas mostram que 3 em cada 10 estudantes se sentem tristes frequentemente, 
+                    e muitos enfrentam desafios emocionais sozinhos. Este portal oferece informações 
+                    confiáveis e orientações para ajudar você a compreender e lidar melhor com essas situações.
+                </p>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+                <h3>O que você encontrará aqui?</h3>
+                <ul class="info-list">
+                    <li><strong>Portal de Escuta:</strong> Um espaço para expressar seus sentimentos</li>
+                    <li><strong>Quiz Interativo:</strong> Teste seus conhecimentos sobre temas importantes</li>
+                    <li><strong>Orientações:</strong> Informações sobre quando e como pedir ajuda</li>
+                    <li><strong>Referências:</strong> Fontes confiáveis para aprofundar seu conhecimento</li>
+                </ul>
+            </div>
+            <div class="info-card">
+                <div class="info-icon">
+                    <i class="fas fa-phone"></i>
+                </div>
+                <h3>Precisa de ajuda agora?</h3>
+                <p>
+                    Se você está passando por dificuldades emocionais, lembre-se de que não está sozinho. 
+                    Converse com alguém de confiança como professor, pedagogo, direção da escola, familiares 
+                    ou outro adulto de confiança. Existem também serviços especializados disponíveis.
+                </p>
+                <a href="#" class="help-link">
+                    <i class="fas fa-external-link-alt"></i> Saiba mais sobre serviços de apoio
+                </a>
+            </div>
         </div>
-      </section>
+    </section>
 
-      <!-- Diário de Desabafo -->
-      <section id="diario" class="card">
-        <h2>✏️ Espaço de Desabafo</h2>
-        <p style="color: var(--cor-subtexto); font-size: 0.95rem; margin-bottom: 0.8rem;">Como você está se sentindo agora?</p>
-        
-        <div class="journal-tags">
-          <button class="tag-btn active" onclick="selectTag(this)">Anioso(a)</button>
-          <button class="tag-btn" onclick="selectTag(this)">Cansado(a)</button>
-          <button class="tag-btn" onclick="selectTag(this)">Triste</button>
-          <button class="tag-btn" onclick="selectTag(this)">Confuso(a)</button>
+    <!-- Estatísticas -->
+    <section class="stats-section">
+        <h2>Dados Importantes sobre Saúde Emocional</h2>
+        <div class="stats-container">
+            <div class="stat-card">
+                <div class="stat-number">30%</div>
+                <p>de estudantes relatam sentimentos frequentes de tristeza</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">43%</div>
+                <p>se sentem irritados, nervosos ou mal-humorados</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">40%</div>
+                <p>já sofreram bullying na escola</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">26%</div>
+                <p>sentem que ninguém se preocupa com eles</p>
+            </div>
         </div>
+    </section>
 
-        <textarea class="journal-input" id="journal-text" placeholder="Escreva o que está pesando na sua mente... ninguém vai ler isso além de você."></textarea>
-        <button class="btn-submit" onclick="soltarPensamento()">Soltar Pensamento 🍃</button>
-        <div style="clear:both;"></div>
-        <p id="journal-msg" style="font-size: 0.85rem; color: #6b8e23; margin-top: 0.5rem; font-weight: 600; display: none;"></p>
-      </section>
-
-    </div>
-
-    <!-- Grid de Conteúdo: Dicas de Autocuidado & Sons -->
-    <div class="grid-2">
-      
-      <!-- Guia de Autocuidado para Momentos Difíceis -->
-      <section id="autocuidado" class="card">
-        <h2>🛋️ O que fazer se você não estiver bem?</h2>
-        <div class="dicas-list">
-          <div class="dica-item" style="border-left-color: var(--pastel-pêssego);">
-            <h3>1. Regra do Copo d'Água</h3>
-            <p>Beba um copo de água bem gelada em pequenos goles. A mudança de temperatura ajuda seu corpo a sair do modo de alerta.</p>
-          </div>
-          <div class="dica-item" style="border-left-color: var(--pastel-lavanda);">
-            <h3>2. Ancoragem dos 5 Sentidos</h3>
-            <p>Olhe ao redor e encontre: 5 coisas que você vê, 4 coisas que pode tocar, 3 sons que ouve e 2 cheiros.</p>
-          </div>
-          <div class="dica-item" style="border-left-color: var(--pastel-menta);">
-            <h3>3. Solte os Ombros</h3>
-            <p>Desencaixe a mandíbula, descasque a língua do céu da boca e abaixe os ombros. Sinta o alívio muscular.</p>
-          </div>
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Portal de Apoio ao Estudante</h4>
+                <p>Um espaço seguro para sua saúde emocional e bem-estar</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="escuta.html">Portal de Escuta</a></li>
+                    <li><a href="quiz.html">Quiz Interativo</a></li>
+                    <li><a href="referencias.html">Referências</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
         </div>
-      </section>
-
-      <!-- Sons & Apoio Emocional -->
-      <section class="card support-card">
-        <h2>💬 Precisando conversar?</h2>
-        <p style="color: var(--cor-subtexto);">Lembre-se de que você não precisa passar por tudo sozinho(a).</p>
-
-        <div class="support-info">
-          <strong>CVV - Centro de Valorização da Vida</strong>
-          <p style="font-size: 0.9rem; color: var(--cor-subtexto); margin-top: 0.3rem;">
-            Apoio emocional gratuito e confidencial disponível 24 horas por dia por telefone ou chat.
-          </p>
-          <div style="margin-top: 0.8rem; display: flex; gap: 0.6rem; align-items: center;">
-            <span style="background: #ffffff; padding: 0.4rem 0.8rem; border-radius: 10px; font-weight: 800; color: #5a4a42;">Ligue 188</span>
-            <a href="https://www.cvv.org.br/" target="_blank" style="color: #4a403a; font-weight: 700; text-decoration: underline; font-size: 0.9rem;">Acessar Chat Online</a>
-          </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Portal de Apoio ao Estudante. Todos os direitos reservados.</p>
         </div>
+    </footer>
 
-        <h3 style="margin-top: 1.5rem; font-size: 1rem; color: #5a4a42;">🎧 Clima Confortável</h3>
-        <div class="sounds-grid">
-          <div class="sound-card" onclick="playSoftSound('chuva')">🌧️ Barulho de Chuva</div>
-          <div class="sound-card" onclick="playSoftSound('floresta')">🍃 Vento nas Folhas</div>
-          <div class="sound-card" onclick="playSoftSound('lareira')">🔥 Lareira Quentinha</div>
-          <div class="sound-card" onclick="playSoftSound('ondas')">🌊 Ondas Suaves</div>
-        </div>
-      </section>
-
-    </div>
-
-  </div>
-
-  <footer>
-    <p>Refúgio • Um espaço feito para acolher seus sentimentos. 🤍</p>
-  </footer>
-
-  <!-- Lógica 3D & Funcionalidades Interativas -->
-  <script>
-    // ===============================================
-    // 1. CONFIGURAÇÃO DO PET 3D (THREE.JS)
-    // ===============================================
-    const container = document.getElementById('canvas-container');
-    const width = container.clientWidth;
-    const height = container.clientHeight;
-
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = 4.8;
-
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-    container.appendChild(renderer.domElement);
-
-    // Iluminação
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
-    scene.add(ambientLight);
-
-    const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.7);
-    dirLight.position.set(4, 5, 3);
-    scene.add(dirLight);
-
-    // Grupo do Personagem (Bichinho Fofo)
-    const petGroup = new THREE.Group();
-    scene.add(petGroup);
-
-    // Corpo Redondo Soft
-    const bodyGeo = new THREE.SphereGeometry(1, 64, 64);
-    const bodyMat = new THREE.MeshPhongMaterial({ 
-      color: 0xffcad4, 
-      shininess: 25,
-      flatShading: false
-    });
-    const body = new THREE.Mesh(bodyGeo, bodyMat);
-    petGroup.add(body);
-
-    // Olhos Expressivos
-    const eyeGeo = new THREE.SphereGeometry(0.09, 32, 32);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x4a403a });
-
-    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-0.35, 0.2, 0.92);
-    petGroup.add(leftEye);
-
-    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(0.35, 0.2, 0.92);
-    petGroup.add(rightEye);
-
-    // Brilho dos Olhos
-    const shineGeo = new THREE.SphereGeometry(0.03, 16, 16);
-    const shineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-
-    const leftShine = new THREE.Mesh(shineGeo, shineMat);
-    leftShine.position.set(-0.32, 0.23, 0.99);
-    petGroup.add(leftShine);
-
-    const rightShine = new THREE.Mesh(shineGeo, shineMat);
-    rightShine.position.set(0.38, 0.23, 0.99);
-    petGroup.add(rightShine);
-
-    // Bochechas Coradas
-    const cheekGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const cheekMat = new THREE.MeshBasicMaterial({ color: 0xffb5a7, transparent: true, opacity: 0.7 });
-
-    const leftCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    leftCheek.position.set(-0.48, 0.02, 0.86);
-    petGroup.add(leftCheek);
-
-    const rightCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    rightCheek.position.set(0.48, 0.02, 0.86);
-    petGroup.add(rightCheek);
-
-    // Orelhas Fofas
-    const earGeo = new THREE.SphereGeometry(0.35, 32, 32);
-    earGeo.scale(0.8, 1.4, 0.8);
-    const earMat = new THREE.MeshPhongMaterial({ color: 0xffcad4, shininess: 15 });
-
-    const leftEar = new THREE.Mesh(earGeo, earMat);
-    leftEar.position.set(-0.65, 0.85, 0.1);
-    leftEar.rotation.z = -0.25;
-    petGroup.add(leftEar);
-
-    const rightEar = new THREE.Mesh(earGeo, earMat);
-    rightEar.position.set(0.65, 0.85, 0.1);
-    rightEar.rotation.z = 0.25;
-    petGroup.add(rightEar);
-
-    // Interatividade com o Mouse
-    let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      const rect = container.getBoundingClientRect();
-      if (e.clientX >= rect.left && e.clientX <= rect.right &&
-          e.clientY >= rect.top && e.clientY <= rect.bottom) {
-        mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      }
-    });
-
-    // Animação de Pulo/Ações
-    let isJumping = false;
-    let jumpTime = 0;
-
-    function setStatus(text) {
-      document.getElementById('pet-status-text').innerText = text;
-    }
-
-    function fazerCarinho() {
-      setStatus('✨ O mascote está amando o seu carinho!');
-      bodyMat.color.setHex(0xfde2e4);
-      petGroup.scale.set(1.08, 0.92, 1.08);
-      setTimeout(() => {
-        petGroup.scale.set(1, 1, 1);
-        bodyMat.color.setHex(0xffcad4);
-      }, 400);
-    }
-
-    function alimentarPet() {
-      setStatus('🍎 Nhoc nhoc! Ele adorou o lanchinho.');
-      let scale = 1;
-      const eatInterval = setInterval(() => {
-        scale = scale === 1 ? 1.05 : 1;
-        petGroup.scale.set(scale, scale, scale);
-      }, 150);
-
-      setTimeout(() => {
-        clearInterval(eatInterval);
-        petGroup.scale.set(1, 1, 1);
-        setStatus('O mascote está de barriguinha cheia!');
-      }, 1200);
-    }
-
-    function brincarPet() {
-      if (!isJumping) {
-        isJumping = true;
-        jumpTime = 0;
-        setStatus('🎈 Uhul! Hora de brincar!');
-      }
-    }
-
-    // Loop de Animação Principal
-    function animate() {
-      requestAnimationFrame(animate);
-
-      // Suavização do movimento dos olhos seguindo o mouse
-      targetX += (mouseX - targetX) * 0.08;
-      targetY += (mouseY - targetY) * 0.08;
-
-      petGroup.rotation.y = targetX * 0.5;
-      petGroup.rotation.x = -targetY * 0.3;
-
-      // Pulo e flutuação suave
-      if (isJumping) {
-        jumpTime += 0.09;
-        petGroup.position.y = Math.sin(jumpTime) * 0.45;
-        if (jumpTime >= Math.PI) {
-          isJumping = false;
-          petGroup.position.y = 0;
-          setStatus('O mascote descansou e está feliz.');
-        }
-      } else {
-        petGroup.position.y = Math.sin(Date.now() * 0.002) * 0.06;
-      }
-
-      renderer.render(scene, camera);
-    }
-    animate();
-
-    // Redimensionamento responsivo
-    window.addEventListener('resize', () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
-
-    // ===============================================
-    // 2. LÓGICA DA RESPIRO DINÂMICO
-    // ===============================================
-    const breathText = document.getElementById('breath-text');
-    const breathSub = document.getElementById('breath-sub');
-
-    const fasesBreathing = [
-      { main: 'Inspire...', sub: 'Sinta o ar encher o seu peito devagar.' },
-      { main: 'Segure...', sub: 'Mantenha a calma por alguns segundos.' },
-      { main: 'Expire...', sub: 'Solte todo o ar e relaxe os ombros.' }
-    ];
-    let step = 0;
-
-    setInterval(() => {
-      step = (step + 1) % fasesBreathing.length;
-      breathText.innerText = fasesBreathing[step].main;
-      breathSub.innerText = fasesBreathing[step].sub;
-    }, 2600);
-
-    // ===============================================
-    // 3. LÓGICA DO DIÁRIO DE DESABAFO
-    // ===============================================
-    function selectTag(btn) {
-      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
-      btn.classList.add('active');
-    }
-
-    function soltarPensamento() {
-      const input = document.getElementById('journal-text');
-      const msg = document.getElementById('journal-msg');
-
-      if (input.value.trim() !== "") {
-        input.style.transition = "opacity 0.8s, transform 0.8s";
-        input.style.opacity = "0.2";
-        input.style.transform = "scale(0.98)";
-        
-        msg.innerText = "✨ Seu pensamento foi liberado. Respire fundo e cuide de você.";
-        msg.style.display = "block";
-
-        setTimeout(() => {
-          input.value = "";
-          input.style.opacity = "1";
-          input.style.transform = "scale(1)";
-        }, 1800);
-      }
-    }
-
-    // ===============================================
-    // 4. LÓGICA DE SONS CONFORTÁVEIS (FEEDBACK)
-    // ===============================================
-    function playSoftSound(tipo) {
-      alert(`Você ativou o modo sonoro: ${tipo.toUpperCase()} 🎧. (Coloque seus fones e aproveite o momento de descanso)`);
-    }
-  </script>
+    <script src="js/main.js"></script>
 </body>
 </html>
+```\n
+## 📄 Arquivo: escuta.html
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal de Escuta - Portal de Apoio ao Estudante</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Botão para aumentar fonte -->
+    <div class="accessibility-controls">
+        <button id="increaseFontBtn" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+            <i class="fas fa-plus"></i> A+
+        </button>
+        <button id="decreaseFontBtn" aria-label="Diminuir tamanho da fonte" title="Diminuir fonte">
+            <i class="fas fa-minus"></i> A-
+        </button>
+        <button id="toggleDarkMode" aria-label="Alternar modo escuro" title="Modo escuro">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="toggleContrast" aria-label="Alto contraste" title="Alto contraste">
+            <i class="fas fa-adjust"></i>
+        </button>
+    </div>
+
+    <!-- Botão voltar ao topo -->
+    <button id="backToTopBtn" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <span>Portal de Apoio</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="escuta.html" class="active">Portal de Escuta</a></li>
+                <li><a href="quiz.html">Quiz Interativo</a></li>
+                <li><a href="referencias.html">Referências</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Seção Hero do Portal de Escuta -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Portal de Escuta</h1>
+            <p>Um espaço seguro e acolhedor para expressar seus sentimentos</p>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Introdução -->
+            <section class="intro-section">
+                <h2>Bem-vindo ao Portal de Escuta</h2>
+                <p>
+                    Este é um espaço seguro onde você pode expressar seus sentimentos, preocupações e desafios 
+                    que enfrenta no ambiente escolar. Aqui, sua voz será ouvida e respeitada. 
+                </p>
+                <p>
+                    <strong>Importante:</strong> Este formulário é uma simulação educativa. Nenhuma informação será armazenada. 
+                    Se você está enfrentando dificuldades reais, procure conversar com um adulto de confiança.
+                </p>
+            </section>
+
+            <!-- Formulário de Desabafo -->
+            <section class="form-section">
+                <h2>Compartilhe Seus Sentimentos</h2>
+                <form id="desaboForm" class="desabo-form">
+                    <div class="form-group">
+                        <label for="nome">Como você gostaria de ser chamado?</label>
+                        <input type="text" id="nome" name="nome" placeholder="Digite um nome (pode ser fictício )" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tema">Qual é o tema principal do seu desabafo?</label>
+                        <select id="tema" name="tema" required>
+                            <option value="">Selecione um tema...</option>
+                            <option value="bullying">Bullying</option>
+                            <option value="ansiedade">Ansiedade</option>
+                            <option value="tristeza">Tristeza</option>
+                            <option value="relacionamento">Relacionamentos</option>
+                            <option value="autoestima">Autoestima</option>
+                            <option value="pressao">Pressão Acadêmica</option>
+                            <option value="familia">Problemas Familiares</option>
+                            <option value="outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensagem">Seu Desabafo</label>
+                        <textarea id="mensagem" name="mensagem" rows="8" placeholder="Escreva o que está sentindo..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">
+                        <i class="fas fa-paper-plane"></i> Enviar Desabafo
+                    </button>
+                </form>
+
+                <!-- Mensagem de Acolhimento (aparece após envio) -->
+                <div id="welcomeMessage" class="welcome-message-box" style="display: none;">
+                    <div class="message-content">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Obrigado por compartilhar!</h3>
+                        <p id="personalMessage"></p>
+                        <p class="message-text">
+                            Sua coragem em expressar seus sentimentos é um passo importante. 
+                            Lembre-se de que você não está sozinho(a) e que existem pessoas que se importam com você.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Frases Motivacionais -->
+            <section class="motivational-section">
+                <h2>Frases de Motivação e Esperança</h2>
+                <div class="quotes-container">
+                    <div class="quote-card">
+                        <p class="quote-text">"Você é mais forte do que pensa. Cada dia é uma nova oportunidade para começar de novo."</p>
+                        <p class="quote-author">- Mensagem de Apoio</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"Pedir ajuda não é fraqueza, é sabedoria. Todos precisamos de apoio em algum momento."</p>
+                        <p class="quote-author">- Mensagem de Apoio</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"Sua diferença é sua força. O mundo precisa de você como você é."</p>
+                        <p class="quote-author">- Mensagem de Apoio</p>
+                    </div>
+                    <div class="quote-card">
+                        <p class="quote-text">"Hoje pode ser difícil, mas amanhã é uma nova chance. Você consegue!"</p>
+                        <p class="quote-author">- Mensagem de Apoio</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Orientações para Pedir Ajuda -->
+            <section class="help-section">
+                <h2>Como e Quando Pedir Ajuda</h2>
+                
+                <div class="help-cards">
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-chalkboard-user"></i>
+                        </div>
+                        <h3>Converse com um Professor</h3>
+                        <p>
+                            Professores estão preparados para ouvir e orientar. Escolha um professor em quem você confia 
+                            e compartilhe o que está sentindo. Eles podem ajudar a encontrar soluções.
+                        </p>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-user-tie"></i>
+                        </div>
+                        <h3>Procure o Pedagogo ou Orientador</h3>
+                        <p>
+                            Pedagogos e orientadores educacionais são profissionais especializados em apoiar estudantes 
+                            com dificuldades emocionais e comportamentais. Eles podem oferecer suporte individualizado.
+                        </p>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <h3>Fale com a Direção da Escola</h3>
+                        <p>
+                            A direção da escola tem responsabilidade de garantir um ambiente seguro e acolhedor. 
+                            Se você está enfrentando bullying ou violência, a direção pode intervir e protegê-lo.
+                        </p>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-home"></i>
+                        </div>
+                        <h3>Confie em Familiares</h3>
+                        <p>
+                            Seus pais, responsáveis ou outros membros da família podem ser seus maiores aliados. 
+                            Compartilhe seus sentimentos com eles e peça apoio. Eles querem seu bem-estar.
+                        </p>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-people-group"></i>
+                        </div>
+                        <h3>Procure um Adulto de Confiança</h3>
+                        <p>
+                            Pode ser um tio, tia, avó, vizinho ou qualquer adulto em quem você confia. 
+                            Às vezes, é mais fácil conversar com alguém fora do círculo imediato.
+                        </p>
+                    </div>
+
+                    <div class="help-card">
+                        <div class="help-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <h3>Serviços de Apoio Profissional</h3>
+                        <p>
+                            Existem linhas de apoio gratuitas como o Centro de Valorização da Vida (CVV - 188) 
+                            que oferecem suporte emocional 24 horas. Não hesite em ligar.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sinais de Alerta -->
+            <section class="alert-section">
+                <h2>Sinais de que Você Precisa de Ajuda</h2>
+                <div class="alert-content">
+                    <p>
+                        Procure ajuda imediatamente se você está experimentando:
+                    </p>
+                    <ul class="alert-list">
+                        <li>Pensamentos de machucar a si mesmo ou a outros</li>
+                        <li>Sentimentos persistentes de tristeza ou desesperança</li>
+                        <li>Isolamento social extremo</li>
+                        <li>Mudanças drásticas no comportamento ou hábitos de sono</li>
+                        <li>Bullying ou assédio constante</li>
+                        <li>Abuso físico ou emocional</li>
+                        <li>Dificuldade para concentrar ou desempenho acadêmico em queda</li>
+                        <li>Consumo de álcool ou drogas</li>
+                    </ul>
+                    <p class="alert-highlight">
+                        <strong>Lembre-se:</strong> Pedir ajuda é um sinal de força, não de fraqueza. 
+                        Você merece ser ouvido e apoiado.
+                    </p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Portal de Apoio ao Estudante</h4>
+                <p>Um espaço seguro para sua saúde emocional e bem-estar</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="escuta.html">Portal de Escuta</a></li>
+                    <li><a href="quiz.html">Quiz Interativo</a></li>
+                    <li><a href="referencias.html">Referências</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Portal de Apoio ao Estudante. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/escuta.js"></script>
+</body>
+</html>
+```\n
+## 📄 Arquivo: quiz.html
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Interativo - Portal de Apoio ao Estudante</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Botão para aumentar fonte -->
+    <div class="accessibility-controls">
+        <button id="increaseFontBtn" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+            <i class="fas fa-plus"></i> A+
+        </button>
+        <button id="decreaseFontBtn" aria-label="Diminuir tamanho da fonte" title="Diminuir fonte">
+            <i class="fas fa-minus"></i> A-
+        </button>
+        <button id="toggleDarkMode" aria-label="Alternar modo escuro" title="Modo escuro">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="toggleContrast" aria-label="Alto contraste" title="Alto contraste">
+            <i class="fas fa-adjust"></i>
+        </button>
+    </div>
+
+    <!-- Botão voltar ao topo -->
+    <button id="backToTopBtn" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <span>Portal de Apoio</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="escuta.html">Portal de Escuta</a></li>
+                <li><a href="quiz.html" class="active">Quiz Interativo</a></li>
+                <li><a href="referencias.html">Referências</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Seção Hero do Quiz -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Quiz Interativo</h1>
+            <p>Teste seus conhecimentos sobre temas importantes</p>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Introdução do Quiz -->
+            <section id="quizIntro" class="quiz-intro">
+                <h2>Bem-vindo ao Quiz!</h2>
+                <p>
+                    Este quiz foi desenvolvido para ajudar você a refletir sobre temas importantes 
+                    relacionados à saúde emocional, respeito, empatia e segurança digital.
+                </p>
+                <p>
+                    O quiz contém 5 perguntas com múltiplas respostas. Ao final, você verá quantas 
+                    respostas acertou e receberá orientações sobre cada tema.
+                </p>
+                <button id="startQuizBtn" class="btn btn-primary">
+                    <i class="fas fa-play"></i> Começar Quiz
+                </button>
+            </section>
+
+            <!-- Container do Quiz -->
+            <section id="quizContainer" class="quiz-container" style="display: none;">
+                <!-- Barra de Progresso -->
+                <div class="quiz-progress">
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <p id="progressText">Pergunta 1 de 5</p>
+                </div>
+
+                <!-- Perguntas -->
+                <div id="quizQuestions" class="quiz-questions">
+                    <!-- As perguntas serão inseridas aqui via JavaScript -->
+                </div>
+
+                <!-- Botões de Navegação -->
+                <div class="quiz-buttons">
+                    <button id="prevBtn" class="btn btn-secondary" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Anterior
+                    </button>
+                    <button id="nextBtn" class="btn btn-primary">
+                        Próxima <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button id="submitBtn" class="btn btn-success" style="display: none;">
+                        <i class="fas fa-check"></i> Enviar Respostas
+                    </button>
+                </div>
+            </section>
+
+            <!-- Resultados -->
+            <section id="quizResults" class="quiz-results" style="display: none;">
+                <div class="results-content">
+                    <h2>Seus Resultados</h2>
+                    
+                    <div class="score-display">
+                        <div class="score-circle">
+                            <span id="scorePercentage">0%</span>
+                        </div>
+                        <p id="scoreMessage"></p>
+                    </div>
+
+                    <div class="results-details">
+                        <p>Você acertou <strong id="correctAnswers">0</strong> de <strong>5</strong> perguntas.</p>
+                    </div>
+
+                    <!-- Feedback por Pergunta -->
+                    <div id="feedbackContainer" class="feedback-container">
+                        <!-- O feedback será inserido aqui via JavaScript -->
+                    </div>
+
+                    <!-- Botões de Ação -->
+                    <div class="results-buttons">
+                        <button id="retakeQuizBtn" class="btn btn-primary">
+                            <i class="fas fa-redo"></i> Fazer Quiz Novamente
+                        </button>
+                        <a href="index.html" class="btn btn-secondary">
+                            <i class="fas fa-home"></i> Voltar ao Início
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Portal de Apoio ao Estudante</h4>
+                <p>Um espaço seguro para sua saúde emocional e bem-estar</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="escuta.html">Portal de Escuta</a></li>
+                    <li><a href="quiz.html">Quiz Interativo</a></li>
+                    <li><a href="referencias.html">Referências</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Portal de Apoio ao Estudante. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/quiz.js"></script>
+</body>
+</html>
+```\n
+## 📄 Arquivo: referencias.html
+```html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Referências - Portal de Apoio ao Estudante</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Botão para aumentar fonte -->
+    <div class="accessibility-controls">
+        <button id="increaseFontBtn" aria-label="Aumentar tamanho da fonte" title="Aumentar fonte">
+            <i class="fas fa-plus"></i> A+
+        </button>
+        <button id="decreaseFontBtn" aria-label="Diminuir tamanho da fonte" title="Diminuir fonte">
+            <i class="fas fa-minus"></i> A-
+        </button>
+        <button id="toggleDarkMode" aria-label="Alternar modo escuro" title="Modo escuro">
+            <i class="fas fa-moon"></i>
+        </button>
+        <button id="toggleContrast" aria-label="Alto contraste" title="Alto contraste">
+            <i class="fas fa-adjust"></i>
+        </button>
+    </div>
+
+    <!-- Botão voltar ao topo -->
+    <button id="backToTopBtn" aria-label="Voltar ao topo" title="Voltar ao topo">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Navegação -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-heart"></i>
+                <span>Portal de Apoio</span>
+            </div>
+            <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Início</a></li>
+                <li><a href="escuta.html">Portal de Escuta</a></li>
+                <li><a href="quiz.html">Quiz Interativo</a></li>
+                <li><a href="referencias.html" class="active">Referências</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Seção Hero -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Referências</h1>
+            <p>Fontes confiáveis utilizadas neste portal</p>
+        </div>
+    </section>
+
+    <!-- Conteúdo Principal -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Introdução -->
+            <section class="intro-section">
+                <h2>Sobre as Referências</h2>
+                <p>
+                    Este portal foi desenvolvido com base em informações de fontes confiáveis e reconhecidas 
+                    internacionalmente. Todas as referências abaixo são de organizações governamentais, instituições 
+                    de ensino, organizações de saúde e pesquisas científicas.
+                </p>
+                <p>
+                    Você é encorajado a explorar essas fontes para aprofundar seu conhecimento sobre saúde emocional, 
+                    bullying, respeito e empatia.
+                </p>
+            </section>
+
+            <!-- Referências por Categoria -->
+            <section class="references-section">
+                <h2>Referências Utilizadas</h2>
+
+                <!-- Saúde Mental e Emocional -->
+                <div class="reference-category">
+                    <h3><i class="fas fa-brain"></i> Saúde Mental e Emocional</h3>
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <div class="reference-number">1</div>
+                            <div class="reference-content">
+                                <h4>Saúde Mental dos Adolescentes</h4>
+                                <p class="reference-org">Organização Pan-Americana da Saúde (OPAS/OMS )</p>
+                                <p class="reference-description">
+                                    Informações sobre saúde mental de adolescentes, fatores de risco e proteção, 
+                                    e a importância da promoção do bem-estar psicológico.
+                                </p>
+                                <a href="https://www.paho.org/pt/topicos/saude-mental-dos-adolescentes" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="reference-item">
+                            <div class="reference-number">2</div>
+                            <div class="reference-content">
+                                <h4>Pesquisa Nacional de Saúde do Escolar (PeNSe ) 2024</h4>
+                                <p class="reference-org">Instituto Brasileiro de Geografia e Estatística (IBGE)</p>
+                                <p class="reference-description">
+                                    Dados sobre saúde mental de adolescentes brasileiros, incluindo prevalência de 
+                                    tristeza, ansiedade, bullying e outros indicadores de bem-estar emocional.
+                                </p>
+                                <a href="https://agenciabrasil.ebc.com.br/saude/noticia/2026-03/ibge-alerta-para-quadro-preocupante-na-saude-mental-de-adolescentes" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="reference-item">
+                            <div class="reference-number">3</div>
+                            <div class="reference-content">
+                                <h4>Centro de Valorização da Vida (CVV )</h4>
+                                <p class="reference-org">Organização Não Governamental Brasileira</p>
+                                <p class="reference-description">
+                                    Serviço de apoio emocional e prevenção do suicídio, oferecendo atendimento 
+                                    voluntário e gratuito 24 horas por telefone (188), chat e e-mail.
+                                </p>
+                                <a href="https://www.cvv.org.br/" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bullying e Convivência Escolar -->
+                <div class="reference-category">
+                    <h3><i class="fas fa-hand-fist"></i> Bullying e Convivência Escolar</h3>
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <div class="reference-number">4</div>
+                            <div class="reference-content">
+                                <h4>Bullying e Convivência Escolar: Entendendo o Fenômeno</h4>
+                                <p class="reference-org">Ministério da Educação (MEC ) - Brasil</p>
+                                <p class="reference-description">
+                                    Publicação oficial do MEC que define bullying, cyberbullying, apresenta a estrutura 
+                                    normativa brasileira e orientações para prevenção e intervenção em situações de bullying.
+                                </p>
+                                <a href="https://www.gov.br/mec/pt-br/escola-que-protege" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="reference-item">
+                            <div class="reference-number">5</div>
+                            <div class="reference-content">
+                                <h4>Lei Federal nº 13.185/2015</h4>
+                                <p class="reference-org">Governo Federal - Brasil</p>
+                                <p class="reference-description">
+                                    Lei que institui o Programa de Combate à Intimidação Sistemática (Bullying ) 
+                                    e estabelece diretrizes para as escolas.
+                                </p>
+                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2015/lei/l13185.htm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="reference-item">
+                            <div class="reference-number">6</div>
+                            <div class="reference-content">
+                                <h4>Prevenção do Bullying Escolar</h4>
+                                <p class="reference-org">Secretaria de Educação - Prefeitura de Petrópolis</p>
+                                <p class="reference-description">
+                                    Guia de orientação para o combate ao bullying nas escolas, com orientações 
+                                    práticas para educadores, pais e alunos.
+                                </p>
+                                <a href="https://www.petropolis.rj.gov.br/pmp/" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empatia e Respeito -->
+                <div class="reference-category">
+                    <h3><i class="fas fa-handshake"></i> Empatia e Respeito</h3>
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <div class="reference-number">7</div>
+                            <div class="reference-content">
+                                <h4>Empatia na Educação: Construindo Ambientes Seguros</h4>
+                                <p class="reference-org">Pesquisas em Educação e Desenvolvimento</p>
+                                <p class="reference-description">
+                                    Estudos sobre a importância da empatia e do respeito na construção de ambientes 
+                                    escolares seguros, colaborativos e inclusivos.
+                                </p>
+                                <a href="#" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Segurança Digital -->
+                <div class="reference-category">
+                    <h3><i class="fas fa-shield-alt"></i> Segurança Digital e Ciberbullying</h3>
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <div class="reference-number">8</div>
+                            <div class="reference-content">
+                                <h4>Segurança na Internet para Adolescentes</h4>
+                                <p class="reference-org">Ministério da Educação e Cultura</p>
+                                <p class="reference-description">
+                                    Orientações sobre segurança digital, privacidade na internet, proteção de dados 
+                                    pessoais e prevenção de ciberbullying.
+                                </p>
+                                <a href="https://www.gov.br/mec/pt-br" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Legislação e Políticas Públicas -->
+                <div class="reference-category">
+                    <h3><i class="fas fa-gavel"></i> Legislação e Políticas Públicas</h3>
+                    <div class="reference-list">
+                        <div class="reference-item">
+                            <div class="reference-number">9</div>
+                            <div class="reference-content">
+                                <h4>Lei Federal nº 13.277/2016</h4>
+                                <p class="reference-org">Governo Federal - Brasil</p>
+                                <p class="reference-description">
+                                    Lei que altera a Lei de Diretrizes e Bases da Educação Nacional para incluir 
+                                    a educação em direitos humanos.
+                                </p>
+                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2015-2018/2016/lei/l13277.htm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="reference-item">
+                            <div class="reference-number">10</div>
+                            <div class="reference-content">
+                                <h4>Lei Federal nº 14.811/2024</h4>
+                                <p class="reference-org">Governo Federal - Brasil</p>
+                                <p class="reference-description">
+                                    Lei que altera a Lei de Combate ao Bullying e amplia as medidas de proteção 
+                                    e prevenção nas escolas.
+                                </p>
+                                <a href="https://www.planalto.gov.br/ccivil_03/_ato2023-2026/2024/lei/l14811.htm" target="_blank" rel="noopener noreferrer">
+                                    <i class="fas fa-external-link-alt"></i> Acessar
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Nota sobre Confiabilidade -->
+            <section class="credibility-section">
+                <h2>Por que essas fontes são confiáveis?</h2>
+                <div class="credibility-cards">
+                    <div class="credibility-card">
+                        <i class="fas fa-globe"></i>
+                        <h4>Organizações Internacionais</h4>
+                        <p>
+                            OPAS/OMS são agências especializadas das Nações Unidas reconhecidas mundialmente 
+                            por sua expertise em saúde pública.
+                        </p>
+                    </div>
+                    <div class="credibility-card">
+                        <i class="fas fa-university"></i>
+                        <h4>Instituições Governamentais</h4>
+                        <p>
+                            O IBGE, MEC e outras agências federais produzem dados e políticas baseados em 
+                            pesquisa rigorosa e evidências científicas.
+                        </p>
+                    </div>
+                    <div class="credibility-card">
+                        <i class="fas fa-book"></i>
+                        <h4>Pesquisa Científica</h4>
+                        <p>
+                            As informações apresentadas são baseadas em estudos revisados por pares e 
+                            publicações acadêmicas reconhecidas.
+                        </p>
+                    </div>
+                    <div class="credibility-card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Atualização Contínua</h4>
+                        <p>
+                            Essas organizações mantêm seus dados e orientações constantemente atualizados 
+                            com as descobertas mais recentes.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Rodapé -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Portal de Apoio ao Estudante</h4>
+                <p>Um espaço seguro para sua saúde emocional e bem-estar</p>
+            </div>
+            <div class="footer-section">
+                <h4>Navegação</h4>
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="escuta.html">Portal de Escuta</a></li>
+                    <li><a href="quiz.html">Quiz Interativo</a></li>
+                    <li><a href="referencias.html">Referências</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Recursos</h4>
+                <ul>
+                    <li><a href="#">Política de Privacidade</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Portal de Apoio ao Estudante. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>
+```\n
+## 📄 Arquivo: css/styles.css
+```css
+/* ===================================
+   VARIÁVEIS E CONFIGURAÇÕES GLOBAIS
+   =================================== */
+
+:root {
+    --primary-color: #6366f1;
+    --primary-dark: #4f46e5;
+    --secondary-color: #ec4899;
+    --success-color: #10b981;
+    --warning-color: #f59e0b;
+    --danger-color: #ef4444;
+    --light-bg: #f9fafb;
+    --white: #ffffff;
+    --text-dark: #1f2937;
+    --text-light: #6b7280;
+    --border-color: #e5e7eb;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1 );
+    --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+
+/* Modo Escuro */
+body.dark-mode {
+    --light-bg: #1f2937;
+    --white: #111827;
+    --text-dark: #f9fafb;
+    --text-light: #d1d5db;
+    --border-color: #374151;
+}
+
+/* Alto Contraste */
+body.high-contrast {
+    --primary-color: #000000;
+    --primary-dark: #000000;
+    --secondary-color: #ffff00;
+    --text-dark: #000000;
+    --text-light: #000000;
+    --light-bg: #ffffff;
+    --white: #ffffff;
+    --border-color: #000000;
+}
+
+/* ===================================
+   RESET E ESTILOS BASE
+   =================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    font-size: 16px;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--light-bg);
+    color: var(--text-dark);
+    line-height: 1.6;
+    transition: var(--transition);
+}
+
+body.font-large {
+    font-size: 18px;
+}
+
+body.font-larger {
+    font-size: 20px;
+}
+
+/* ===================================
+   CONTROLES DE ACESSIBILIDADE
+   =================================== */
+
+.accessibility-controls {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    display: flex;
+    gap: 10px;
+    z-index: 1000;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+.accessibility-controls button {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    border: 2px solid var(--primary-color);
+    background-color: var(--white);
+    color: var(--primary-color);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow);
+}
+
+.accessibility-controls button:hover {
+    background-color: var(--primary-color);
+    color: var(--white);
+    transform: scale(1.1);
+}
+
+/* ===================================
+   BOTÃO VOLTAR AO TOPO
+   =================================== */
+
+#backToTopBtn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-lg);
+    transition: var(--transition);
+    z-index: 999;
+}
+
+#backToTopBtn:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-5px);
+}
+
+#backToTopBtn.show {
+    display: flex;
+}
+
+/* ===================================
+   NAVEGAÇÃO
+   =================================== */
+
+.navbar {
+    background-color: var(--white);
+    box-shadow: var(--shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: var(--transition);
+}
+
+.nav-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+.logo i {
+    font-size: 1.8rem;
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    transition: var(--transition);
+    position: relative;
+}
+
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: var(--primary-color);
+}
+
+.nav-menu a.active::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary-color);
+    border-radius: 2px;
+}
+
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    background: none;
+    border: none;
+    cursor: pointer;
+    gap: 5px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: var(--text-dark);
+    border-radius: 2px;
+    transition: var(--transition);
+}
+
+/* ===================================
+   SEÇÃO HERO
+   =================================== */
+
+.hero {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    gap: 3rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 4rem 2rem;
+    min-height: 600px;
+}
+
+.hero-content h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    color: var(--primary-color);
+    line-height: 1.2;
+    animation: slideInLeft 0.8s ease;
+}
+
+.hero-content .subtitle {
+    font-size: 1.3rem;
+    color: var(--secondary-color);
+    margin-bottom: 1.5rem;
+    animation: slideInLeft 0.8s ease 0.1s both;
+}
+
+.welcome-message {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 2rem;
+    line-height: 1.8;
+    animation: slideInLeft 0.8s ease 0.2s both;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 1rem;
+    animation: slideInLeft 0.8s ease 0.3s both;
+}
+
+.hero-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: slideInRight 0.8s ease;
+}
+
+.hero-illustration {
+    width: 300px;
+    height: 300px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 120px;
+    color: var(--white);
+}
+
+/* ===================================
+   PÁGINA HERO
+   =================================== */
+
+.page-hero {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 4rem 2rem;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-hero-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.page-hero-content p {
+    font-size: 1.2rem;
+    opacity: 0.9;
+}
+
+/* ===================================
+   BOTÕES
+   =================================== */
+
+.btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: var(--white);
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-secondary:hover {
+    background-color: #be185d;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+.btn-success {
+    background-color: var(--success-color);
+    color: var(--white);
+}
+
+.btn-success:hover {
+    background-color: #059669;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+}
+
+/* ===================================
+   CARROSSEL
+   =================================== */
+
+.carousel-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.carousel-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+    color: var(--primary-color);
+}
+
+.carousel {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.carousel-item {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.carousel-item:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel-icon {
+    font-size: 3rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.carousel-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.carousel-item p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ===================================
+   SEÇÃO DE INFORMAÇÕES
+   =================================== */
+
+.info-section {
+    max-width: 1200px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+}
+
+.info-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.info-card {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+    border-left: 5px solid var(--primary-color);
+}
+
+.info-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateX(5px);
+}
+
+.info-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.info-card h3 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.info-card p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+}
+
+.info-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.info-list li {
+    padding: 0.5rem 0;
+    color: var(--text-light);
+}
+
+.info-list strong {
+    color: var(--text-dark);
+}
+
+.help-link {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.help-link:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* ===================================
+   SEÇÃO DE ESTATÍSTICAS
+   =================================== */
+
+.stats-section {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 4rem 2rem;
+    margin: 4rem 0;
+}
+
+.stats-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 3rem;
+}
+
+.stats-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    backdrop-filter: blur(10px);
+    transition: var(--transition);
+}
+
+.stat-card:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    transform: scale(1.05);
+}
+
+.stat-number {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.stat-card p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+}
+
+/* ===================================
+   SEÇÃO DE CONTEÚDO PRINCIPAL
+   =================================== */
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+.container {
+    background-color: var(--white);
+    border-radius: 12px;
+    padding: 3rem;
+}
+
+.intro-section {
+    margin-bottom: 3rem;
+}
+
+.intro-section h2 {
+    font-size: 2rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+}
+
+.intro-section p {
+    color: var(--text-light);
+    line-height: 1.8;
+    margin-bottom: 1rem;
+    font-size: 1.05rem;
+}
+
+/* ===================================
+   FORMULÁRIO DE DESABAFO
+   =================================== */
+
+.form-section {
+    margin: 3rem 0;
+}
+
+.form-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+}
+
+.desabo-form {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: var(--transition);
+    background-color: var(--white);
+    color: var(--text-dark);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 150px;
+}
+
+/* ===================================
+   MENSAGEM DE ACOLHIMENTO
+   =================================== */
+
+.welcome-message-box {
+    background: linear-gradient(135deg, var(--success-color), #34d399);
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-top: 2rem;
+    animation: slideUp 0.5s ease;
+}
+
+.message-content {
+    text-align: center;
+}
+
+.message-content i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    display: block;
+}
+
+.message-content h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.message-text {
+    font-size: 1.05rem;
+    line-height: 1.8;
+}
+
+/* ===================================
+   SEÇÃO DE FRASES MOTIVACIONAIS
+   =================================== */
+
+.motivational-section {
+    margin: 3rem 0;
+}
+
+.motivational-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.quotes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.quote-card {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+.quote-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.quote-text {
+    font-size: 1.1rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.quote-author {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* ===================================
+   SEÇÃO DE AJUDA
+   =================================== */
+
+.help-section {
+    margin: 3rem 0;
+}
+
+.help-section h2 {
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+
+.help-card {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    transition: var(--transition);
+    border-top: 4px solid var(--primary-color);
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-lg);
+}
+
+.help-icon {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.help-card h3 {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+}
+
+.help-card p {
+    color: var(--text-light);
+    line-height: 1.8;
+}
+
+/* ===================================
+   SEÇÃO DE ALERTA
+   =================================== */
+
+.alert-section {
+    background-color: #fef3c7;
+    border-left: 5px solid var(--warning-color);
+    padding: 2rem;
+    border-radius: 8px;
+    margin: 3rem 0;
+}
+
+.alert-section h2 {
+    color: var(--text-dark);
+    margin-bottom: 1.5rem;
+}
+
+.alert-content p {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.alert-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+}
+
+.alert-list li {
+    padding: 0.5rem 0 0.5rem 2rem;
+    color: var(--text-dark);
+    position: relative;
+}
+
+.alert-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: var(--danger-color);
+    font-weight: bold;
+}
+
+.alert-highlight {
+    background-color: rgba(239, 68, 68, 0.1);
+    padding: 1rem;
+    border-radius: 8px;
+    color: var(--text-dark);
+}
+
+/* ===================================
+   QUIZ
+   =================================== */
+
+.quiz-intro {
+    text-align: center;
+    padding: 2rem;
+    background-color: var(--light-bg);
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.quiz-intro h2 {
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+    font-size: 1.8rem;
+}
+
+.quiz-intro p {
+    color: var(--text-light);
+    margin-bottom: 1rem;
+    line-height: 1.8;
+}
+
+.quiz-container {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.quiz-progress {
+    margin-bottom: 2rem;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: var(--border-color);
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 0.5rem;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: width 0.3s ease;
+}
+
+#progressText {
+    text-align: center;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.quiz-questions {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+    margin-bottom: 2rem;
+}
+
+.question-item {
+    margin-bottom: 2rem;
+}
+
+.question-item h3 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.question-options {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.option {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: var(--transition);
+    background-color: var(--white);
+}
+
+.option:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(99, 102, 241, 0.05);
+}
+
+.option input[type="radio"] {
+    margin-right: 1rem;
+    cursor: pointer;
+    width: 20px;
+    height: 20px;
+}
+
+.option input[type="radio"]:checked + label {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.option label {
+    cursor: pointer;
+    flex: 1;
+    color: var(--text-dark);
+}
+
+.quiz-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* ===================================
+   RESULTADOS DO QUIZ
+   =================================== */
+
+.quiz-results {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.results-content {
+    background-color: var(--white);
+    padding: 2rem;
+    border-radius: 12px;
+}
+
+.results-content h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    font-size: 2rem;
+}
+
+.score-display {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.score-circle {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1rem;
+    box-shadow: var(--shadow-lg);
+}
+
+.score-circle span {
+    font-size: 3rem;
+    color: var(--white);
+    font-weight: bold;
+}
+
+#scoreMessage {
+    font-size: 1.3rem;
+    color: var(--text-dark);
+    font-weight: 600;
+}
+
+.results-details {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: var(--text-light);
+}
+
+.results-details p {
+    font-size: 1.1rem;
+}
+
+.feedback-container {
+    margin: 2rem 0;
+}
+
+.feedback-item {
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    border-left: 4px solid var(--border-color);
+}
+
+.feedback-item.correct {
+    border-left-color: var(--success-color);
+    background-color: rgba(16, 185, 129, 0.05);
+}
+
+.feedback-item.incorrect {
+    border-left-color: var(--danger-color);
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.feedback-question {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.feedback-answer {
+    color: var(--text-light);
+    font-size: 0.95rem;
+}
+
+.results-buttons {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2rem;
+}
+
+/* ===================================
+   REFERÊNCIAS
+   =================================== */
+
+.reference-category {
+    margin: 3rem 0;
+}
+
+.reference-category h3 {
+    font-size: 1.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.reference-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.reference-item {
+    display: flex;
+    gap: 1.5rem;
+    background-color: var(--light-bg);
+    padding: 1.5rem;
+    border-radius: 8px;
+    transition: var(--transition);
+}
+
+.reference-item:hover {
+    box-shadow: var(--shadow);
+    transform: translateX(5px);
+}
+
+.reference-number {
+    min-width: 40px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    flex-shrink: 0;
+}
+
+.reference-content h4 {
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.reference-org {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.reference-description {
+    color: var(--text-light);
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+}
+
+.reference-content a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.reference-content a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+.credibility-section {
+    margin-top: 3rem;
+    padding-top: 3rem;
+    border-top: 2px solid var(--border-color);
+}
+
+.credibility-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 2rem;
+    text-align: center;
+    font-size: 1.8rem;
+}
+
+.credibility-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.credibility-card {
+    background-color: var(--light-bg);
+    padding: 2rem;
+    border-radius: 12px;
+    text-align: center;
+    transition: var(--transition);
+}
+
+.credibility-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+}
+
+.credibility-card i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 1rem;
+}
+
+.credibility-card h4 {
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.credibility-card p {
+    color: var(--text-light);
+    line-height: 1.6;
+}
+
+/* ===================================
+   RODAPÉ
+   =================================== */
+
+.footer {
+    background-color: var(--text-dark);
+    color: var(--white);
+    margin-top: 4rem;
+    padding: 3rem 2rem 1rem;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.footer-section h4 {
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+}
+
+.footer-section p {
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+}
+
+.footer-section ul {
+    list-style: none;
+}
+
+.footer-section ul li {
+    margin-bottom: 0.5rem;
+}
+
+.footer-section a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-section a:hover {
+    color: var(--white);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* ===================================
+   ANIMAÇÕES
+   =================================== */
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideInRight {
+    from {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================
+   RESPONSIVIDADE
+   =================================== */
+
+@media (max-width: 768px) {
+    .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        flex-direction: column;
+        background-color: var(--white);
+        padding: 1rem;
+        gap: 1rem;
+        box-shadow: var(--shadow);
+    }
+
+    .nav-menu.active {
+        display: flex;
+    }
+
+    .menu-toggle {
+        display: flex;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        padding: 2rem;
+        min-height: auto;
+    }
+
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-illustration {
+        width: 200px;
+        height: 200px;
+        font-size: 80px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .carousel {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .container {
+        padding: 1.5rem;
+    }
+
+    .accessibility-controls {
+        top: 80px;
+        right: 10px;
+    }
+
+    #backToTopBtn {
+        bottom: 20px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .page-hero-content h1 {
+        font-size: 1.8rem;
+    }
+
+    .help-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .quote-card {
+        min-height: 150px;
+    }
+
+    .reference-item {
+        flex-direction: column;
+    }
+
+    .reference-number {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    html {
+        font-size: 14px;
+    }
+
+    .hero-content h1 {
+        font-size: 1.5rem;
+    }
+
+    .hero-content .subtitle {
+        font-size: 1rem;
+    }
+
+    .carousel-section h2,
+    .stats-section h2 {
+        font-size: 1.5rem;
+    }
+
+    .stats-container {
+        grid-template-columns: 1fr;
+    }
+
+    .accessibility-controls {
+        gap: 5px;
+    }
+
+    .accessibility-controls button {
+        width: 40px;
+        height: 40px;
+        font-size: 12px;
+    }
+
+    .quiz-buttons {
+        flex-direction: column;
+    }
+
+    .quiz-buttons button {
+        width: 100%;
+    }
+
+    .results-buttons {
+        flex-direction: column;
+    }
+
+    .results-buttons a,
+    .results-buttons button {
+        width: 100%;
+    }
+}
+```\n
+## 📄 Arquivo: js/main.js
+```js
+// ===================================
+// FUNCIONALIDADES GERAIS DO PORTAL
+// ===================================
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    initializeAccessibility();
+    initializeNavigation();
+    initializeBackToTop();
+    loadSavedPreferences();
+});
+
+// ===================================
+// ACESSIBILIDADE
+// ===================================
+
+function initializeAccessibility() {
+    const increaseFontBtn = document.getElementById('increaseFontBtn');
+    const decreaseFontBtn = document.getElementById('decreaseFontBtn');
+    const toggleDarkModeBtn = document.getElementById('toggleDarkMode');
+    const toggleContrastBtn = document.getElementById('toggleContrast');
+
+    if (increaseFontBtn) {
+        increaseFontBtn.addEventListener('click', increaseFontSize);
+    }
+
+    if (decreaseFontBtn) {
+        decreaseFontBtn.addEventListener('click', decreaseFontSize);
+    }
+
+    if (toggleDarkModeBtn) {
+        toggleDarkModeBtn.addEventListener('click', toggleDarkMode);
+    }
+
+    if (toggleContrastBtn) {
+        toggleContrastBtn.addEventListener('click', toggleContrast);
+    }
+}
+
+function increaseFontSize() {
+    const body = document.body;
+    
+    if (body.classList.contains('font-larger')) {
+        return; // Máximo atingido
+    }
+    
+    if (body.classList.contains('font-large')) {
+        body.classList.remove('font-large');
+        body.classList.add('font-larger');
+        localStorage.setItem('fontSize', 'larger');
+    } else {
+        body.classList.add('font-large');
+        localStorage.setItem('fontSize', 'large');
+    }
+}
+
+function decreaseFontSize() {
+    const body = document.body;
+    
+    if (body.classList.contains('font-larger')) {
+        body.classList.remove('font-larger');
+        body.classList.add('font-large');
+        localStorage.setItem('fontSize', 'large');
+    } else if (body.classList.contains('font-large')) {
+        body.classList.remove('font-large');
+        localStorage.setItem('fontSize', 'normal');
+    }
+}
+
+function toggleDarkMode() {
+    const body = document.body;
+    body.classList.toggle('dark-mode');
+    
+    const isDarkMode = body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    
+    // Atualizar ícone do botão
+    const btn = document.getElementById('toggleDarkMode');
+    if (btn) {
+        btn.innerHTML = isDarkMode ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        btn.title = isDarkMode ? 'Modo claro' : 'Modo escuro';
+    }
+}
+
+function toggleContrast() {
+    const body = document.body;
+    body.classList.toggle('high-contrast');
+    
+    const isHighContrast = body.classList.contains('high-contrast');
+    localStorage.setItem('highContrast', isHighContrast);
+}
+
+function loadSavedPreferences() {
+    // Carregar tamanho da fonte
+    const fontSize = localStorage.getItem('fontSize');
+    if (fontSize === 'large') {
+        document.body.classList.add('font-large');
+    } else if (fontSize === 'larger') {
+        document.body.classList.add('font-large', 'font-larger');
+    }
+
+    // Carregar modo escuro
+    const darkMode = localStorage.getItem('darkMode');
+    if (darkMode === 'true') {
+        document.body.classList.add('dark-mode');
+        const btn = document.getElementById('toggleDarkMode');
+        if (btn) {
+            btn.innerHTML = '<i class="fas fa-sun"></i>';
+            btn.title = 'Modo claro';
+        }
+    }
+
+    // Carregar alto contraste
+    const highContrast = localStorage.getItem('highContrast');
+    if (highContrast === 'true') {
+        document.body.classList.add('high-contrast');
+    }
+}
+
+// ===================================
+// NAVEGAÇÃO
+// ===================================
+
+function initializeNavigation() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+
+    if (menuToggle) {
+        menuToggle.addEventListener('click', function() {
+            navMenu.classList.toggle('active');
+        });
+    }
+
+    // Fechar menu ao clicar em um link
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            navMenu.classList.remove('active');
+        });
+    });
+
+    // Atualizar link ativo baseado na página atual
+    updateActiveNavLink();
+}
+
+function updateActiveNavLink() {
+    const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+    const navLinks = document.querySelectorAll('.nav-menu a');
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+}
+
+// ===================================
+// BOTÃO VOLTAR AO TOPO
+// ===================================
+
+function initializeBackToTop() {
+    const backToTopBtn = document.getElementById('backToTopBtn');
+
+    if (backToTopBtn) {
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                backToTopBtn.classList.add('show');
+            } else {
+                backToTopBtn.classList.remove('show');
+            }
+        });
+
+        backToTopBtn.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    }
+}
+
+// ===================================
+// UTILITÁRIOS
+// ===================================
+
+// Função para mostrar notificações
+function showNotification(message, type = 'success') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+        notification.remove();
+    }, 3000);
+}
+
+// Função para validar email
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Função para formatar data
+function formatDate(date) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(date).toLocaleDateString('pt-BR', options);
+}
+
+// ===================================
+// EFEITOS VISUAIS
+// ===================================
+
+// Adicionar efeito de fade-in aos elementos
+document.addEventListener('DOMContentLoaded', function() {
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver(function(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+
+    // Observar elementos com classe fade-in
+    const fadeElements = document.querySelectorAll('.carousel-item, .info-card, .help-card');
+    fadeElements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+});
+
+// ===================================
+// CONSOLE LOG PARA DEBUG
+// ===================================
+
+console.log('Portal de Apoio ao Estudante - Carregado com sucesso!');
+console.log('Versão: 1.0.0');
+console.log('Recursos disponíveis: Acessibilidade, Navegação, Modo Escuro, Alto Contraste');
+```\n
+## 📄 Arquivo: js/escuta.js
+```js
+// ===================================
+// FUNCIONALIDADES DO PORTAL DE ESCUTA
+// ===================================
+
+document.addEventListener('DOMContentLoaded', function() {
+    initializeDesaboForm();
+});
+
+// ===================================
+// FORMULÁRIO DE DESABAFO
+// ===================================
+
+function initializeDesaboForm() {
+    const form = document.getElementById('desaboForm');
+    
+    if (form) {
+        form.addEventListener('submit', handleDesaboSubmit);
+    }
+}
+
+function handleDesaboSubmit(event) {
+    event.preventDefault();
+    
+    // Obter valores do formulário
+    const nome = document.getElementById('nome').value.trim();
+    const tema = document.getElementById('tema').value;
+    const mensagem = document.getElementById('mensagem').value.trim();
+    
+    // Validar campos
+    if (!nome || !tema || !mensagem) {
+        showDesaboNotification('Por favor, preencha todos os campos.', 'error');
+        return;
+    }
+    
+    if (mensagem.length < 10) {
+        showDesaboNotification('Por favor, escreva mais sobre seus sentimentos.', 'error');
+        return;
+    }
+    
+    // Simular envio (sem armazenar dados)
+    processDesaboSubmit(nome, tema, mensagem);
+}
+
+function processDesaboSubmit(nome, tema, mensagem) {
+    // Obter tema em português
+    const temaMap = {
+        'bullying': 'Bullying',
+        'ansiedade': 'Ansiedade',
+        'tristeza': 'Tristeza',
+        'relacionamento': 'Relacionamentos',
+        'autoestima': 'Autoestima',
+        'pressao': 'Pressão Acadêmica',
+        'familia': 'Problemas Familiares',
+        'outro': 'Outro'
+    };
+    
+    const temaNome = temaMap[tema] || tema;
+    
+    // Gerar mensagem personalizada de acolhimento
+    const mensagemAcolhimento = gerarMensagemAcolhimento(nome, temaNome);
+    
+    // Mostrar mensagem de acolhimento
+    const welcomeBox = document.getElementById('welcomeMessage');
+    const personalMessage = document.getElementById('personalMessage');
+    
+    if (welcomeBox && personalMessage) {
+        personalMessage.textContent = mensagemAcolhimento;
+        welcomeBox.style.display = 'block';
+        
+        // Scroll para a mensagem
+        welcomeBox.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Limpar formulário
+    document.getElementById('desaboForm').reset();
+    
+    // Registrar no console (apenas para demonstração)
+    console.log('Desabafo recebido (simulado):');
+    console.log('Nome:', nome);
+    console.log('Tema:', temaNome);
+    console.log('Mensagem:', mensagem);
+    console.log('Data:', new Date().toLocaleString('pt-BR'));
+    console.log('Nota: Este é um formulário de simulação. Nenhuma informação foi armazenada.');
+}
+
+// ===================================
+// GERADOR DE MENSAGENS PERSONALIZADAS
+// ===================================
+
+function gerarMensagemAcolhimento(nome, tema) {
+    const mensagens = {
+        'Bullying': `${nome}, obrigado por compartilhar sobre essa situação difícil. Bullying é uma forma séria de violência que afeta muitas pessoas. Saiba que você não está sozinho(a) e que pedir ajuda é um sinal de força. Converse com um professor, pedagogo ou adulto de confiança sobre o que está acontecendo.`,
+        
+        'Ansiedade': `${nome}, é normal sentir ansiedade em certos momentos. Muitos adolescentes enfrentam esses sentimentos. O importante é reconhecer que você está buscando apoio. Tente técnicas de respiração, converse com alguém de confiança e lembre-se de que esses sentimentos são temporários.`,
+        
+        'Tristeza': `${nome}, sentir tristeza faz parte da vida, mas quando persiste, é importante buscar apoio. Você merece estar bem e feliz. Compartilhe seus sentimentos com alguém de confiança - um familiar, professor ou profissional de saúde mental.`,
+        
+        'Relacionamentos': `${nome}, relacionamentos podem ser complicados e gerar muitas emoções. O que você está sentindo é válido. Procure conversar com alguém que você confia sobre o que está acontecendo. Às vezes, uma perspectiva externa ajuda muito.`,
+        
+        'Autoestima': `${nome}, sua autoestima é importante e você merece se sentir bem consigo mesmo(a). Todos temos qualidades únicas e valiosas. Se está lutando com isso, converse com alguém de confiança ou procure um profissional que possa ajudá-lo(a).`,
+        
+        'Pressão Acadêmica': `${nome}, a pressão acadêmica é real e muitos estudantes a enfrentam. Lembre-se de que suas notas não definem seu valor como pessoa. Procure equilibrar estudos com descanso e atividades que você gosta. Peça ajuda se precisar.`,
+        
+        'Problemas Familiares': `${nome}, problemas familiares podem ser muito estressantes. Você não está sozinho(a) nessa situação. Procure conversar com um adulto de confiança, um professor ou um profissional que possa oferecer suporte e orientação.`,
+        
+        'Outro': `${nome}, obrigado por compartilhar o que está sentindo. Independentemente do tema, sua voz importa e você merece ser ouvido(a). Procure conversar com alguém de confiança sobre o que está passando.`
+    };
+    
+    return mensagens[tema] || mensagens['Outro'];
+}
+
+// ===================================
+// NOTIFICAÇÕES
+// ===================================
+
+function showDesaboNotification(message, type = 'success') {
+    // Criar elemento de notificação
+    const notification = document.createElement('div');
+    notification.className = `desabo-notification notification-${type}`;
+    notification.innerHTML = `
+        <div class="notification-content">
+            <i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i>
+            <span>${message}</span>
+        </div>
+    `;
+    
+    // Adicionar estilos
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: ${type === 'error' ? '#ef4444' : '#10b981'};
+        color: white;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 10000;
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        animation: slideDown 0.3s ease;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    // Remover após 3 segundos
+    setTimeout(() => {
+        notification.style.animation = 'slideUp 0.3s ease';
+        setTimeout(() => {
+            notification.remove();
+        }, 300);
+    }, 3000);
+}
+
+// ===================================
+// ANIMAÇÕES CSS PARA NOTIFICAÇÕES
+// ===================================
+
+// Adicionar estilos de animação se não existirem
+if (!document.querySelector('style[data-animations]')) {
+    const style = document.createElement('style');
+    style.setAttribute('data-animations', 'true');
+    style.textContent = `
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
+        }
+    `;
+    document.head.appendChild(style);
+}
+
+// ===================================
+// CONSOLE LOG
+// ===================================
+
+console.log('Portal de Escuta - Módulo carregado com sucesso!');
+console.log('Funcionalidades: Formulário de desabafo simulado, mensagens personalizadas de acolhimento');
+```\n
+## 📄 Arquivo: js/quiz.js
+```js
+// ===================================
+// FUNCIONALIDADES DO QUIZ INTERATIVO
+// ===================================
+
+// Dados do Quiz
+const quizData = [
+    {
+        id: 1,
+        question: "Isso é bullying? João constantemente faz piadas sobre a aparência de Maria na frente de outros colegas, e Maria se sente humilhada.",
+        options: [
+            { text: "Não, é apenas uma brincadeira", correct: false },
+            { text: "Sim, é bullying porque é repetitivo e causa humilhação", correct: true },
+            { text: "Talvez, depende da intenção de João", correct: false },
+            { text: "Não, porque não é violência física", correct: false }
+        ],
+        explanation: "Bullying não é apenas violência física. Quando comportamentos agressivos, repetitivos e intencionales causam humilhação e afetam a vítima emocionalmente, é considerado bullying. Isso pode ser verbal, social ou psicológico."
+    },
+    {
+        id: 2,
+        question: "Esta atitude demonstra respeito? Pedro discorda da opinião de sua amiga Sofia, mas a ouve com atenção, reconhece seus pontos válidos e expressa sua opinião de forma respeitosa.",
+        options: [
+            { text: "Não, porque discorda dela", correct: false },
+            { text: "Sim, porque demonstra empatia e respeito pela diferença de opinião", correct: true },
+            { text: "Não, porque deveria concordar com ela", correct: false },
+            { text: "Talvez, depende do assunto", correct: false }
+        ],
+        explanation: "Respeito significa ouvir o outro, reconhecer sua perspectiva e expressar discordância de forma educada. Não significa concordar com tudo, mas sim valorizar a dignidade e as opiniões da outra pessoa."
+    },
+    {
+        id: 3,
+        question: "Como você deveria agir se presenciar um colega sendo vítima de bullying?",
+        options: [
+            { text: "Fingir que não viu e sair do local", correct: false },
+            { text: "Apoiar a vítima, não participar do bullying e informar um adulto de confiança", correct: true },
+            { text: "Unir-se aos agressores para não ser alvo também", correct: false },
+            { text: "Confrontar os agressores sozinho", correct: false }
+        ],
+        explanation: "Quando você testemunha bullying, é importante não participar, apoiar a vítima e informar um adulto - professor, pedagogo ou direção. Sua atitude pode fazer uma grande diferença na vida de quem está sofrendo."
+    },
+    {
+        id: 4,
+        question: "Qual é a senha mais segura?",
+        options: [
+            { text: "123456", correct: false },
+            { text: "SuaNome2024", correct: false },
+            { text: "Tr0p1c@lM@r#2024", correct: true },
+            { text: "password", correct: false }
+        ],
+        explanation: "Uma senha segura deve ter: letras maiúsculas e minúsculas, números e caracteres especiais. Deve ter pelo menos 12 caracteres e não deve conter informações pessoais. Nunca compartilhe sua senha com ninguém."
+    },
+    {
+        id: 5,
+        question: "Você está se sentindo muito triste e desesperado há várias semanas. O que você deveria fazer?",
+        options: [
+            { text: "Manter para si mesmo e esperar passar", correct: false },
+            { text: "Conversar com alguém de confiança e procurar ajuda profissional se necessário", correct: true },
+            { text: "Culpar-se por estar se sentindo assim", correct: false },
+            { text: "Tentar resolver sozinho sem contar para ninguém", correct: false }
+        ],
+        explanation: "Sentimentos persistentes de tristeza e desespero são sinais de que você precisa de ajuda. Converse com um familiar, professor, pedagogo ou procure um profissional de saúde mental. Pedir ajuda é um sinal de força, não de fraqueza."
+    }
+];
+
+// Variáveis de estado
+let currentQuestion = 0;
+let userAnswers = [];
+let quizStarted = false;
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    initializeQuiz();
+});
+
+function initializeQuiz() {
+    const startBtn = document.getElementById('startQuizBtn');
+    const retakeBtn = document.getElementById('retakeQuizBtn');
+    
+    if (startBtn) {
+        startBtn.addEventListener('click', startQuiz);
+    }
+    
+    if (retakeBtn) {
+        retakeBtn.addEventListener('click', retakeQuiz);
+    }
+}
+
+// ===================================
+// FUNÇÕES PRINCIPAIS DO QUIZ
+// ===================================
+
+function startQuiz() {
+    quizStarted = true;
+    currentQuestion = 0;
+    userAnswers = new Array(quizData.length).fill(null);
+    
+    // Esconder introdução
+    document.getElementById('quizIntro').style.display = 'none';
+    
+    // Mostrar quiz
+    document.getElementById('quizContainer').style.display = 'block';
+    
+    // Carregar primeira pergunta
+    loadQuestion();
+}
+
+function loadQuestion() {
+    const question = quizData[currentQuestion];
+    const container = document.getElementById('quizQuestions');
+    
+    // Atualizar barra de progresso
+    updateProgressBar();
+    
+    // Limpar container
+    container.innerHTML = '';
+    
+    // Criar elemento da pergunta
+    const questionElement = document.createElement('div');
+    questionElement.className = 'question-item';
+    
+    let optionsHTML = '<div class="question-options">';
+    
+    question.options.forEach((option, index) => {
+        const isSelected = userAnswers[currentQuestion] === index;
+        optionsHTML += `
+            <label class="option">
+                <input type="radio" name="answer" value="${index}" ${isSelected ? 'checked' : ''}>
+                <label>${option.text}</label>
+            </label>
+        `;
+    });
+    
+    optionsHTML += '</div>';
+    
+    questionElement.innerHTML = `
+        <h3>Pergunta ${currentQuestion + 1} de ${quizData.length}</h3>
+        <p>${question.question}</p>
+        ${optionsHTML}
+    `;
+    
+    container.appendChild(questionElement);
+    
+    // Adicionar listeners aos radios
+    const radios = container.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => {
+        radio.addEventListener('change', function() {
+            userAnswers[currentQuestion] = parseInt(this.value);
+        });
+    });
+    
+    // Atualizar botões
+    updateQuizButtons();
+}
+
+function updateProgressBar() {
+    const progress = ((currentQuestion + 1) / quizData.length) * 100;
+    const progressFill = document.getElementById('progressFill');
+    const progressText = document.getElementById('progressText');
+    
+    if (progressFill) {
+        progressFill.style.width = progress + '%';
+    }
+    
+    if (progressText) {
+        progressText.textContent = `Pergunta ${currentQuestion + 1} de ${quizData.length}`;
+    }
+}
+
+function updateQuizButtons() {
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    
+    // Mostrar/esconder botão anterior
+    if (prevBtn) {
+        prevBtn.style.display = currentQuestion > 0 ? 'inline-flex' : 'none';
+        prevBtn.addEventListener('click', previousQuestion);
+    }
+    
+    // Configurar botão próximo/enviar
+    if (currentQuestion === quizData.length - 1) {
+        if (nextBtn) nextBtn.style.display = 'none';
+        if (submitBtn) {
+            submitBtn.style.display = 'inline-flex';
+            submitBtn.addEventListener('click', submitQuiz);
+        }
+    } else {
+        if (nextBtn) {
+            nextBtn.style.display = 'inline-flex';
+            nextBtn.onclick = nextQuestion;
+        }
+        if (submitBtn) submitBtn.style.display = 'none';
+    }
+}
+
+function nextQuestion() {
+    if (currentQuestion < quizData.length - 1) {
+        currentQuestion++;
+        loadQuestion();
+    }
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        loadQuestion();
+    }
+}
+
+function submitQuiz() {
+    // Calcular pontuação
+    let correctCount = 0;
+    
+    userAnswers.forEach((answer, index) => {
+        if (answer !== null && quizData[index].options[answer].correct) {
+            correctCount++;
+        }
+    });
+    
+    // Mostrar resultados
+    showResults(correctCount);
+}
+
+// ===================================
+// RESULTADOS
+// ===================================
+
+function showResults(correctCount) {
+    // Esconder quiz
+    document.getElementById('quizContainer').style.display = 'none';
+    
+    // Mostrar resultados
+    document.getElementById('quizResults').style.display = 'block';
+    
+    // Calcular porcentagem
+    const percentage = Math.round((correctCount / quizData.length) * 100);
+    
+    // Atualizar elementos de resultado
+    document.getElementById('scorePercentage').textContent = percentage + '%';
+    document.getElementById('correctAnswers').textContent = correctCount;
+    
+    // Mensagem personalizada
+    const scoreMessage = document.getElementById('scoreMessage');
+    if (percentage === 100) {
+        scoreMessage.textContent = 'Excelente! Você acertou todas as perguntas!';
+        scoreMessage.style.color = '#10b981';
+    } else if (percentage >= 80) {
+        scoreMessage.textContent = 'Muito bom! Você tem um ótimo conhecimento sobre esses temas.';
+        scoreMessage.style.color = '#10b981';
+    } else if (percentage >= 60) {
+        scoreMessage.textContent = 'Bom! Você acertou a maioria das perguntas. Revise os temas para melhorar.';
+        scoreMessage.style.color = '#f59e0b';
+    } else {
+        scoreMessage.textContent = 'Continue aprendendo! Revise os temas e tente novamente.';
+        scoreMessage.style.color = '#ef4444';
+    }
+    
+    // Gerar feedback detalhado
+    generateFeedback();
+    
+    // Scroll para resultados
+    document.getElementById('quizResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+function generateFeedback() {
+    const feedbackContainer = document.getElementById('feedbackContainer');
+    feedbackContainer.innerHTML = '<h3>Feedback Detalhado</h3>';
+    
+    userAnswers.forEach((answer, index) => {
+        const question = quizData[index];
+        const isCorrect = answer !== null && question.options[answer].correct;
+        
+        const feedbackItem = document.createElement('div');
+        feedbackItem.className = `feedback-item ${isCorrect ? 'correct' : 'incorrect'}`;
+        
+        const userAnswer = answer !== null ? question.options[answer].text : 'Não respondida';
+        const correctAnswer = question.options.find(opt => opt.correct).text;
+        
+        feedbackItem.innerHTML = `
+            <div class="feedback-question">
+                <i class="fas fa-${isCorrect ? 'check-circle' : 'times-circle'}"></i>
+                Pergunta ${index + 1}: ${question.question}
+            </div>
+            <div class="feedback-answer">
+                <p><strong>Sua resposta:</strong> ${userAnswer}</p>
+                ${!isCorrect ? `<p><strong>Resposta correta:</strong> ${correctAnswer}</p>` : ''}
+                <p><strong>Explicação:</strong> ${question.explanation}</p>
+            </div>
+        `;
+        
+        feedbackContainer.appendChild(feedbackItem);
+    });
+}
+
+function retakeQuiz() {
+    // Resetar estado
+    currentQuestion = 0;
+    userAnswers = [];
+    quizStarted = false;
+    
+    // Esconder resultados
+    document.getElementById('quizResults').style.display = 'none';
+    
+    // Mostrar introdução
+    document.getElementById('quizIntro').style.display = 'block';
+    
+    // Scroll para topo
+    document.getElementById('quizIntro').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===================================
+// CONSOLE LOG
+// ===================================
+
+console.log('Quiz Interativo - Módulo carregado com sucesso!');
+console.log('Total de perguntas:', quizData.length);
+console.log('Temas cobertos: Bullying, Respeito, Empatia, Segurança Digital, Saúde Mental');
+```\n
