@@ -3,21 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EstudanteHub - Foco e Acolhimento</title>
-  <!-- Three.js para Renderização 3D -->
+  <title>Espaço Escuta & Acolhimento</title>
+  
+  <!-- Fonte Google & Three.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
   <style>
     :root {
-      --bg-principal: #f4f7f6;
-      --card-bg: #ffffff;
-      --texto: #334155;
-      --texto-suave: #64748b;
-      --pastel-verde: #e2ece9;
-      --pastel-azul: #dfe7fd;
-      --pastel-rosa: #fde2e4;
-      --pastel-amarelo: #fff1e6;
-      --sombra-suave: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
-      --borda-raio: 20px;
+      --bg-gradient: linear-gradient(180deg, #fbf7f5 0%, #f4f0f8 50%, #edf4f8 100%);
+      --card-bg: rgba(255, 255, 255, 0.85);
+      --cor-texto: #4a4e69;
+      --cor-suave: #8d99ae;
+      --destaque-rosa: #f7d6e0;
+      --destaque-azul: #d6e2e9;
+      --destaque-verde: #e2ece9;
+      --sombra: 0 15px 35px rgba(100, 100, 120, 0.05);
+      --borda-suave: 1px solid rgba(255, 255, 255, 0.6);
     }
 
     * {
@@ -26,209 +30,276 @@
       padding: 0;
     }
 
-    body {
-      background-color: var(--bg-principal);
-      color: var(--texto);
-      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-      line-height: 1.6;
+    html {
+      scroll-behavior: smooth;
     }
 
-    /* Cabeçalho */
+    body {
+      background: var(--bg-gradient);
+      color: var(--cor-texto);
+      font-family: 'Poppins', sans-serif;
+      min-height: 100vh;
+      line-height: 1.7;
+    }
+
+    /* Cabeçalho Flutuante */
     header {
-      background: var(--card-bg);
-      padding: 1.2rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(255, 255, 255, 0.6);
+      border-bottom: var(--borda-suave);
+      padding: 1.2rem 8%;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: var(--sombra-suave);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
 
-    header .logo {
-      font-size: 1.3rem;
-      font-weight: 700;
-      color: #475569;
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+      color: #3d405b;
     }
 
-    nav a {
-      margin-left: 1.5rem;
-      text-decoration: none;
-      color: var(--texto-suave);
-      font-weight: 500;
-      transition: color 0.2s;
-    }
-
-    nav a:hover {
-      color: #1e293b;
-    }
-
-    /* Container Principal */
-    .container {
-      max-width: 1050px;
-      margin: 2rem auto;
-      padding: 0 1.5rem;
+    nav {
       display: flex;
-      flex-direction: column;
       gap: 2rem;
     }
 
-    /* Hero Section */
-    .hero {
-      background: linear-gradient(135deg, var(--pastel-verde) 0%, var(--pastel-azul) 100%);
-      padding: 2.5rem;
-      border-radius: var(--borda-raio);
+    nav a {
+      text-decoration: none;
+      color: var(--cor-suave);
+      font-weight: 400;
+      font-size: 0.95rem;
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: #3d405b;
+    }
+
+    /* Container Principal */
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 4rem;
+    }
+
+    /* Hero Principal com Pet 3D Integro */
+    .hero-section {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       text-align: center;
-      box-shadow: var(--sombra-suave);
+      padding: 2rem 1rem;
     }
 
-    .hero h1 {
-      font-size: 2rem;
-      color: #334155;
-      margin-bottom: 0.5rem;
-    }
-
-    .hero p {
-      color: var(--texto-suave);
-      font-size: 1.05rem;
-    }
-
-    /* Grids */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.5rem;
-    }
-
-    .card {
-      background: var(--card-bg);
-      border-radius: var(--borda-raio);
-      padding: 1.8rem;
-      box-shadow: var(--sombra-suave);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.08);
-    }
-
-    .card h2 {
-      font-size: 1.25rem;
-      color: #475569;
-      margin-bottom: 1rem;
-    }
-
-    /* Pet 3D Container */
-    .pet-wrapper {
-      text-align: center;
-    }
-
-    #pet-canvas-container {
-      width: 100%;
-      height: 280px;
-      border-radius: 16px;
-      background: radial-gradient(circle, #ffffff 0%, #f1f5f9 100%);
-      cursor: pointer;
+    .hero-section h1 {
+      font-size: 2.2rem;
+      font-weight: 500;
+      color: #3d405b;
       margin-bottom: 0.8rem;
     }
 
-    .pet-instrucao {
-      font-size: 0.85rem;
-      color: var(--texto-suave);
+    .hero-section p {
+      color: var(--cor-suave);
+      max-width: 550px;
+      font-size: 1.05rem;
+      font-weight: 300;
     }
 
-    /* Espaço Calma & Respiração */
-    .respiracao-wrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* Container do Mascote 3D */
+    .pet-area {
+      position: relative;
+      width: 100%;
+      max-width: 450px;
+      height: 380px;
       margin: 1.5rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
-    .circulo-respiracao {
-      width: 100px;
-      height: 100px;
-      background-color: #b8c0ff;
-      border-radius: 50%;
-      animation: pulse-respirar 8s infinite ease-in-out;
+    #pet-canvas {
+      width: 100%;
+      height: 100%;
+      cursor: grab;
     }
 
-    @keyframes pulse-respirar {
-      0%, 100% { transform: scale(1); opacity: 0.7; }
-      50% { transform: scale(1.5); opacity: 1; background-color: var(--pastel-verde); }
+    #pet-canvas:active {
+      cursor: grabbing;
     }
 
-    .dicas-lista {
+    .pet-botoes {
+      display: flex;
+      gap: 1rem;
+      margin-top: -1rem;
+    }
+
+    .btn-pet {
+      background: var(--card-bg);
+      border: var(--borda-suave);
+      padding: 0.6rem 1.4rem;
+      border-radius: 30px;
+      color: var(--cor-texto);
+      font-family: inherit;
+      font-size: 0.9rem;
+      cursor: pointer;
+      box-shadow: var(--sombra);
+      transition: all 0.3s ease;
+    }
+
+    .btn-pet:hover {
+      transform: translateY(-2px);
+      background: #ffffff;
+    }
+
+    /* Seção Escuta */
+    #escuta {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 3rem;
+      box-shadow: var(--sombra);
+      border: var(--borda-suave);
+      backdrop-filter: blur(8px);
+    }
+
+    .sec-titulo {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #3d405b;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .sec-sub {
+      text-align: center;
+      color: var(--cor-suave);
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      font-size: 0.95rem;
+    }
+
+    .caixa-desabafo {
+      width: 100%;
+      min-height: 130px;
+      border: 1px solid #e2e8f0;
+      border-radius: 18px;
+      padding: 1.2rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--cor-texto);
+      background: rgba(255, 255, 255, 0.9);
+      resize: vertical;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    .caixa-desabafo:focus {
+      border-color: #b8c0ff;
+    }
+
+    .escuta-rodape {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 1rem;
+    }
+
+    .mensagem-resposta {
+      font-size: 0.9rem;
+      color: #7209b7;
+      font-weight: 300;
+    }
+
+    /* Seção de Calma & Respiração */
+    #calma {
       display: flex;
       flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .dica-item {
-      padding: 1rem;
-      border-radius: 12px;
-      font-size: 0.95rem;
-    }
-
-    .dica-1 { background-color: var(--pastel-verde); }
-    .dica-2 { background-color: var(--pastel-azul); }
-    .dica-3 { background-color: var(--pastel-rosa); }
-
-    /* Bloco de Tarefas / Estudos */
-    .task-input {
-      display: flex;
-      gap: 0.5rem;
-      margin-bottom: 1rem;
-    }
-
-    .task-input input {
-      flex: 1;
-      padding: 0.7rem 1rem;
-      border: 1px solid #e2e8f0;
-      border-radius: 10px;
-      outline: none;
-      font-size: 0.95rem;
-    }
-
-    .task-input button {
-      padding: 0.7rem 1.2rem;
-      background: #cbd5e1;
-      border: none;
-      border-radius: 10px;
-      color: #334155;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 0.2s;
-    }
-
-    .task-input button:hover {
-      background: #94a3b8;
-      color: #ffffff;
-    }
-
-    .task-list {
-      list-style: none;
-    }
-
-    .task-list li {
-      padding: 0.6rem 0.8rem;
-      background: #f8fafc;
-      border-radius: 8px;
-      margin-bottom: 0.5rem;
-      display: flex;
       align-items: center;
-      gap: 0.6rem;
-      font-size: 0.95rem;
+    }
+
+    .respirador-box {
+      background: var(--card-bg);
+      border-radius: 28px;
+      padding: 3rem 2rem;
+      width: 100%;
+      box-shadow: var(--sombra);
+      border: var(--borda-suave);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      backdrop-filter: blur(8px);
+    }
+
+    .circulo-guia {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--destaque-rosa), var(--destaque-azul));
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #3d405b;
+      font-size: 0.9rem;
+      font-weight: 400;
+      margin: 2rem 0;
+      animation: pulso-respiracao 8s infinite ease-in-out;
+      box-shadow: 0 10px 30px rgba(214, 226, 233, 0.5);
+    }
+
+    @keyframes pulso-respiracao {
+      0%, 100% {
+        transform: scale(0.9);
+        opacity: 0.7;
+      }
+      50% {
+        transform: scale(1.45);
+        opacity: 1;
+        background: linear-gradient(135deg, var(--destaque-azul), var(--destaque-verde));
+      }
+    }
+
+    .cards-dicas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    .dica-card {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1.5rem;
+      border-radius: 20px;
+      border: var(--borda-suave);
+    }
+
+    .dica-card h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+      color: #3d405b;
+    }
+
+    .dica-card p {
+      font-size: 0.88rem;
+      color: var(--cor-suave);
+      font-weight: 300;
     }
 
     /* Rodapé */
     footer {
       text-align: center;
-      padding: 2.5rem 1rem;
-      color: var(--texto-suave);
-      font-size: 0.9rem;
+      padding: 3rem 1rem;
+      color: var(--cor-suave);
+      font-size: 0.85rem;
+      font-weight: 300;
     }
   </style>
 </head>
@@ -236,199 +307,249 @@
 
   <!-- Navegação -->
   <header>
-    <div class="logo">EstudanteHub 🌿</div>
+    <div class="logo">escuta.</div>
     <nav>
-      <a href="#mascote">Mascote</a>
-      <a href="#calma">Espaço Calma</a>
-      <a href="#tarefas">Tarefas</a>
+      <a href="#inicio">Início</a>
+      <a href="#escuta">Espaço Escuta</a>
+      <a href="#calma">Acalmar</a>
     </nav>
   </header>
 
-  <div class="container">
-    
-    <!-- Hero Banner -->
-    <section class="hero">
-      <h1>Seu canto de estudos e desaceleração</h1>
-      <p>Organize suas metas, converse com seu mascote 3D e reserve um momento para respirar.</p>
-    </section>
-
-    <!-- Grid: Pet 3D + Espaço Calma -->
-    <div class="grid-2">
+  <main>
+    <!-- Hero / Pet Section -->
+    <section id="inicio" class="hero-section">
+      <h1>Um lugar leve para desacelerar</h1>
+      <p>Tire um momento para você. Interaja com seu companheiro 3D e encontre paz no seu próprio ritmo.</p>
       
-      <!-- Card do Pet 3D -->
-      <section id="mascote" class="card pet-wrapper">
-        <h2>Seu Companheiro 3D</h2>
-        <div id="pet-canvas-container"></div>
-        <p class="pet-instrucao">💡 Mova o mouse para ele olhar para você. Clique para brincar!</p>
-      </section>
-
-      <!-- Card do Espaço Calma -->
-      <section id="calma" class="card">
-        <h2>Espaço para Acalmar</h2>
-        <p style="color: var(--texto-suave); font-size: 0.9rem;">Siga o ritmo do círculo para sincronizar sua respiração:</p>
-        
-        <div class="respiracao-wrapper">
-          <div class="circulo-respiracao"></div>
-        </div>
-
-        <div class="dicas-lista">
-          <div class="dica-item dica-1">
-            <strong>1. Técnica 4-7-8:</strong> Inspire pelo nariz por 4s, segure por 7s e solte o ar devagar por 8s.
-          </div>
-          <div class="dica-item dica-2">
-            <strong>2. Regra dos 5 Sentidos:</strong> Observe 5 objetos à sua volta, toque em 4 e ouça 3 sons ao redor.
-          </div>
-          <div class="dica-item dica-3">
-            <strong>3. Pausa Física:</strong> Desencaixe o maxilar, relaxe os ombros e beba um copo de água sem pressa.
-          </div>
-        </div>
-      </section>
-
-    </div>
-
-    <!-- Seção de Organização de Estudos -->
-    <section id="tarefas" class="card">
-      <h2>Minhas Metas de Estudo</h2>
-      <div class="task-input">
-        <input type="text" id="nova-tarefa" placeholder="Ex: Ler capítulo 3 de História...">
-        <button onclick="adicionarTarefa()">Adicionar</button>
+      <div class="pet-area">
+        <div id="pet-canvas"></div>
       </div>
-      <ul class="task-list" id="lista-tarefas">
-        <li><input type="checkbox"> Revisar anotações da aula</li>
-        <li><input type="checkbox"> Fazer pausa de 10 minutos para respirar</li>
-      </ul>
+
+      <div class="pet-botoes">
+        <button class="btn-pet" onclick="brincarPet()">✨ Fazer Carinho</button>
+        <button class="btn-pet" onclick="pularPet()">🎈 Brincar</button>
+      </div>
     </section>
 
-  </div>
+    <!-- Seção Escuta -->
+    <section id="escuta">
+      <h2 class="sec-titulo">Espaço de Escuta</h2>
+      <p class="sec-sub">Escreva o que estiver pesando nos seus pensamentos. Este espaço é só seu.</p>
+      
+      <textarea class="caixa-desabafo" id="texto-desabafo" placeholder="Como você está se sentindo agora?"></textarea>
+      
+      <div class="escuta-rodape">
+        <span class="mensagem-resposta" id="status-resposta"></span>
+        <button class="btn-pet" onclick="liberarPensamento()">Soltar Pensamento 🍃</button>
+      </div>
+    </section>
+
+    <!-- Seção Calma -->
+    <section id="calma">
+      <div class="respirador-box">
+        <h2 class="sec-titulo">Exercício de Respiração</h2>
+        <p class="sec-sub">Siga a expansão do círculo para desacelerar seu ritmo cardíaco.</p>
+        
+        <div class="circulo-guia" id="texto-respiro">Respire...</div>
+
+        <div class="cards-dicas">
+          <div class="dica-card">
+            <h3>🌱 Técnica 4-7-8</h3>
+            <p>Inspire suavemente pelo nariz por 4 segundos. Segure o ar por 7 segundos. Solte o ar devagar pela boca por 8 segundos.</p>
+          </div>
+          <div class="dica-card">
+            <h3>👁️ Ancoragem 5-4-3-2-1</h3>
+            <p>Olhe 5 coisas ao redor, toque em 4 texturas, ouça 3 sons próximos, sinta 2 aromas e dê 1 gole d'água.</p>
+          </div>
+          <div class="dica-card">
+            <h3>☁️ Desmance a Tensão</h3>
+            <p>Desencaixe a mandíbula, abaixe os ombros longe das orelhas e abra a palma das mãos devagar.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
 
   <footer>
-    <p>EstudanteHub • Um ambiente leve para aprender e relaxar.</p>
+    <p>Espaço Escuta • Ambiente de acolhimento e desaceleração</p>
   </footer>
 
-  <!-- Scripts: Lógica do Pet 3D e Interatividades -->
+  <!-- Lógica Tridimensional & Interações -->
   <script>
-    // --- LÓGICA DO PET 3D (THREE.JS) ---
-    const container = document.getElementById('pet-canvas-container');
+    // --- 1. CONFIGURAÇÃO DA CENA 3D (THREE.JS) ---
+    const container = document.getElementById('pet-canvas');
+    const width = container.clientWidth;
+    const height = container.clientHeight;
 
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 4.5;
+    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
+    camera.position.z = 5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Iluminação
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
+    // Luzes Suaves
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xffffff, 0.6);
-    dirLight.position.set(5, 5, 5);
+    const dirLight = new THREE.DirectionalLight(0xfff0f5, 0.8);
+    dirLight.position.set(3, 4, 3);
     scene.add(dirLight);
 
-    // Grupo do Pet
+    // --- 2. MODELAGEM DO PERSONAGEM (PET FOFO) ---
     const petGroup = new THREE.Group();
     scene.add(petGroup);
 
-    // Corpo
-    const bodyGeo = new THREE.SphereGeometry(1, 32, 32);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xb8c0ff, shininess: 20 });
+    // Corpo Principal (Forma Suave)
+    const bodyGeo = new THREE.SphereGeometry(1, 64, 64);
+    const bodyMat = new THREE.MeshPhongMaterial({ 
+      color: 0xd6e2e9, 
+      shininess: 15,
+      flatShading: false
+    });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     petGroup.add(body);
 
     // Olhos
-    const eyeGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x334155 });
+    const eyeGeo = new THREE.SphereGeometry(0.09, 32, 32);
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x4a4e69 });
 
     const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-0.35, 0.25, 0.88);
+    leftEye.position.set(-0.32, 0.2, 0.92);
     petGroup.add(leftEye);
 
     const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(0.35, 0.25, 0.88);
+    rightEye.position.set(0.32, 0.2, 0.92);
     petGroup.add(rightEye);
 
-    // Orelhas
-    const earGeo = new THREE.ConeGeometry(0.3, 0.6, 16);
-    const earMat = new THREE.MeshPhongMaterial({ color: 0xb8c0ff });
+    // Bochechas Rosa Suave
+    const cheekGeo = new THREE.SphereGeometry(0.12, 16, 16);
+    const cheekMat = new THREE.MeshBasicMaterial({ color: 0xf7d6e0, transparent: true, opacity: 0.7 });
+
+    const leftCheek = new THREE.Mesh(cheekGeo, cheekMat);
+    leftCheek.position.set(-0.48, 0.05, 0.85);
+    petGroup.add(leftCheek);
+
+    const rightCheek = new THREE.Mesh(cheekGeo, cheekMat);
+    rightCheek.position.set(0.48, 0.05, 0.85);
+    petGroup.add(rightCheek);
+
+    // Orelhas Redondas
+    const earGeo = new THREE.SphereGeometry(0.35, 32, 32);
+    const earMat = new THREE.MeshPhongMaterial({ color: 0xd6e2e9, shininess: 10 });
 
     const leftEar = new THREE.Mesh(earGeo, earMat);
-    leftEar.position.set(-0.6, 0.9, 0.2);
-    leftEar.rotation.z = -0.3;
+    leftEar.position.set(-0.75, 0.75, 0.1);
     petGroup.add(leftEar);
 
     const rightEar = new THREE.Mesh(earGeo, earMat);
-    rightEar.position.set(0.6, 0.9, 0.2);
-    rightEar.rotation.z = 0.3;
+    rightEar.position.set(0.75, 0.75, 0.1);
     petGroup.add(rightEar);
 
-    // Movimento do Mouse
+    // --- 3. INTERAÇÃO E ANIMAÇÃO DO PET ---
     let mouseX = 0, mouseY = 0;
-    document.addEventListener('mousemove', (e) => {
+    let targetX = 0, targetY = 0;
+
+    // Acompanhar o Cursor
+    window.addEventListener('mousemove', (e) => {
       const rect = container.getBoundingClientRect();
-      if (e.clientX >= rect.left && e.clientX <= rect.right &&
-          e.clientY >= rect.top && e.clientY <= rect.bottom) {
-        mouseX = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
-        mouseY = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
-      }
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      mouseX = (x / rect.width) * 2 - 1;
+      mouseY = -(y / rect.height) * 2 + 1;
     });
 
-    // Clique para Pular
-    let isJumping = false;
-    let jumpVelocity = 0;
+    let isBouncing = false;
+    let bounceTime = 0;
 
-    container.addEventListener('click', () => {
-      if (!isJumping) {
-        isJumping = true;
-        jumpVelocity = 0.12;
-        bodyMat.color.setHex(0xfde2e4); // Muda para tom rosa ao interagir
-        setTimeout(() => bodyMat.color.setHex(0xb8c0ff), 700);
+    function pularPet() {
+      if (!isBouncing) {
+        isBouncing = true;
+        bounceTime = 0;
+        bodyMat.color.setHex(0xf7d6e0); // Muda para tom rosa
+        setTimeout(() => bodyMat.color.setHex(0xd6e2e9), 800);
       }
-    });
+    }
 
-    // Loop de Animação
+    function brincarPet() {
+      // Pequeno balanço para os lados
+      let count = 0;
+      const interval = setInterval(() => {
+        petGroup.rotation.z = Math.sin(count) * 0.2;
+        count += 0.3;
+        if (count > Math.PI * 2) {
+          clearInterval(interval);
+          petGroup.rotation.z = 0;
+        }
+      }, 30);
+    }
+
+    // Loop de Animação Principal
     function animate() {
       requestAnimationFrame(animate);
 
-      // Acompanhamento suave do cursor
-      petGroup.rotation.y += (mouseX * 0.6 - petGroup.rotation.y) * 0.05;
-      petGroup.rotation.x += (-mouseY * 0.4 - petGroup.rotation.x) * 0.05;
+      // Movimento suave dos olhos/cabeça seguindo o mouse
+      targetX += (mouseX - targetX) * 0.05;
+      targetY += (mouseY - targetY) * 0.05;
 
-      // Pulo e flutuação
-      if (isJumping) {
-        petGroup.position.y += jumpVelocity;
-        jumpVelocity -= 0.007;
-        if (petGroup.position.y <= 0) {
-          petGroup.position.y = 0;
-          isJumping = false;
-        }
+      petGroup.rotation.y = targetX * 0.4;
+      petGroup.rotation.x = -targetY * 0.3;
+
+      // Flutuação Contínua (Efeito Flutuante)
+      if (!isBouncing) {
+        petGroup.position.y = Math.sin(Date.now() * 0.002) * 0.08;
       } else {
-        petGroup.position.y = Math.sin(Date.now() * 0.0025) * 0.06;
+        bounceTime += 0.08;
+        petGroup.position.y = Math.abs(Math.sin(bounceTime)) * 0.5;
+        if (bounceTime > Math.PI) {
+          isBouncing = false;
+          petGroup.position.y = 0;
+        }
       }
 
       renderer.render(scene, camera);
     }
     animate();
 
-    // Redimensionamento responsivo do Canvas 3D
+    // Redimensionamento do canvas 3D
     window.addEventListener('resize', () => {
-      camera.aspect = container.clientWidth / container.clientHeight;
+      const w = container.clientWidth;
+      const h = container.clientHeight;
+      camera.aspect = w / h;
       camera.updateProjectionMatrix();
-      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setSize(w, h);
     });
 
-    // --- LÓGICA DA LISTA DE TAREFAS ---
-    function adicionarTarefa() {
-      const input = document.getElementById('nova-tarefa');
-      const texto = input.value.trim();
-      if (texto !== '') {
-        const ul = document.getElementById('lista-tarefas');
-        const li = document.createElement('li');
-        li.innerHTML = `<input type="checkbox"> ${texto}`;
-        ul.appendChild(li);
-        input.value = '';
+    // --- 4. FUNÇÃO DA ÁREA DE ESCUTA ---
+    function liberarPensamento() {
+      const campo = document.getElementById('texto-desabafo');
+      const status = document.getElementById('status-resposta');
+
+      if (campo.value.trim() !== "") {
+        campo.style.transition = "opacity 0.8s ease";
+        campo.style.opacity = "0.3";
+        status.innerText = "Seu pensamento foi acolhido. Respire fundo...";
+
+        setTimeout(() => {
+          campo.value = "";
+          campo.style.opacity = "1";
+          status.innerText = "";
+        }, 2500);
       }
     }
+
+    // --- 5. TEXTO DINÂMICO PARA RESPIRAÇÃO ---
+    const textoRespiro = document.getElementById('texto-respiro');
+    const fases = ['Inspire...', 'Segure...', 'Expire...'];
+    let faseIdx = 0;
+
+    setInterval(() => {
+      faseIdx = (faseIdx + 1) % fases.length;
+      textoRespiro.innerText = fases[faseIdx];
+    }, 2600);
   </script>
 </body>
 </html>
