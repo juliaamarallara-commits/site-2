@@ -3,25 +3,32 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Espaço Escuta & Acolhimento</title>
-  
-  <!-- Fonte Google & Three.js -->
+  <title>Refúgio - Seu Cantinho de Conforto</title>
+
+  <!-- Google Fonts & Three.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     :root {
-      --bg-gradient: linear-gradient(180deg, #fbf7f5 0%, #f4f0f8 50%, #edf4f8 100%);
-      --card-bg: rgba(255, 255, 255, 0.85);
-      --cor-texto: #4a4e69;
-      --cor-suave: #8d99ae;
-      --destaque-rosa: #f7d6e0;
-      --destaque-azul: #d6e2e9;
-      --destaque-verde: #e2ece9;
-      --sombra: 0 15px 35px rgba(100, 100, 120, 0.05);
-      --borda-suave: 1px solid rgba(255, 255, 255, 0.6);
+      /* Paleta Acolhedora e Quente/Pastel */
+      --bg-site: #fcf8f2;
+      --card-bg: #ffffff;
+      --cor-texto: #4a403a;
+      --cor-subtexto: #7d7067;
+      
+      --pastel-rosa: #fde2e4;
+      --pastel-pêssego: #ffcad4;
+      --pastel-lavanda: #e8dff5;
+      --pastel-menta: #e2ece9;
+      --pastel-azul: #d8e2dc;
+      --pastel-amarelo: #fff1e6;
+
+      --sombra-card: 0 12px 30px rgba(125, 112, 103, 0.07);
+      --borda-card: 1px solid rgba(230, 220, 210, 0.6);
+      --raio: 24px;
     }
 
     * {
@@ -35,486 +42,686 @@
     }
 
     body {
-      background: var(--bg-gradient);
+      background-color: var(--bg-site);
       color: var(--cor-texto);
-      font-family: 'Poppins', sans-serif;
-      min-height: 100vh;
-      line-height: 1.7;
+      font-family: 'Nunito', sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
-    /* Cabeçalho Flutuante */
+    /* Cabeçalho */
     header {
       position: sticky;
       top: 0;
-      z-index: 1000;
+      z-index: 100;
+      background: rgba(252, 248, 242, 0.85);
       backdrop-filter: blur(12px);
-      background: rgba(255, 255, 255, 0.6);
-      border-bottom: var(--borda-suave);
-      padding: 1.2rem 8%;
+      border-bottom: var(--borda-card);
+      padding: 1.1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
     .logo {
-      font-size: 1.25rem;
-      font-weight: 600;
-      letter-spacing: -0.5px;
-      color: #3d405b;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #6b5b52;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     nav {
       display: flex;
-      gap: 2rem;
+      gap: 1.2rem;
     }
 
     nav a {
       text-decoration: none;
-      color: var(--cor-suave);
-      font-weight: 400;
+      color: var(--cor-subtexto);
+      font-weight: 600;
       font-size: 0.95rem;
-      transition: color 0.3s ease;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      transition: all 0.2s ease;
     }
 
     nav a:hover {
-      color: #3d405b;
+      background: var(--pastel-lavanda);
+      color: var(--cor-texto);
     }
 
-    /* Container Principal */
-    main {
-      max-width: 1000px;
+    /* Layout Principal */
+    .container {
+      max-width: 1080px;
       margin: 0 auto;
-      padding: 3rem 1.5rem 6rem;
+      padding: 2.5rem 1.5rem 5rem;
       display: flex;
       flex-direction: column;
-      gap: 4rem;
+      gap: 3.5rem;
     }
 
-    /* Hero Principal com Pet 3D Integro */
-    .hero-section {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    /* Banner de Acolhimento */
+    .welcome-banner {
+      background: linear-gradient(135deg, var(--pastel-amarelo) 0%, var(--pastel-rosa) 100%);
+      border-radius: var(--raio);
+      padding: 2.5rem 2rem;
       text-align: center;
-      padding: 2rem 1rem;
+      box-shadow: var(--sombra-card);
+      border: var(--borda-card);
     }
 
-    .hero-section h1 {
-      font-size: 2.2rem;
-      font-weight: 500;
-      color: #3d405b;
+    .welcome-banner h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      color: #5a4a42;
+      margin-bottom: 0.6rem;
+    }
+
+    .welcome-banner p {
+      font-size: 1.1rem;
+      color: var(--cor-subtexto);
+      max-width: 650px;
+      margin: 0 auto;
+    }
+
+    /* Seção do Mascot 3D */
+    .pet-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: center;
+      background: var(--card-bg);
+      border-radius: var(--raio);
+      padding: 2rem;
+      box-shadow: var(--sombra-card);
+      border: var(--borda-card);
+    }
+
+    .pet-info h2 {
+      font-size: 1.6rem;
+      font-weight: 700;
       margin-bottom: 0.8rem;
+      color: #5a4a42;
     }
 
-    .hero-section p {
-      color: var(--cor-suave);
-      max-width: 550px;
-      font-size: 1.05rem;
-      font-weight: 300;
+    .pet-info p {
+      color: var(--cor-subtexto);
+      margin-bottom: 1.5rem;
+      font-size: 1rem;
     }
 
-    /* Container do Mascote 3D */
-    .pet-area {
+    .pet-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .btn-pet {
+      background: var(--pastel-amarelo);
+      border: 1px solid #f2e3d5;
+      padding: 0.7rem 1.2rem;
+      border-radius: 16px;
+      font-family: inherit;
+      font-weight: 700;
+      color: var(--cor-texto);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-pet:hover {
+      transform: translateY(-2px);
+      background: var(--pastel-pêssego);
+    }
+
+    .pet-display {
       position: relative;
       width: 100%;
-      max-width: 450px;
-      height: 380px;
-      margin: 1.5rem 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      height: 320px;
+      background: radial-gradient(circle, #ffffff 0%, #f7f0e8 100%);
+      border-radius: 20px;
+      overflow: hidden;
     }
 
-    #pet-canvas {
+    #canvas-container {
       width: 100%;
       height: 100%;
       cursor: grab;
     }
 
-    #pet-canvas:active {
+    #canvas-container:active {
       cursor: grabbing;
     }
 
-    .pet-botoes {
-      display: flex;
-      gap: 1rem;
-      margin-top: -1rem;
-    }
-
-    .btn-pet {
-      background: var(--card-bg);
-      border: var(--borda-suave);
-      padding: 0.6rem 1.4rem;
-      border-radius: 30px;
-      color: var(--cor-texto);
-      font-family: inherit;
-      font-size: 0.9rem;
-      cursor: pointer;
-      box-shadow: var(--sombra);
-      transition: all 0.3s ease;
-    }
-
-    .btn-pet:hover {
-      transform: translateY(-2px);
-      background: #ffffff;
-    }
-
-    /* Seção Escuta */
-    #escuta {
-      background: var(--card-bg);
-      border-radius: 28px;
-      padding: 3rem;
-      box-shadow: var(--sombra);
-      border: var(--borda-suave);
-      backdrop-filter: blur(8px);
-    }
-
-    .sec-titulo {
-      font-size: 1.4rem;
-      font-weight: 500;
-      color: #3d405b;
-      margin-bottom: 1rem;
-      text-align: center;
-    }
-
-    .sec-sub {
-      text-align: center;
-      color: var(--cor-suave);
-      font-weight: 300;
-      margin-bottom: 2.5rem;
-      font-size: 0.95rem;
-    }
-
-    .caixa-desabafo {
-      width: 100%;
-      min-height: 130px;
-      border: 1px solid #e2e8f0;
-      border-radius: 18px;
-      padding: 1.2rem;
-      font-family: inherit;
-      font-size: 0.95rem;
-      color: var(--cor-texto);
+    .pet-status {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
       background: rgba(255, 255, 255, 0.9);
-      resize: vertical;
-      outline: none;
-      transition: border 0.3s ease;
+      padding: 0.4rem 1rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cor-subtexto);
+      pointer-events: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     }
 
-    .caixa-desabafo:focus {
-      border-color: #b8c0ff;
+    /* Grid de Conteúdo */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
     }
 
-    .escuta-rodape {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 1rem;
-    }
-
-    .mensagem-resposta {
-      font-size: 0.9rem;
-      color: #7209b7;
-      font-weight: 300;
-    }
-
-    /* Seção de Calma & Respiração */
-    #calma {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .respirador-box {
+    .card {
       background: var(--card-bg);
-      border-radius: 28px;
-      padding: 3rem 2rem;
-      width: 100%;
-      box-shadow: var(--sombra);
-      border: var(--borda-suave);
+      border-radius: var(--raio);
+      padding: 2rem;
+      box-shadow: var(--sombra-card);
+      border: var(--borda-card);
+    }
+
+    .card h2 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: #5a4a42;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Exercício de Respiração */
+    .breath-box {
       display: flex;
       flex-direction: column;
       align-items: center;
-      backdrop-filter: blur(8px);
+      text-align: center;
+      padding: 1rem 0;
     }
 
-    .circulo-guia {
+    .breath-circle {
       width: 130px;
       height: 130px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--destaque-rosa), var(--destaque-azul));
+      background: linear-gradient(135deg, var(--pastel-menta), var(--pastel-lavanda));
       display: flex;
       justify-content: center;
       align-items: center;
-      color: #3d405b;
-      font-size: 0.9rem;
-      font-weight: 400;
-      margin: 2rem 0;
-      animation: pulso-respiracao 8s infinite ease-in-out;
-      box-shadow: 0 10px 30px rgba(214, 226, 233, 0.5);
+      font-weight: 700;
+      color: #4a403a;
+      margin: 1.5rem 0;
+      animation: breatheAnimation 8s infinite ease-in-out;
+      box-shadow: 0 8px 25px rgba(226, 236, 233, 0.8);
     }
 
-    @keyframes pulso-respiracao {
-      0%, 100% {
-        transform: scale(0.9);
-        opacity: 0.7;
-      }
-      50% {
-        transform: scale(1.45);
-        opacity: 1;
-        background: linear-gradient(135deg, var(--destaque-azul), var(--destaque-verde));
-      }
+    @keyframes breatheAnimation {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.4); opacity: 1; background: linear-gradient(135deg, var(--pastel-rosa), var(--pastel-pêssego)); }
     }
 
-    .cards-dicas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-      gap: 1.5rem;
+    /* Diário de Desabafo */
+    .journal-tags {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .tag-btn {
+      background: var(--bg-site);
+      border: 1px solid #eae0d5;
+      padding: 0.3rem 0.8rem;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--cor-subtexto);
+      cursor: pointer;
+    }
+
+    .tag-btn.active {
+      background: var(--pastel-lavanda);
+      color: var(--cor-texto);
+      border-color: #d8cde5;
+    }
+
+    textarea.journal-input {
       width: 100%;
-      margin-top: 2rem;
+      height: 120px;
+      border: 1px solid #eee5dc;
+      border-radius: 16px;
+      padding: 1rem;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--cor-texto);
+      background: #faf6f0;
+      resize: none;
+      outline: none;
+      transition: border 0.2s;
     }
 
-    .dica-card {
-      background: rgba(255, 255, 255, 0.7);
-      padding: 1.5rem;
-      border-radius: 20px;
-      border: var(--borda-suave);
+    textarea.journal-input:focus {
+      border-color: #d0c2b4;
+      background: #ffffff;
     }
 
-    .dica-card h3 {
+    .btn-submit {
+      margin-top: 0.8rem;
+      background: var(--pastel-menta);
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 14px;
+      font-family: inherit;
+      font-weight: 700;
+      color: var(--cor-texto);
+      cursor: pointer;
+      float: right;
+      transition: all 0.2s;
+    }
+
+    .btn-submit:hover {
+      background: #cbdcd7;
+    }
+
+    /* Lista de Guias & Dicas de Autocuidado */
+    .dicas-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .dica-item {
+      background: var(--bg-site);
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      border-left: 4px solid var(--pastel-pêssego);
+    }
+
+    .dica-item h3 {
       font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-      color: #3d405b;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
     }
 
-    .dica-card p {
-      font-size: 0.88rem;
-      color: var(--cor-suave);
-      font-weight: 300;
+    .dica-item p {
+      font-size: 0.9rem;
+      color: var(--cor-subtexto);
     }
 
-    /* Rodapé */
+    /* Seção de Playlist / Conforto Sonoro */
+    .sounds-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+
+    .sound-card {
+      background: var(--bg-site);
+      padding: 0.8rem;
+      border-radius: 14px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+    }
+
+    .sound-card:hover {
+      background: var(--pastel-azul);
+      border-color: #c0d4c8;
+    }
+
+    /* Suporte & Apoio */
+    .support-card {
+      background: linear-gradient(135deg, var(--pastel-lavanda) 0%, var(--pastel-azul) 100%);
+    }
+
+    .support-info {
+      background: rgba(255, 255, 255, 0.7);
+      padding: 1rem 1.2rem;
+      border-radius: 16px;
+      margin-top: 1rem;
+    }
+
+    .support-info strong {
+      display: block;
+      color: #4a403a;
+      font-size: 1.05rem;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
-      padding: 3rem 1rem;
-      color: var(--cor-suave);
-      font-size: 0.85rem;
-      font-weight: 300;
+      padding: 2rem;
+      color: var(--cor-subtexto);
+      font-size: 0.9rem;
+      border-top: var(--borda-card);
+    }
+
+    @media (max-width: 768px) {
+      .pet-section {
+        grid-template-columns: 1fr;
+      }
+      header {
+        padding: 1rem;
+      }
+      nav {
+        gap: 0.5rem;
+      }
     }
   </style>
 </head>
 <body>
 
-  <!-- Navegação -->
+  <!-- Navegação superior -->
   <header>
-    <div class="logo">escuta.</div>
+    <div class="logo">🌿 Refúgio</div>
     <nav>
-      <a href="#inicio">Início</a>
-      <a href="#escuta">Espaço Escuta</a>
-      <a href="#calma">Acalmar</a>
+      <a href="#mascote">Mascote</a>
+      <a href="#calma">Calma</a>
+      <a href="#diario">Desabafo</a>
+      <a href="#autocuidado">Dicas</a>
     </nav>
   </header>
 
-  <main>
-    <!-- Hero / Pet Section -->
-    <section id="inicio" class="hero-section">
-      <h1>Um lugar leve para desacelerar</h1>
-      <p>Tire um momento para você. Interaja com seu companheiro 3D e encontre paz no seu próprio ritmo.</p>
-      
-      <div class="pet-area">
-        <div id="pet-canvas"></div>
-      </div>
+  <div class="container">
 
-      <div class="pet-botoes">
-        <button class="btn-pet" onclick="brincarPet()">✨ Fazer Carinho</button>
-        <button class="btn-pet" onclick="pularPet()">🎈 Brincar</button>
-      </div>
+    <!-- Mensagem de Boas-Vindas -->
+    <section class="welcome-banner">
+      <h1>Você está em um lugar seguro 💛</h1>
+      <p>Não há pressa, julgamentos ou cobranças aqui. Respire fundo, interaja com o seu mascote e fique o tempo que precisar.</p>
     </section>
 
-    <!-- Seção Escuta -->
-    <section id="escuta">
-      <h2 class="sec-titulo">Espaço de Escuta</h2>
-      <p class="sec-sub">Escreva o que estiver pesando nos seus pensamentos. Este espaço é só seu.</p>
-      
-      <textarea class="caixa-desabafo" id="texto-desabafo" placeholder="Como você está se sentindo agora?"></textarea>
-      
-      <div class="escuta-rodape">
-        <span class="mensagem-resposta" id="status-resposta"></span>
-        <button class="btn-pet" onclick="liberarPensamento()">Soltar Pensamento 🍃</button>
-      </div>
-    </section>
+    <!-- Seção do Mascote 3D Interativo -->
+    <section id="mascote" class="pet-section">
+      <div class="pet-info">
+        <h2>Seu Companheiro 3D 🐾</h2>
+        <p>Este é o seu amiguinho virtual. Ele reagirá ao seu carinho e atenção. Mova o cursor para interagir!</p>
 
-    <!-- Seção Calma -->
-    <section id="calma">
-      <div class="respirador-box">
-        <h2 class="sec-titulo">Exercício de Respiração</h2>
-        <p class="sec-sub">Siga a expansão do círculo para desacelerar seu ritmo cardíaco.</p>
-        
-        <div class="circulo-guia" id="texto-respiro">Respire...</div>
-
-        <div class="cards-dicas">
-          <div class="dica-card">
-            <h3>🌱 Técnica 4-7-8</h3>
-            <p>Inspire suavemente pelo nariz por 4 segundos. Segure o ar por 7 segundos. Solte o ar devagar pela boca por 8 segundos.</p>
-          </div>
-          <div class="dica-card">
-            <h3>👁️ Ancoragem 5-4-3-2-1</h3>
-            <p>Olhe 5 coisas ao redor, toque em 4 texturas, ouça 3 sons próximos, sinta 2 aromas e dê 1 gole d'água.</p>
-          </div>
-          <div class="dica-card">
-            <h3>☁️ Desmance a Tensão</h3>
-            <p>Desencaixe a mandíbula, abaixe os ombros longe das orelhas e abra a palma das mãos devagar.</p>
-          </div>
+        <div class="pet-actions">
+          <button class="btn-pet" onclick="fazerCarinho()">✨ Carinho</button>
+          <button class="btn-pet" onclick="alimentarPet()">🍎 Dar Lanchinho</button>
+          <button class="btn-pet" onclick="brincarPet()">🎈 Brincar</button>
         </div>
       </div>
+
+      <div class="pet-display">
+        <div id="canvas-container"></div>
+        <div class="pet-status" id="pet-status-text">O mascote está calmo e feliz</div>
+      </div>
     </section>
-  </main>
+
+    <!-- Grid de Ferramentas: Respiração & Diário -->
+    <div class="grid-2">
+      
+      <!-- Cantinho da Respiração -->
+      <section id="calma" class="card">
+        <h2>🫁 Respire sem Pressa</h2>
+        <p style="color: var(--cor-subtexto); font-size: 0.95rem;">Acompanhe o ritmo do círculo para desacelerar seus pensamentos:</p>
+        
+        <div class="breath-box">
+          <div class="breath-circle" id="breath-text">Inspire...</div>
+          <p style="font-size: 0.85rem; color: var(--cor-subtexto);" id="breath-sub">Sinta o ar encher o seu peito com calma.</p>
+        </div>
+      </section>
+
+      <!-- Diário de Desabafo -->
+      <section id="diario" class="card">
+        <h2>✏️ Espaço de Desabafo</h2>
+        <p style="color: var(--cor-subtexto); font-size: 0.95rem; margin-bottom: 0.8rem;">Como você está se sentindo agora?</p>
+        
+        <div class="journal-tags">
+          <button class="tag-btn active" onclick="selectTag(this)">Anioso(a)</button>
+          <button class="tag-btn" onclick="selectTag(this)">Cansado(a)</button>
+          <button class="tag-btn" onclick="selectTag(this)">Triste</button>
+          <button class="tag-btn" onclick="selectTag(this)">Confuso(a)</button>
+        </div>
+
+        <textarea class="journal-input" id="journal-text" placeholder="Escreva o que está pesando na sua mente... ninguém vai ler isso além de você."></textarea>
+        <button class="btn-submit" onclick="soltarPensamento()">Soltar Pensamento 🍃</button>
+        <div style="clear:both;"></div>
+        <p id="journal-msg" style="font-size: 0.85rem; color: #6b8e23; margin-top: 0.5rem; font-weight: 600; display: none;"></p>
+      </section>
+
+    </div>
+
+    <!-- Grid de Conteúdo: Dicas de Autocuidado & Sons -->
+    <div class="grid-2">
+      
+      <!-- Guia de Autocuidado para Momentos Difíceis -->
+      <section id="autocuidado" class="card">
+        <h2>🛋️ O que fazer se você não estiver bem?</h2>
+        <div class="dicas-list">
+          <div class="dica-item" style="border-left-color: var(--pastel-pêssego);">
+            <h3>1. Regra do Copo d'Água</h3>
+            <p>Beba um copo de água bem gelada em pequenos goles. A mudança de temperatura ajuda seu corpo a sair do modo de alerta.</p>
+          </div>
+          <div class="dica-item" style="border-left-color: var(--pastel-lavanda);">
+            <h3>2. Ancoragem dos 5 Sentidos</h3>
+            <p>Olhe ao redor e encontre: 5 coisas que você vê, 4 coisas que pode tocar, 3 sons que ouve e 2 cheiros.</p>
+          </div>
+          <div class="dica-item" style="border-left-color: var(--pastel-menta);">
+            <h3>3. Solte os Ombros</h3>
+            <p>Desencaixe a mandíbula, descasque a língua do céu da boca e abaixe os ombros. Sinta o alívio muscular.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sons & Apoio Emocional -->
+      <section class="card support-card">
+        <h2>💬 Precisando conversar?</h2>
+        <p style="color: var(--cor-subtexto);">Lembre-se de que você não precisa passar por tudo sozinho(a).</p>
+
+        <div class="support-info">
+          <strong>CVV - Centro de Valorização da Vida</strong>
+          <p style="font-size: 0.9rem; color: var(--cor-subtexto); margin-top: 0.3rem;">
+            Apoio emocional gratuito e confidencial disponível 24 horas por dia por telefone ou chat.
+          </p>
+          <div style="margin-top: 0.8rem; display: flex; gap: 0.6rem; align-items: center;">
+            <span style="background: #ffffff; padding: 0.4rem 0.8rem; border-radius: 10px; font-weight: 800; color: #5a4a42;">Ligue 188</span>
+            <a href="https://www.cvv.org.br/" target="_blank" style="color: #4a403a; font-weight: 700; text-decoration: underline; font-size: 0.9rem;">Acessar Chat Online</a>
+          </div>
+        </div>
+
+        <h3 style="margin-top: 1.5rem; font-size: 1rem; color: #5a4a42;">🎧 Clima Confortável</h3>
+        <div class="sounds-grid">
+          <div class="sound-card" onclick="playSoftSound('chuva')">🌧️ Barulho de Chuva</div>
+          <div class="sound-card" onclick="playSoftSound('floresta')">🍃 Vento nas Folhas</div>
+          <div class="sound-card" onclick="playSoftSound('lareira')">🔥 Lareira Quentinha</div>
+          <div class="sound-card" onclick="playSoftSound('ondas')">🌊 Ondas Suaves</div>
+        </div>
+      </section>
+
+    </div>
+
+  </div>
 
   <footer>
-    <p>Espaço Escuta • Ambiente de acolhimento e desaceleração</p>
+    <p>Refúgio • Um espaço feito para acolher seus sentimentos. 🤍</p>
   </footer>
 
-  <!-- Lógica Tridimensional & Interações -->
+  <!-- Lógica 3D & Funcionalidades Interativas -->
   <script>
-    // --- 1. CONFIGURAÇÃO DA CENA 3D (THREE.JS) ---
-    const container = document.getElementById('pet-canvas');
+    // ===============================================
+    // 1. CONFIGURAÇÃO DO PET 3D (THREE.JS)
+    // ===============================================
+    const container = document.getElementById('canvas-container');
     const width = container.clientWidth;
     const height = container.clientHeight;
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = 5;
+    camera.position.z = 4.8;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     container.appendChild(renderer.domElement);
 
-    // Luzes Suaves
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
+    // Iluminação
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.85);
     scene.add(ambientLight);
 
-    const dirLight = new THREE.DirectionalLight(0xfff0f5, 0.8);
-    dirLight.position.set(3, 4, 3);
+    const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.7);
+    dirLight.position.set(4, 5, 3);
     scene.add(dirLight);
 
-    // --- 2. MODELAGEM DO PERSONAGEM (PET FOFO) ---
+    // Grupo do Personagem (Bichinho Fofo)
     const petGroup = new THREE.Group();
     scene.add(petGroup);
 
-    // Corpo Principal (Forma Suave)
+    // Corpo Redondo Soft
     const bodyGeo = new THREE.SphereGeometry(1, 64, 64);
     const bodyMat = new THREE.MeshPhongMaterial({ 
-      color: 0xd6e2e9, 
-      shininess: 15,
+      color: 0xffcad4, 
+      shininess: 25,
       flatShading: false
     });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     petGroup.add(body);
 
-    // Olhos
+    // Olhos Expressivos
     const eyeGeo = new THREE.SphereGeometry(0.09, 32, 32);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x4a4e69 });
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x4a403a });
 
     const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-0.32, 0.2, 0.92);
+    leftEye.position.set(-0.35, 0.2, 0.92);
     petGroup.add(leftEye);
 
     const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(0.32, 0.2, 0.92);
+    rightEye.position.set(0.35, 0.2, 0.92);
     petGroup.add(rightEye);
 
-    // Bochechas Rosa Suave
+    // Brilho dos Olhos
+    const shineGeo = new THREE.SphereGeometry(0.03, 16, 16);
+    const shineMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+
+    const leftShine = new THREE.Mesh(shineGeo, shineMat);
+    leftShine.position.set(-0.32, 0.23, 0.99);
+    petGroup.add(leftShine);
+
+    const rightShine = new THREE.Mesh(shineGeo, shineMat);
+    rightShine.position.set(0.38, 0.23, 0.99);
+    petGroup.add(rightShine);
+
+    // Bochechas Coradas
     const cheekGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const cheekMat = new THREE.MeshBasicMaterial({ color: 0xf7d6e0, transparent: true, opacity: 0.7 });
+    const cheekMat = new THREE.MeshBasicMaterial({ color: 0xffb5a7, transparent: true, opacity: 0.7 });
 
     const leftCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    leftCheek.position.set(-0.48, 0.05, 0.85);
+    leftCheek.position.set(-0.48, 0.02, 0.86);
     petGroup.add(leftCheek);
 
     const rightCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    rightCheek.position.set(0.48, 0.05, 0.85);
+    rightCheek.position.set(0.48, 0.02, 0.86);
     petGroup.add(rightCheek);
 
-    // Orelhas Redondas
+    // Orelhas Fofas
     const earGeo = new THREE.SphereGeometry(0.35, 32, 32);
-    const earMat = new THREE.MeshPhongMaterial({ color: 0xd6e2e9, shininess: 10 });
+    earGeo.scale(0.8, 1.4, 0.8);
+    const earMat = new THREE.MeshPhongMaterial({ color: 0xffcad4, shininess: 15 });
 
     const leftEar = new THREE.Mesh(earGeo, earMat);
-    leftEar.position.set(-0.75, 0.75, 0.1);
+    leftEar.position.set(-0.65, 0.85, 0.1);
+    leftEar.rotation.z = -0.25;
     petGroup.add(leftEar);
 
     const rightEar = new THREE.Mesh(earGeo, earMat);
-    rightEar.position.set(0.75, 0.75, 0.1);
+    rightEar.position.set(0.65, 0.85, 0.1);
+    rightEar.rotation.z = 0.25;
     petGroup.add(rightEar);
 
-    // --- 3. INTERAÇÃO E ANIMAÇÃO DO PET ---
+    // Interatividade com o Mouse
     let mouseX = 0, mouseY = 0;
     let targetX = 0, targetY = 0;
 
-    // Acompanhar o Cursor
     window.addEventListener('mousemove', (e) => {
       const rect = container.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      mouseX = (x / rect.width) * 2 - 1;
-      mouseY = -(y / rect.height) * 2 + 1;
+      if (e.clientX >= rect.left && e.clientX <= rect.right &&
+          e.clientY >= rect.top && e.clientY <= rect.bottom) {
+        mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+        mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
+      }
     });
 
-    let isBouncing = false;
-    let bounceTime = 0;
+    // Animação de Pulo/Ações
+    let isJumping = false;
+    let jumpTime = 0;
 
-    function pularPet() {
-      if (!isBouncing) {
-        isBouncing = true;
-        bounceTime = 0;
-        bodyMat.color.setHex(0xf7d6e0); // Muda para tom rosa
-        setTimeout(() => bodyMat.color.setHex(0xd6e2e9), 800);
-      }
+    function setStatus(text) {
+      document.getElementById('pet-status-text').innerText = text;
+    }
+
+    function fazerCarinho() {
+      setStatus('✨ O mascote está amando o seu carinho!');
+      bodyMat.color.setHex(0xfde2e4);
+      petGroup.scale.set(1.08, 0.92, 1.08);
+      setTimeout(() => {
+        petGroup.scale.set(1, 1, 1);
+        bodyMat.color.setHex(0xffcad4);
+      }, 400);
+    }
+
+    function alimentarPet() {
+      setStatus('🍎 Nhoc nhoc! Ele adorou o lanchinho.');
+      let scale = 1;
+      const eatInterval = setInterval(() => {
+        scale = scale === 1 ? 1.05 : 1;
+        petGroup.scale.set(scale, scale, scale);
+      }, 150);
+
+      setTimeout(() => {
+        clearInterval(eatInterval);
+        petGroup.scale.set(1, 1, 1);
+        setStatus('O mascote está de barriguinha cheia!');
+      }, 1200);
     }
 
     function brincarPet() {
-      // Pequeno balanço para os lados
-      let count = 0;
-      const interval = setInterval(() => {
-        petGroup.rotation.z = Math.sin(count) * 0.2;
-        count += 0.3;
-        if (count > Math.PI * 2) {
-          clearInterval(interval);
-          petGroup.rotation.z = 0;
-        }
-      }, 30);
+      if (!isJumping) {
+        isJumping = true;
+        jumpTime = 0;
+        setStatus('🎈 Uhul! Hora de brincar!');
+      }
     }
 
     // Loop de Animação Principal
     function animate() {
       requestAnimationFrame(animate);
 
-      // Movimento suave dos olhos/cabeça seguindo o mouse
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
+      // Suavização do movimento dos olhos seguindo o mouse
+      targetX += (mouseX - targetX) * 0.08;
+      targetY += (mouseY - targetY) * 0.08;
 
-      petGroup.rotation.y = targetX * 0.4;
+      petGroup.rotation.y = targetX * 0.5;
       petGroup.rotation.x = -targetY * 0.3;
 
-      // Flutuação Contínua (Efeito Flutuante)
-      if (!isBouncing) {
-        petGroup.position.y = Math.sin(Date.now() * 0.002) * 0.08;
-      } else {
-        bounceTime += 0.08;
-        petGroup.position.y = Math.abs(Math.sin(bounceTime)) * 0.5;
-        if (bounceTime > Math.PI) {
-          isBouncing = false;
+      // Pulo e flutuação suave
+      if (isJumping) {
+        jumpTime += 0.09;
+        petGroup.position.y = Math.sin(jumpTime) * 0.45;
+        if (jumpTime >= Math.PI) {
+          isJumping = false;
           petGroup.position.y = 0;
+          setStatus('O mascote descansou e está feliz.');
         }
+      } else {
+        petGroup.position.y = Math.sin(Date.now() * 0.002) * 0.06;
       }
 
       renderer.render(scene, camera);
     }
     animate();
 
-    // Redimensionamento do canvas 3D
+    // Redimensionamento responsivo
     window.addEventListener('resize', () => {
       const w = container.clientWidth;
       const h = container.clientHeight;
@@ -523,33 +730,59 @@
       renderer.setSize(w, h);
     });
 
-    // --- 4. FUNÇÃO DA ÁREA DE ESCUTA ---
-    function liberarPensamento() {
-      const campo = document.getElementById('texto-desabafo');
-      const status = document.getElementById('status-resposta');
+    // ===============================================
+    // 2. LÓGICA DA RESPIRO DINÂMICO
+    // ===============================================
+    const breathText = document.getElementById('breath-text');
+    const breathSub = document.getElementById('breath-sub');
 
-      if (campo.value.trim() !== "") {
-        campo.style.transition = "opacity 0.8s ease";
-        campo.style.opacity = "0.3";
-        status.innerText = "Seu pensamento foi acolhido. Respire fundo...";
+    const fasesBreathing = [
+      { main: 'Inspire...', sub: 'Sinta o ar encher o seu peito devagar.' },
+      { main: 'Segure...', sub: 'Mantenha a calma por alguns segundos.' },
+      { main: 'Expire...', sub: 'Solte todo o ar e relaxe os ombros.' }
+    ];
+    let step = 0;
+
+    setInterval(() => {
+      step = (step + 1) % fasesBreathing.length;
+      breathText.innerText = fasesBreathing[step].main;
+      breathSub.innerText = fasesBreathing[step].sub;
+    }, 2600);
+
+    // ===============================================
+    // 3. LÓGICA DO DIÁRIO DE DESABAFO
+    // ===============================================
+    function selectTag(btn) {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+
+    function soltarPensamento() {
+      const input = document.getElementById('journal-text');
+      const msg = document.getElementById('journal-msg');
+
+      if (input.value.trim() !== "") {
+        input.style.transition = "opacity 0.8s, transform 0.8s";
+        input.style.opacity = "0.2";
+        input.style.transform = "scale(0.98)";
+        
+        msg.innerText = "✨ Seu pensamento foi liberado. Respire fundo e cuide de você.";
+        msg.style.display = "block";
 
         setTimeout(() => {
-          campo.value = "";
-          campo.style.opacity = "1";
-          status.innerText = "";
-        }, 2500);
+          input.value = "";
+          input.style.opacity = "1";
+          input.style.transform = "scale(1)";
+        }, 1800);
       }
     }
 
-    // --- 5. TEXTO DINÂMICO PARA RESPIRAÇÃO ---
-    const textoRespiro = document.getElementById('texto-respiro');
-    const fases = ['Inspire...', 'Segure...', 'Expire...'];
-    let faseIdx = 0;
-
-    setInterval(() => {
-      faseIdx = (faseIdx + 1) % fases.length;
-      textoRespiro.innerText = fases[faseIdx];
-    }, 2600);
+    // ===============================================
+    // 4. LÓGICA DE SONS CONFORTÁVEIS (FEEDBACK)
+    // ===============================================
+    function playSoftSound(tipo) {
+      alert(`Você ativou o modo sonoro: ${tipo.toUpperCase()} 🎧. (Coloque seus fones e aproveite o momento de descanso)`);
+    }
   </script>
 </body>
 </html>
