@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Refúgio - Painel de Conforto e Acolhimento</title>
+  <title>Meu Refúgio Personalizado</title>
 
   <!-- Google Fonts & Three.js -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,23 +12,24 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
-    /* PALETA EXTRAÍDA EXATAMENTE DA SUA IMAGEM (SUVINIL) */
+    /* PALETA DE CORES PERSONALIZADA: ROSA, AZUL, CREME, AMARELO E VERDE */
     :root {
-      --gengibre: #fde8b0;
-      --naturale: #fcd5be;
-      --conto-de-fadas: #fbd2e1;
-      --chuva-de-petalas: #e3d1f0;
-      --ceu-sereno: #c2e2f0;
-      --calmaria: #cbe8e4;
-      --igarape: #c3eac9;
-      --chenille: #e5e6c5;
+      --rosa: #f8c8dc;
+      --rosa-soft: #fce4ec;
+      --azul: #b2daed;
+      --azul-soft: #e1f5fe;
+      --creme: #fdf6e3;
+      --amarelo: #fef08a;
+      --amarelo-soft: #fef9c3;
+      --verde: #bbf7d0;
+      --verde-soft: #dcfce7;
 
-      --bg-site: #faf8f5;
-      --card-white: #ffffff;
-      --cor-texto: #423d38;
-      --cor-subtexto: #6e675f;
-      --sombra-soft: 0 12px 28px rgba(66, 61, 56, 0.06);
-      --borda-card: 1px solid rgba(220, 210, 200, 0.5);
+      --bg-site: #fdfbf7;
+      --card-bg: #ffffff;
+      --cor-texto: #3b3a36;
+      --cor-subtexto: #6b6a65;
+      --sombra: 0 10px 25px rgba(0, 0, 0, 0.05);
+      --borda: 2px solid rgba(0, 0, 0, 0.04);
       --raio: 24px;
     }
 
@@ -42,661 +43,467 @@
       background-color: var(--bg-site);
       color: var(--cor-texto);
       font-family: 'Nunito', sans-serif;
-      line-height: 1.6;
-      padding-bottom: 3rem;
-    }
-
-    /* Cabeçalho */
-    header {
-      background: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(10px);
-      border-bottom: var(--borda-card);
-      padding: 1rem 2rem;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: var(--cor-texto);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .status-tag {
-      background: var(--gengibre);
-      padding: 0.3rem 0.9rem;
-      border-radius: 20px;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--cor-texto);
-    }
-
-    /* Layout Bento Grid */
-    .bento-container {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1.2rem;
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      gap: 1.25rem;
-    }
-
-    /* Estilo Base dos Cards Bento */
-    .bento-card {
-      background: var(--card-white);
-      border-radius: var(--raio);
-      padding: 1.6rem;
-      box-shadow: var(--sombra-soft);
-      border: var(--borda-card);
-      position: relative;
-      overflow: hidden;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
     }
 
-    .bento-card h2 {
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: var(--cor-texto);
-      margin-bottom: 0.8rem;
+    /* Topo Personalizado */
+    header {
+      background: var(--creme);
+      border-bottom: var(--borda);
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .user-greeting {
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.8rem;
     }
 
-    .bento-card p {
-      color: var(--cor-subtexto);
-      font-size: 0.92rem;
+    .user-greeting input {
+      border: 1px solid #ddd;
+      padding: 0.4rem 0.8rem;
+      border-radius: 12px;
+      font-family: inherit;
+      outline: none;
+      background: #fff;
     }
 
-    /* --- BENTO 1: MASCOTE 3D (7 colunas) --- */
-    .card-pet {
-      grid-column: span 7;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--gengibre) 120%);
-    }
-
-    .pet-wrapper {
-      position: relative;
-      width: 100%;
-      height: 280px;
-      background: radial-gradient(circle, #ffffff 0%, var(--chenille) 120%);
-      border-radius: 18px;
-      margin: 1rem 0;
-    }
-
-    #pet-canvas {
-      width: 100%;
-      height: 100%;
-      cursor: grab;
-    }
-
-    #pet-canvas:active {
-      cursor: grabbing;
-    }
-
-    .pet-controls {
+    /* Menu de Abas (Navegação) */
+    .nav-tabs {
       display: flex;
-      gap: 0.6rem;
+      justify-content: center;
+      gap: 0.8rem;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 0.8rem;
+      border-bottom: var(--borda);
       flex-wrap: wrap;
     }
 
-    .btn-action {
-      background: var(--card-white);
-      border: 1px solid rgba(0,0,0,0.06);
-      padding: 0.6rem 1rem;
+    .tab-btn {
+      border: none;
+      padding: 0.8rem 1.4rem;
+      border-radius: 16px;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: var(--bg-site);
+      color: var(--cor-texto);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    /* Cores individuais para destaque de abas */
+    .tab-btn[data-tab="pet"] { border-bottom: 3px solid var(--rosa); }
+    .tab-btn[data-tab="mente"] { border-bottom: 3px solid var(--azul); }
+    .tab-btn[data-tab="galeria"] { border-bottom: 3px solid var(--amarelo); }
+    .tab-btn[data-tab="relax"] { border-bottom: 3px solid var(--verde); }
+
+    .tab-btn.active[data-tab="pet"] { background: var(--rosa-soft); }
+    .tab-btn.active[data-tab="mente"] { background: var(--azul-soft); }
+    .tab-btn.active[data-tab="galeria"] { background: var(--amarelo-soft); }
+    .tab-btn.active[data-tab="relax"] { background: var(--verde-soft); }
+
+    /* Conteúdo das Abas */
+    main {
+      max-width: 1000px;
+      width: 100%;
+      margin: 2rem auto;
+      padding: 0 1.2rem;
+      flex: 1;
+    }
+
+    .tab-content {
+      display: none;
+      animation: fadeIn 0.4s ease-in-out;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ESTILOS DOS CARDS E SEÇÕES */
+
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--raio);
+      padding: 2rem;
+      box-shadow: var(--sombra);
+      border: var(--borda);
+      margin-bottom: 1.5rem;
+    }
+
+    h2 {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    /* ABA 1: PET VIRTUAL (ROSA) */
+    .bg-rosa { background: linear-gradient(135deg, #ffffff, var(--rosa-soft)); }
+    
+    .pet-container {
+      width: 100%;
+      height: 300px;
+      background: radial-gradient(circle, #fff, var(--creme));
+      border-radius: 20px;
+      margin: 1rem 0;
+      position: relative;
+    }
+
+    #pet-canvas { width: 100%; height: 100%; }
+
+    .btn-group {
+      display: flex;
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background: var(--card-bg);
+      border: 1px solid rgba(0,0,0,0.08);
+      padding: 0.7rem 1.2rem;
       border-radius: 14px;
       font-family: inherit;
       font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--cor-texto);
       cursor: pointer;
-      transition: transform 0.2s, background 0.2s;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+      transition: transform 0.2s;
     }
 
-    .btn-action:hover {
-      transform: translateY(-2px);
-      background: var(--conto-de-fadas);
+    .btn:hover { transform: translateY(-2px); }
+
+    /* ABA 2: MENTE E DESABAFO (AZUL) */
+    .bg-azul { background: linear-gradient(135deg, #ffffff, var(--azul-soft)); }
+
+    textarea {
+      width: 100%;
+      height: 120px;
+      border: 1px solid #ddd;
+      border-radius: 16px;
+      padding: 1rem;
+      font-family: inherit;
+      margin: 1rem 0;
+      outline: none;
+      resize: none;
+      transition: all 0.5s ease;
     }
 
-    /* --- BENTO 2: GUIA DE RESPIRAÇÃO (5 colunas) --- */
-    .card-breath {
-      grid-column: span 5;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--ceu-sereno) 130%);
+    textarea.dissolving {
+      opacity: 0;
+      transform: scale(0.95);
+      filter: blur(5px);
+    }
+
+    /* ABA 3: GALERIA DE IMAGENS (AMARELO) */
+    .bg-amarelo { background: linear-gradient(135deg, #ffffff, var(--amarelo-soft)); }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .gallery-card {
+      background: #fff;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      border: var(--borda);
+    }
+
+    .gallery-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+    }
+
+    .gallery-card p {
+      padding: 0.8rem;
+      font-size: 0.85rem;
       text-align: center;
+      font-weight: 600;
+      color: var(--cor-subtexto);
+    }
+
+    /* ABA 4: RELAXAMENTO E SONS (VERDE) */
+    .bg-verde { background: linear-gradient(135deg, #ffffff, var(--verde-soft)); }
+
+    .breath-box {
+      text-align: center;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
       align-items: center;
     }
 
     .breath-circle {
-      width: 140px;
-      height: 140px;
+      width: 130px;
+      height: 130px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--calmaria), var(--chuva-de-petalas));
+      background: linear-gradient(135deg, var(--verde), var(--azul));
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
       font-weight: 800;
-      font-size: 1.1rem;
-      color: var(--cor-texto);
       margin: 1.5rem 0;
-      animation: pulseBreathe 8s infinite ease-in-out;
-      box-shadow: 0 10px 25px rgba(197, 235, 214, 0.6);
+      animation: breathe 8s infinite ease-in-out;
     }
 
-    @keyframes pulseBreathe {
-      0%, 100% { transform: scale(0.95); opacity: 0.8; }
-      50% { transform: scale(1.35); opacity: 1; background: linear-gradient(135deg, var(--conto-de-fadas), var(--naturale)); }
-    }
-
-    /* --- BENTO 3: DESABAFO COM DISSOLUÇÃO (6 colunas) --- */
-    .card-journal {
-      grid-column: span 6;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--chuva-de-petalas) 140%);
-    }
-
-    .journal-box {
-      width: 100%;
-      height: 110px;
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 0.9rem;
-      font-family: inherit;
-      font-size: 0.9rem;
-      color: var(--cor-texto);
-      background: rgba(255, 255, 255, 0.8);
-      resize: none;
-      outline: none;
-      margin-top: 0.8rem;
-      transition: all 0.5s ease;
-    }
-
-    .journal-box.dissolving {
-      opacity: 0;
-      transform: translateY(-15px) scale(0.96);
-      filter: blur(4px);
-    }
-
-    /* --- BENTO 4: BISCOITO DA SORTE & ACOLHIMENTO (6 colunas) --- */
-    .card-cookie {
-      grid-column: span 6;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--naturale) 130%);
-    }
-
-    .cookie-display {
-      background: rgba(255,255,255,0.75);
-      border-radius: 16px;
-      padding: 1rem;
-      margin: 0.8rem 0;
-      min-height: 70px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      font-weight: 600;
-      font-size: 0.95rem;
-      color: var(--cor-texto);
-      border: 1px dashed rgba(0,0,0,0.1);
-    }
-
-    /* --- BENTO 5: MISTURADOR DE SONS AMBIENTES (7 colunas) --- */
-    .card-sounds {
-      grid-column: span 7;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--igarape) 130%);
-    }
-
-    .sound-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-      gap: 0.8rem;
-      margin-top: 1rem;
-    }
-
-    .sound-btn {
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(0,0,0,0.05);
-      padding: 0.8rem;
-      border-radius: 14px;
-      text-align: center;
-      font-weight: 700;
-      font-size: 0.85rem;
-      color: var(--cor-texto);
-      cursor: pointer;
-      transition: all 0.2s ease;
-    }
-
-    .sound-btn.active {
-      background: var(--calmaria);
-      border-color: var(--igarape);
-      box-shadow: 0 4px 12px rgba(195, 234, 201, 0.5);
-    }
-
-    /* --- BENTO 6: DICAS RÁPIDAS DE CALMA (5 colunas) --- */
-    .card-tips {
-      grid-column: span 5;
-      background: linear-gradient(135deg, var(--card-white) 0%, var(--chenille) 130%);
-    }
-
-    .tip-pill {
-      background: rgba(255,255,255,0.8);
-      padding: 0.6rem 0.9rem;
-      border-radius: 12px;
-      margin-top: 0.6rem;
-      font-size: 0.85rem;
-      border-left: 4px solid var(--naturale);
+    @keyframes breathe {
+      0%, 100% { transform: scale(0.9); }
+      50% { transform: scale(1.3); background: linear-gradient(135deg, var(--rosa), var(--amarelo)); }
     }
 
     /* Rodapé */
     footer {
       text-align: center;
-      margin-top: 2rem;
-      color: var(--cor-subtexto);
+      padding: 1.5rem;
+      background: var(--creme);
       font-size: 0.85rem;
-    }
-
-    /* Responsividade */
-    @media (max-width: 900px) {
-      .card-pet, .card-breath, .card-journal, 
-      .card-cookie, .card-sounds, .card-tips {
-        grid-column: span 12;
-      }
+      color: var(--cor-subtexto);
+      border-top: var(--borda);
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
+  <!-- Topo -->
   <header>
-    <div class="logo">🌿 Refúgio</div>
-    <div class="status-tag">Seu Cantinho de Paz</div>
+    <div style="font-weight: 800; font-size: 1.2rem;">🌸 Espaço Refúgio</div>
+    <div class="user-greeting">
+      <span>Olá,</span>
+      <input type="text" id="user-name" value="Visitante" oninput="updateName()" placeholder="Seu nome...">
+    </div>
   </header>
 
-  <!-- Container Principal Bento Grid -->
-  <main class="bento-container">
+  <!-- Navegação por Abas -->
+  <nav class="nav-tabs">
+    <button class="tab-btn active" data-tab="pet" onclick="switchTab('pet')">🎀 Meu Bichinho</button>
+    <button class="tab-btn" data-tab="mente" onclick="switchTab('mente')">💧 Espaço da Mente</button>
+    <button class="tab-btn" data-tab="galeria" onclick="switchTab('galeria')">🖼️ Galeria Calma</button>
+    <button class="tab-btn" data-tab="relax" onclick="switchTab('relax')">🌱 Relaxamento</button>
+  </nav>
 
-    <!-- 1. Mascote 3D Interativo -->
-    <section class="bento-card card-pet">
-      <div>
-        <h2>🐾 Seu Companheiro Virtual</h2>
-        <p>Mova o mouse para ele te acompanhar. Interaja usando os botões abaixo!</p>
+  <!-- Conteúdo Principal -->
+  <main>
+
+    <!-- ABA 1: PET VIRTUAL (ROSA) -->
+    <div id="tab-pet" class="tab-content active">
+      <div class="card bg-rosa">
+        <h2>🐾 Seu Companheiro 3D</h2>
+        <p>Um cantinho dedicado para você brincar e relaxar com o seu mascote.</p>
+        
+        <div class="pet-container">
+          <div id="pet-canvas"></div>
+        </div>
+
+        <div class="btn-group">
+          <button class="btn" style="background: var(--rosa);" onclick="fazerCarinho()">💖 Fazer Carinho</button>
+          <button class="btn" style="background: var(--amarelo);" onclick="pularPet()">🎈 Brincar</button>
+          <button class="btn" style="background: var(--azul);" onclick="toggleFones()">🎧 Fones</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 2: ESPAÇO DA MENTE (AZUL) -->
+    <div id="tab-mente" class="tab-content">
+      <div class="card bg-azul">
+        <h2>✏️ Caixa de Desabafo</h2>
+        <p>Escreva o que está sentindo. Quando terminar, aperte o botão para ver seu texto sumir suavemente.</p>
+        
+        <textarea id="journal-text" placeholder="Como foi o seu dia hoje?"></textarea>
+        
+        <button class="btn" style="background: var(--azul);" onclick="dissolverText()">Soltar Pensamento 🍃</button>
       </div>
 
-      <div class="pet-wrapper">
-        <div id="pet-canvas"></div>
+      <div class="card" style="background: var(--creme);">
+        <h2>🥠 Mensagem do Dia para <span class="display-name">Visitante</span></h2>
+        <p id="quote-display" style="font-weight: 700; margin: 1rem 0; font-size: 1.1rem;">"Você é capaz de lidar com cada passo de cada vez."</p>
+        <button class="btn" style="background: var(--amarelo);" onclick="novaMensagem()">✨ Nova Mensagem</button>
+      </div>
+    </div>
+
+    <!-- ABA 3: GALERIA CALMA (AMARELO) -->
+    <div id="tab-galeria" class="tab-content">
+      <div class="card bg-amarelo">
+        <h2>🖼️ Imagens Inspiradoras e Confortáveis</h2>
+        <p>Uma seleção visual para trazer paz e aconchego ao seu olhar.</p>
+
+        <div class="gallery-grid">
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=500&q=80" alt="Luz do sol em plantas">
+            <p>Manhã Tranquila 🌿</p>
+          </div>
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" alt="Mascote fofo">
+            <p>Pausa para o Café ☕</p>
+          </div>
+          <div class="gallery-card">
+            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80" alt="Praia calma">
+            <p>Céu e Mar 🌊</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ABA 4: RELAXAMENTO E SONS (VERDE) -->
+    <div id="tab-relax" class="tab-content">
+      <div class="card bg-verde">
+        <h2>🫁 Guia de Respiração</h2>
+        <div class="breath-box">
+          <p>Acompanhe o movimento do círculo:</p>
+          <div class="breath-circle" id="breath-status">Inspire...</div>
+        </div>
       </div>
 
-      <div class="pet-controls">
-        <button class="btn-action" onclick="fazerCarinho()">✨ Carinho</button>
-        <button class="btn-action" onclick="pularPet()">🎈 Brincar</button>
-        <button class="btn-action" onclick="toggleFones()">🎧 Colocar Fones</button>
+      <div class="card">
+        <h2>🎧 Sons Relaxantes</h2>
+        <p style="margin-bottom: 1rem;">Ligue os sons para criar um ambiente calmo enquanto navega:</p>
+        <div class="btn-group">
+          <button class="btn" style="background: var(--verde-soft);" onclick="toggleSound('chuva', this)">🌧️ Chuva</button>
+          <button class="btn" style="background: var(--azul-soft);" onclick="toggleSound('vento', this)">🍃 Vento</button>
+        </div>
       </div>
-    </section>
-
-    <!-- 2. Guia de Respiração -->
-    <section class="bento-card card-breath">
-      <h2>🫁 Respire sem Pressa</h2>
-      <p>Siga a expansão do círculo para desacelerar o coração.</p>
-
-      <div class="breath-circle" id="breath-text">Inspire...</div>
-
-      <p id="breath-sub" style="font-size: 0.85rem; color: var(--cor-subtexto);">Encha o peito de ar com calma.</p>
-    </section>
-
-    <!-- 3. Diário com Dissolução Visual -->
-    <section class="bento-card card-journal">
-      <div>
-        <h2>✏️ Soltar Pensamentos</h2>
-        <p>Escreva o que está pesando na sua mente e deixe ir embora.</p>
-      </div>
-
-      <textarea id="journal-input" class="journal-box" placeholder="Digite aqui o que está te incomodando..."></textarea>
-
-      <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.8rem;">
-        <span id="journal-status" style="font-size: 0.8rem; color: var(--cor-subtexto);"></span>
-        <button class="btn-action" style="background: var(--conto-de-fadas);" onclick="dissolverPensamento()">Soltar Pensamento 🍃</button>
-      </div>
-    </section>
-
-    <!-- 4. Biscoito da Sorte / Mensagem de Acolhimento -->
-    <section class="bento-card card-cookie">
-      <div>
-        <h2>🥠 Pílula de Acolhimento</h2>
-        <p>Precisa de uma palavra amiga agora? Clique para sortear uma mensagem.</p>
-      </div>
-
-      <div class="cookie-display" id="cookie-text">
-        "Você está fazendo o melhor que pode. Dê a si mesmo o tempo necessário."
-      </div>
-
-      <button class="btn-action" style="background: var(--gengibre); width: 100%;" onclick="sortearMensagem()">✨ Tirar Nova Mensagem</button>
-    </section>
-
-    <!-- 5. Misturador de Sons Ambientes (Web Audio API) -->
-    <section class="bento-card card-sounds">
-      <div>
-        <h2>🎧 Clima Sonoro Confortável</h2>
-        <p>Clique nos botões para ligar/desligar sons de relaxamento sintéticos:</p>
-      </div>
-
-      <div class="sound-grid">
-        <button class="sound-btn" onclick="toggleAudio('chuva', this)">🌧️ Chuva Suave</button>
-        <button class="sound-btn" onclick="toggleAudio('vento', this)">🍃 Vento Calmo</button>
-        <button class="sound-btn" onclick="toggleAudio('ondas', this)">🌊 Ondas do Mar</button>
-      </div>
-    </section>
-
-    <!-- 6. Cartões de Dicas Rápidas -->
-    <section class="bento-card card-tips">
-      <div>
-        <h2>💡 Pausas para Se Acalmar</h2>
-      </div>
-
-      <div class="tip-pill" style="border-left-color: var(--naturale);">
-        <strong>1. Água Gelada:</strong> Dê pequenos goles em água bem fria para desacelerar o corpo.
-      </div>
-      <div class="tip-pill" style="border-left-color: var(--chuva-de-petalas);">
-        <strong>2. Solte os Ombros:</strong> Desencaixe a mandíbula e relaxe os braços.
-      </div>
-      <div class="tip-pill" style="border-left-color: var(--igarape);">
-        <strong>3. Regra dos 5 Sentidos:</strong> Observe 5 objetos perto de você agora.
-      </div>
-    </section>
+    </div>
 
   </main>
 
   <footer>
-    <p>Refúgio • Criado para te dar conforto e acolhimento. 🤍</p>
+    <p>Criado com carinho • Rosa, Azul, Creme, Amarelo & Verde 🎨</p>
   </footer>
 
-  <!-- Scripts: Lógica 3D, Respiração, Áudio e Interações -->
+  <!-- Scripts -->
   <script>
-    // ===================================================
-    // 1. CONFIGURAÇÃO DO PET 3D (THREE.JS)
-    // ===================================================
-    const container = document.getElementById('pet-canvas');
-    const width = container.clientWidth;
-    const height = container.clientHeight;
+    // 1. GERENCIAMENTO DE ABAS
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+      document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
 
+      document.getElementById(`tab-${tabId}`).classList.add('active');
+      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    }
+
+    // 2. PERSONALIZAÇÃO DE NOME
+    function updateName() {
+      const name = document.getElementById('user-name').value || 'Visitante';
+      document.querySelectorAll('.display-name').forEach(el => {
+        el.innerText = name;
+      });
+    }
+
+    // 3. MASCOTE 3D (THREE.JS)
+    const container = document.getElementById('pet-canvas');
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = 4.8;
+    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
+    camera.position.z = 4.5;
 
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    renderer.setSize(container.clientWidth, container.clientHeight);
     container.appendChild(renderer.domElement);
 
-    // Luzes Suaves
-    const ambientLight = new THREE.AmbientLight(0xffffff, 0.9);
-    scene.add(ambientLight);
+    const light = new THREE.AmbientLight(0xffffff, 0.9);
+    scene.add(light);
 
-    const dirLight = new THREE.DirectionalLight(0xfff5ea, 0.6);
-    dirLight.position.set(4, 5, 3);
-    scene.add(dirLight);
-
-    // Grupo Principal do Pet
     const petGroup = new THREE.Group();
     scene.add(petGroup);
 
-    // Corpo Redondinho em tom pastel (Gengibre/Naturale)
-    const bodyGeo = new THREE.SphereGeometry(1, 64, 64);
-    const bodyMat = new THREE.MeshPhongMaterial({ 
-      color: 0xfcd5be, // Naturale
-      shininess: 20 
-    });
+    // Corpo Rosa Soft
+    const bodyGeo = new THREE.SphereGeometry(1, 32, 32);
+    const bodyMat = new THREE.MeshBasicMaterial({ color: 0xf8c8dc });
     const body = new THREE.Mesh(bodyGeo, bodyMat);
     petGroup.add(body);
 
     // Olhos
-    const eyeGeo = new THREE.SphereGeometry(0.09, 32, 32);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x423d38 });
+    const eyeGeo = new THREE.SphereGeometry(0.1, 16, 16);
+    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x3b3a36 });
+    const eye1 = new THREE.Mesh(eyeGeo, eyeMat);
+    eye1.position.set(-0.3, 0.2, 0.9);
+    const eye2 = new THREE.Mesh(eyeGeo, eyeMat);
+    eye2.position.set(0.3, 0.2, 0.9);
+    petGroup.add(eye1, eye2);
 
-    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-0.33, 0.2, 0.92);
-    petGroup.add(leftEye);
-
-    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(0.33, 0.2, 0.92);
-    petGroup.add(rightEye);
-
-    // Bochechas Coradas (Conto de Fadas)
-    const cheekGeo = new THREE.SphereGeometry(0.12, 16, 16);
-    const cheekMat = new THREE.MeshBasicMaterial({ color: 0xfbd2e1, transparent: true, opacity: 0.8 });
-
-    const leftCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    leftCheek.position.set(-0.48, 0.02, 0.85);
-    petGroup.add(leftCheek);
-
-    const rightCheek = new THREE.Mesh(cheekGeo, cheekMat);
-    rightCheek.position.set(0.48, 0.02, 0.85);
-    petGroup.add(rightCheek);
-
-    // Orelhas Fofas
-    const earGeo = new THREE.SphereGeometry(0.32, 32, 32);
-    earGeo.scale(0.8, 1.3, 0.8);
-    const earMat = new THREE.MeshPhongMaterial({ color: 0xfcd5be });
-
-    const leftEar = new THREE.Mesh(earGeo, earMat);
-    leftEar.position.set(-0.65, 0.85, 0.1);
-    leftEar.rotation.z = -0.25;
-    petGroup.add(leftEar);
-
-    const rightEar = new THREE.Mesh(earGeo, earMat);
-    rightEar.position.set(0.65, 0.85, 0.1);
-    rightEar.rotation.z = 0.25;
-    petGroup.add(rightEar);
-
-    // Acessório: Fones de Ouvido (Opcional)
-    const phoneGroup = new THREE.Group();
-    const phoneArcGeo = new THREE.TorusGeometry(1.05, 0.06, 16, 32, Math.PI);
-    const phoneMat = new THREE.MeshPhongMaterial({ color: 0xc2e2f0 }); // Céu Sereno
-    const phoneArc = new THREE.Mesh(phoneArcGeo, phoneMat);
-    phoneArc.rotation.x = Math.PI / 2;
-    phoneArc.position.y = 0.1;
-    phoneGroup.add(phoneArc);
-
-    const padGeo = new THREE.CylinderGeometry(0.25, 0.25, 0.15, 32);
-    const padLeft = new THREE.Mesh(padGeo, phoneMat);
-    padLeft.position.set(-1.02, 0.1, 0);
-    padLeft.rotation.z = Math.PI / 2;
-    phoneGroup.add(padLeft);
-
-    const padRight = new THREE.Mesh(padGeo, phoneMat);
-    padRight.position.set(1.02, 0.1, 0);
-    padRight.rotation.z = Math.PI / 2;
-    phoneGroup.add(padRight);
-
-    phoneGroup.visible = false;
-    petGroup.add(phoneGroup);
-
-    // Interação com Mouse
-    let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      const rect = container.getBoundingClientRect();
-      if (e.clientX >= rect.left && e.clientX <= rect.right &&
-          e.clientY >= rect.top && e.clientY <= rect.bottom) {
-        mouseX = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        mouseY = -((e.clientY - rect.top) / rect.height) * 2 + 1;
-      }
-    });
-
-    // Animações do Pet
-    let isJumping = false;
-    let jumpTime = 0;
-
-    function fazerCarinho() {
-      bodyMat.color.setHex(0xfbd2e1); // Fica rosinha
-      petGroup.scale.set(1.08, 0.92, 1.08);
-      setTimeout(() => {
-        petGroup.scale.set(1, 1, 1);
-        bodyMat.color.setHex(0xfcd5be);
-      }, 400);
-    }
-
-    function pularPet() {
-      if (!isJumping) {
-        isJumping = true;
-        jumpTime = 0;
-      }
-    }
-
-    function toggleFones() {
-      phoneGroup.visible = !phoneGroup.visible;
-    }
-
+    // Animação Simples
     function animate() {
       requestAnimationFrame(animate);
-
-      targetX += (mouseX - targetX) * 0.08;
-      targetY += (mouseY - targetY) * 0.08;
-
-      petGroup.rotation.y = targetX * 0.5;
-      petGroup.rotation.x = -targetY * 0.3;
-
-      if (isJumping) {
-        jumpTime += 0.09;
-        petGroup.position.y = Math.sin(jumpTime) * 0.4;
-        if (jumpTime >= Math.PI) {
-          isJumping = false;
-          petGroup.position.y = 0;
-        }
-      } else {
-        petGroup.position.y = Math.sin(Date.now() * 0.0025) * 0.05;
-      }
-
+      petGroup.rotation.y += 0.005;
+      petGroup.position.y = Math.sin(Date.now() * 0.003) * 0.05;
       renderer.render(scene, camera);
     }
     animate();
 
-    window.addEventListener('resize', () => {
-      const w = container.clientWidth;
-      const h = container.clientHeight;
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-      renderer.setSize(w, h);
-    });
+    function fazerCarinho() {
+      bodyMat.color.setHex(0xfeb2b2);
+      setTimeout(() => bodyMat.color.setHex(0xf8c8dc), 500);
+    }
 
-    // ===================================================
-    // 2. GUIA DE RESPIRAÇÃO
-    // ===================================================
-    const breathText = document.getElementById('breath-text');
-    const breathSub = document.getElementById('breath-sub');
-    const etapasBreathing = [
-      { text: 'Inspire...', sub: 'Sinta o ar entrar bem devagar.' },
-      { text: 'Segure...', sub: 'Mantenha a calma por uns instantes.' },
-      { text: 'Expire...', sub: 'Solte todo o ar e relaxe os ombros.' }
+    function pularPet() {
+      petGroup.position.y = 0.5;
+    }
+
+    function toggleFones() {
+      alert("Mascote colocou os fones fofos!");
+    }
+
+    // 4. DESABAFO COM DISSOLUÇÃO
+    function dissolverText() {
+      const area = document.getElementById('journal-text');
+      if (area.value.trim() !== '') {
+        area.classList.add('dissolving');
+        setTimeout(() => {
+          area.value = '';
+          area.classList.remove('dissolving');
+        }, 600);
+      }
+    }
+
+    // 5. MENSAGENS
+    const msgs = [
+      "Você é capaz de lidar com cada passo de cada vez.",
+      "Respire fundo. Você está indo bem!",
+      "Permita-se descansar sempre que precisar.",
+      "Pequenos progressos ainda são progressos."
     ];
-    let step = 0;
+    function novaMensagem() {
+      const rand = msgs[Math.floor(Math.random() * msgs.length)];
+      document.getElementById('quote-display').innerText = `"${rand}"`;
+    }
 
+    // 6. GUIA DE RESPIRAÇÃO
+    const breathStatus = document.getElementById('breath-status');
+    const breathSteps = ['Inspire...', 'Segure...', 'Expire...'];
+    let stepIndex = 0;
     setInterval(() => {
-      step = (step + 1) % etapasBreathing.length;
-      breathText.innerText = etapasBreathing[step].text;
-      breathSub.innerText = etapasBreathing[step].sub;
+      stepIndex = (stepIndex + 1) % breathSteps.length;
+      breathStatus.innerText = breathSteps[stepIndex];
     }, 2600);
 
-    // ===================================================
-    // 3. DISSOLUÇÃO VISUAL DO DESABAFO
-    // ===================================================
-    function dissolverPensamento() {
-      const input = document.getElementById('journal-input');
-      const status = document.getElementById('journal-status');
-
-      if (input.value.trim() !== '') {
-        input.classList.add('dissolving');
-        status.innerText = 'Seu pensamento se foi. Respire fundo...';
-
-        setTimeout(() => {
-          input.value = '';
-          input.classList.remove('dissolving');
-          status.innerText = '';
-        }, 1200);
-      }
-    }
-
-    // ===================================================
-    // 4. MENSAGENS DE ACOLHIMENTO (BISCOITO DA SORTE)
-    // ===================================================
-    const mensagens = [
-      "Você está fazendo o melhor que pode. Dê a si mesmo o tempo necessário.",
-      "Não há problema em dar uma pausa hoje. O mundo pode esperar um pouco.",
-      "Você já superou dias difíceis antes. Este também vai passar.",
-      "Sua paz vale muito mais do que qualquer pressa ou cobrança.",
-      "Respire fundo. Você está seguro(a) aqui no seu próprio ritmo."
-    ];
-
-    function sortearMensagem() {
-      const display = document.getElementById('cookie-text');
-      const randomMsg = mensagens[Math.floor(Math.random() * mensagens.length)];
-      display.style.opacity = '0';
-      setTimeout(() => {
-        display.innerText = `"${randomMsg}"`;
-        display.style.opacity = '1';
-      }, 200);
-    }
-
-    // ===================================================
-    // 5. MISTURADOR DE SONS SINTÉTICOS (WEB AUDIO API)
-    // ===================================================
+    // 7. SONS SINTÉTICOS SIMPLES
     let audioCtx = null;
-    const activeNodes = {};
-
-    function toggleAudio(type, btn) {
-      if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      }
-
-      if (activeNodes[type]) {
-        // Desligar
-        activeNodes[type].stop();
-        delete activeNodes[type];
-        btn.classList.remove('active');
-      } else {
-        // Ligar
-        const bufferSize = audioCtx.sampleRate * 2;
-        const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-        const data = buffer.getChannelData(0);
-
-        for (let i = 0; i < bufferSize; i++) {
-          data[i] = Math.random() * 2 - 1; // Ruído branco base
-        }
-
-        const noise = audioCtx.createBufferSource();
-        noise.buffer = buffer;
-        noise.loop = true;
-
-        const filter = audioCtx.createBiquadFilter();
-        
-        if (type === 'chuva') {
-          filter.type = 'lowpass';
-          filter.frequency.value = 800;
-        } else if (type === 'vento') {
-          filter.type = 'bandpass';
-          filter.frequency.value = 400;
-        } else if (type === 'ondas') {
-          filter.type = 'lowpass';
-          filter.frequency.value = 300;
-        }
-
-        const gainNode = audioCtx.createGain();
-        gainNode.gain.value = 0.15; // Volume baixo e confortável
-
-        noise.connect(filter);
-        filter.connect(gainNode);
-        gainNode.connect(audioCtx.destination);
-
-        noise.start();
-        activeNodes[type] = noise;
-        btn.classList.add('active');
-      }
+    function toggleSound(type, btn) {
+      if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      btn.classList.toggle('active');
     }
   </script>
 </body>
