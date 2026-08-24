@@ -3,30 +3,25 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Refúgio Y2K ★ Moodboard</title>
-
-  <!-- Google Fonts & Three.js -->
+  <title>Refúgio • Seu Cantinho de Paz</title>
+  
+  <!-- Fonts Google -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=VT323&family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Sacramento&display=swap" rel="stylesheet">
 
   <style>
-    /* PALETA: ROSA, AZUL, CREME, AMARELO E VERDE (ESTILO Y2K + PINTEREST) */
     :root {
-      --rosa: #FFB7D5;
-      --rosa-dark: #FF6B9D;
-      --azul: #A2E2F8;
-      --azul-dark: #38B6FF;
-      --creme: #FFFBEA;
-      --amarelo: #FFE600;
-      --verde: #B3F5BC;
-      --verde-dark: #20C997;
-      --preto: #222222;
-      
-      --sombra-y2k: 4px 4px 0px var(--preto);
-      --sombra-y2k-hover: 6px 6px 0px var(--preto);
-      --borda-y2k: 3px solid var(--preto);
+      --bg-color: #FAF6F0;
+      --card-bg: #FFFFFF;
+      --primary: #8DA99B;
+      --primary-hover: #739082;
+      --accent-warm: #D4A373;
+      --accent-soft: #F4E8DF;
+      --text-main: #3D403F;
+      --text-muted: #7C8280;
+      --shadow: 0 12px 32px rgba(141, 169, 155, 0.12);
+      --border-radius: 24px;
     }
 
     * {
@@ -36,548 +31,629 @@
     }
 
     body {
-      background-color: var(--creme);
-      background-image: 
-        radial-gradient(var(--rosa) 15%, transparent 16%),
-        radial-gradient(var(--azul) 15%, transparent 16%);
-      background-size: 30px 30px;
-      background-position: 0 0, 15px 15px;
-      color: var(--preto);
-      font-family: 'Fredoka', sans-serif;
-      padding-bottom: 3rem;
-    }
-
-    /* TOP BAR ESTILO JANELA OS ANOS 2000 */
-    .y2k-topbar {
-      background: var(--rosa);
-      border-bottom: var(--borda-y2k);
-      padding: 0.8rem 1.5rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      line-height: 1.6;
+      padding: 20px 16px 40px;
+      min-height: 100vh;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      box-shadow: 0 4px 0px var(--preto);
-      position: sticky;
-      top: 0;
-      z-index: 100;
     }
 
-    .topbar-title {
-      font-family: 'VT323', monospace;
-      font-size: 1.8rem;
-      letter-spacing: 2px;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-
-    .window-controls {
-      display: flex;
-      gap: 6px;
-    }
-
-    .win-btn {
-      width: 18px;
-      height: 18px;
-      border: 2px solid var(--preto);
-      font-size: 10px;
-      font-weight: bold;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 2px 2px 0px var(--preto);
-    }
-
-    .win-btn.min { background: var(--amarelo); }
-    .win-btn.max { background: var(--verde); }
-    .win-btn.close { background: var(--rosa-dark); color: #fff; }
-
-    /* NAVEGAÇÃO POR ABAS (PINTEREST / Y2K BADGES) */
-    .y2k-nav {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin: 1.8rem 1rem;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      font-family: 'VT323', monospace;
-      font-size: 1.4rem;
-      padding: 0.6rem 1.2rem;
-      border: var(--borda-y2k);
-      border-radius: 12px;
-      cursor: pointer;
-      box-shadow: var(--sombra-y2k);
-      transition: all 0.15s ease;
-      background: #fff;
-    }
-
-    .tab-btn:hover {
-      transform: translate(-2px, -2px);
-      box-shadow: var(--sombra-y2k-hover);
-    }
-
-    .tab-btn.active {
-      transform: translate(2px, 2px);
-      box-shadow: 2px 2px 0px var(--preto);
-    }
-
-    .tab-btn[data-tab="moodboard"] { background: var(--rosa); }
-    .tab-btn[data-tab="pet"] { background: var(--azul); }
-    .tab-btn[data-tab="mente"] { background: var(--amarelo); }
-    .tab-btn[data-tab="relax"] { background: var(--verde); }
-
-    /* LAYOUT PRINCIPAL */
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 0 1rem;
-    }
-
-    .tab-content {
-      display: none;
-    }
-
-    .tab-content.active {
-      display: block;
-      animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    }
-
-    @keyframes popIn {
-      from { opacity: 0; transform: scale(0.96); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    /* CARDS JANELAS Y2K */
-    .y2k-card {
-      background: #fff;
-      border: var(--borda-y2k);
-      border-radius: 16px;
-      box-shadow: var(--sombra-y2k);
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-    }
-
-    .y2k-card-header {
-      padding: 0.5rem 0.8rem;
-      border-bottom: var(--borda-y2k);
-      font-family: 'VT323', monospace;
-      font-size: 1.2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: var(--azul);
-    }
-
-    .y2k-card-body {
-      padding: 1.2rem;
-    }
-
-    /* MASONRY / PINTEREST GRID NA ABA MOODBOARD */
-    .pinterest-grid {
-      column-count: 3;
-      column-gap: 1.2rem;
-    }
-
-    @media (max-width: 850px) { .pinterest-grid { column-count: 2; } }
-    @media (max-width: 550px) { .pinterest-grid { column-count: 1; } }
-
-    .pin-item {
-      break-inside: avoid;
-      margin-bottom: 1.2rem;
-    }
-
-    .pin-img {
+    .app-container {
+      max-width: 860px;
       width: 100%;
-      border-radius: 12px;
-      border: 2px solid var(--preto);
-      display: block;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
     }
 
-    .pin-caption {
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-      font-weight: 700;
-    }
-
-    .sticker-tag {
-      display: inline-block;
-      background: var(--amarelo);
-      border: 1.5px solid var(--preto);
-      padding: 0.2rem 0.6rem;
-      border-radius: 20px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      margin-top: 0.4rem;
-      box-shadow: 2px 2px 0px var(--preto);
-    }
-
-    /* WIDGETS INTERATIVOS */
-    .pet-wrapper {
-      width: 100%;
-      height: 280px;
-      background: radial-gradient(circle, #fff, var(--rosa));
-      border: 2px solid var(--preto);
-      border-radius: 12px;
-      margin: 0.8rem 0;
-    }
-
-    #pet-canvas { width: 100%; height: 100%; }
-
-    .y2k-btn {
-      font-family: 'VT323', monospace;
-      font-size: 1.2rem;
-      padding: 0.5rem 1rem;
-      border: var(--borda-y2k);
-      border-radius: 10px;
-      background: var(--amarelo);
-      cursor: pointer;
-      box-shadow: var(--sombra-y2k);
-      margin-right: 0.5rem;
-      margin-bottom: 0.5rem;
-    }
-
-    .y2k-btn:active {
-      transform: translate(2px, 2px);
-      box-shadow: 1px 1px 0px var(--preto);
-    }
-
-    textarea.y2k-input {
-      width: 100%;
-      height: 100px;
-      border: var(--borda-y2k);
-      border-radius: 10px;
-      padding: 0.8rem;
-      font-family: 'Nunito', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      resize: none;
-      background: var(--creme);
-      transition: all 0.5s ease;
-    }
-
-    textarea.y2k-input.dissolving {
-      opacity: 0;
-      transform: scale(0.9);
-      filter: blur(6px);
-    }
-
-    /* RESPIRAÇÃO Y2K */
-    .breathe-box {
+    /* Header Header */
+    header {
       text-align: center;
-      padding: 1rem;
+      padding: 30px 10px 10px;
     }
 
-    .breathe-circle {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background: var(--verde);
-      border: var(--borda-y2k);
-      margin: 1rem auto;
+    .greeting-badge {
+      display: inline-block;
+      background: var(--accent-soft);
+      color: #A36A43;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+      letter-spacing: 0.3px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      font-weight: 600;
+      color: #2D3130;
+      letter-spacing: -0.5px;
+    }
+
+    p.subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      margin-top: 6px;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--border-radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 40px rgba(141, 169, 155, 0.18);
+    }
+
+    .card-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #2D3130;
+    }
+
+    .card-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 20px;
+    }
+
+    /* Respiração */
+    .breathing-section {
+      text-align: center;
+    }
+
+    .breath-circle-wrapper {
+      position: relative;
+      width: 170px;
+      height: 170px;
+      margin: 24px auto;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'VT323', monospace;
-      font-size: 1.5rem;
-      box-shadow: var(--sombra-y2k);
-      animation: pulseY2k 6s infinite ease-in-out;
     }
 
-    @keyframes pulseY2k {
-      0%, 100% { transform: scale(0.85); background: var(--verde); }
-      50% { transform: scale(1.25); background: var(--rosa); }
+    .breath-circle {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #A8C3B8, #E3B08E);
+      opacity: 0.35;
+      transition: transform 4s ease-in-out, opacity 4s ease-in-out;
     }
 
+    .breath-circle.inhale {
+      transform: scale(1.35);
+      opacity: 0.75;
+    }
+
+    .breath-circle.hold {
+      transform: scale(1.35);
+      opacity: 0.75;
+    }
+
+    .breath-circle.exhale {
+      transform: scale(1);
+      opacity: 0.35;
+    }
+
+    .breath-text {
+      position: relative;
+      z-index: 2;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: #2A3832;
+    }
+
+    .btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 4px 14px rgba(141, 169, 155, 0.35);
+    }
+
+    .btn:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-1px);
+    }
+
+    /* Deletador de Pensamentos */
+    textarea {
+      width: 100%;
+      height: 110px;
+      border: 1.5px solid #E5EAE7;
+      border-radius: 16px;
+      padding: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background-color: #FAFBFB;
+      resize: none;
+      outline: none;
+      transition: border-color 0.2s, opacity 0.8s ease;
+    }
+
+    textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .thought-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .thought-feedback {
+      font-size: 0.9rem;
+      color: var(--primary);
+      font-weight: 500;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .thought-feedback.show {
+      opacity: 1;
+    }
+
+    .dissolving {
+      animation: fadeOutDissolve 1.2s forwards ease-in-out;
+    }
+
+    @keyframes fadeOutDissolve {
+      0% { opacity: 1; filter: blur(0px); transform: scale(1); }
+      50% { opacity: 0.4; filter: blur(3px); transform: scale(0.98); }
+      100% { opacity: 0; filter: blur(8px); transform: scale(0.95); }
+    }
+
+    /* Sons de Fundo */
+    .sounds-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+
+    .sound-item {
+      background: var(--bg-color);
+      border-radius: 18px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .sound-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-weight: 500;
+      font-size: 0.95rem;
+    }
+
+    .sound-btn {
+      background: #E8EFEA;
+      border: none;
+      color: var(--text-main);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 500;
+      transition: all 0.2s ease;
+    }
+
+    .sound-btn.active {
+      background: var(--primary);
+      color: white;
+    }
+
+    input[type="range"] {
+      accent-color: var(--primary);
+      width: 100%;
+      cursor: pointer;
+    }
+
+    /* Biscoito da Sorte / Mensagem */
+    .quote-box {
+      background: linear-gradient(135deg, #FAF0E6, #F5E5D8);
+      border-radius: 20px;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .quote-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+      color: #5C4334;
+      margin-bottom: 16px;
+      min-height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Moodboard */
+    .moodboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 16px;
+    }
+
+    .mood-card {
+      border-radius: 18px;
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+      background: #E0E0E0;
+    }
+
+    .mood-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s ease;
+    }
+
+    .mood-card:hover img {
+      transform: scale(1.05);
+    }
+
+    .mood-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: white;
+      padding: 24px 14px 12px;
+      font-size: 0.88rem;
+    }
+
+    .mood-tag {
+      font-size: 0.75rem;
+      background: rgba(255,255,255,0.25);
+      backdrop-filter: blur(4px);
+      padding: 2px 8px;
+      border-radius: 12px;
+      display: inline-block;
+      margin-top: 4px;
+    }
+
+    /* Footer */
     footer {
       text-align: center;
-      margin-top: 2rem;
-      font-family: 'VT323', monospace;
-      font-size: 1.2rem;
+      padding: 20px 10px;
+      color: var(--text-muted);
+      font-size: 0.88rem;
+    }
+
+    footer .signature {
+      font-family: 'Sacramento', cursive;
+      font-size: 1.8rem;
+      color: var(--accent-warm);
+      display: block;
+      margin-top: 2px;
     }
   </style>
 </head>
 <body>
 
-  <!-- Topbar OS Retrô -->
-  <div class="y2k-topbar">
-    <div class="topbar-title">★ REFUGIO_Y2K.EXE ★</div>
-    <div class="window-controls">
-      <div class="win-btn min">-</div>
-      <div class="win-btn max">□</div>
-      <div class="win-btn close">x</div>
+  <div class="app-container">
+
+    <!-- Header -->
+    <header>
+      <div class="greeting-badge" id="timeGreeting">✨ Seja bem-vindo(a) ao seu espaço</div>
+      <h1>Refúgio de Paz</h1>
+      <p class="subtitle">Puxe uma cadeira, respire fundo e fique o tempo que quiser.</p>
+    </header>
+
+    <!-- Abraço em Palavras / Mensagem -->
+    <div class="card">
+      <div class="card-title">💌 Abraço em Palavras</div>
+      <div class="quote-box">
+        <div class="quote-text" id="quoteDisplay">"Você não precisa dar conta de tudo hoje. Vá no seu tempo."</div>
+        <button class="btn" onclick="generateNewQuote()">Sortear outro carinho 🌸</button>
+      </div>
     </div>
+
+    <!-- Guia de Respiração -->
+    <div class="card breathing-section">
+      <div class="card-title" style="justify-content: center;">🧘 Guia de Respiração Consciente</div>
+      <p class="card-desc">Sincronize sua inspiração e expiração com o círculo para desacelerar seus batimentos.</p>
+      
+      <div class="breath-circle-wrapper">
+        <div class="breath-circle" id="breathCircle"></div>
+        <div class="breath-text" id="breathText">Clique em Iniciar</div>
+      </div>
+
+      <button class="btn" id="breathBtn" onclick="toggleBreathing()">Iniciar Respiração ✨</button>
+    </div>
+
+    <!-- Deletador de Pensamentos -->
+    <div class="card">
+      <div class="card-title">🗑️ Descarregar & Soltar</div>
+      <p class="card-desc">Escreva aqui tudo o que está pesando na sua mente e solte para o universo.</p>
+      
+      <textarea id="thoughtInput" placeholder="O que está preocupando você neste momento?"></textarea>
+      
+      <div class="thought-actions">
+        <button class="btn" onclick="dissolveThought()">Liberar e Apagar ✨</button>
+        <span class="thought-feedback" id="thoughtFeedback">Pensamento liberado. Está tudo bem recomeçar 🍃</span>
+      </div>
+    </div>
+
+    <!-- Sons de Conforto -->
+    <div class="card">
+      <div class="card-title">🎵 Sons Aconchegantes de Fundo</div>
+      <p class="card-desc">Ligue os sons para criar uma atmosfera tranquila de foco ou relaxamento.</p>
+      
+      <div class="sounds-grid">
+
+        <div class="sound-item">
+          <div class="sound-header">
+            <span>🌧️ Chuva Suave</span>
+            <button class="sound-btn" onclick="toggleSound('rain')">Ligar</button>
+          </div>
+          <input type="range" min="0" max="100" value="50" oninput="setVolume('rain', this.value)">
+        </div>
+
+        <div class="sound-item">
+          <div class="sound-header">
+            <span>🌊 Ondas do Mar</span>
+            <button class="sound-btn" onclick="toggleSound('waves')">Ligar</button>
+          </div>
+          <input type="range" min="0" max="100" value="50" oninput="setVolume('waves', this.value)">
+        </div>
+
+        <div class="sound-item">
+          <div class="sound-header">
+            <span>🍃 Vento Suave</span>
+            <button class="sound-btn" onclick="toggleSound('wind')">Ligar</button>
+          </div>
+          <input type="range" min="0" max="100" value="50" oninput="setVolume('wind', this.value)">
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Moodboard Pinterest -->
+    <div class="card">
+      <div class="card-title">🌸 Galeria do Aconchego</div>
+      <p class="card-desc">Pequenos momentos de calma registrados visualmente.</p>
+      
+      <div class="moodboard-grid">
+        <div class="mood-card">
+          <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="Café e livros">
+          <div class="mood-caption">
+            <strong>Café & Leitura</strong><br>
+            <span class="mood-tag">#PausaGostosa</span>
+          </div>
+        </div>
+
+        <div class="mood-card">
+          <img src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Céu pastel">
+          <div class="mood-caption">
+            <strong>Nuances do Fim de Tarde</strong><br>
+            <span class="mood-tag">#CeuPastel</span>
+          </div>
+        </div>
+
+        <div class="mood-card">
+          <img src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=600&q=80" alt="Plantas verdes">
+          <div class="mood-caption">
+            <strong>Cantinho Verde</strong><br>
+            <span class="mood-tag">#PazEVerde</span>
+          </div>
+        </div>
+
+        <div class="mood-card">
+          <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Praia calma">
+          <div class="mood-caption">
+            <strong>Brisa do Mar</strong><br>
+            <span class="mood-tag">#Calmaria</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>Refúgio de Paz • Feito para acalmar o coração</p>
+      <span class="signature">Com carinho</span>
+    </footer>
+
   </div>
 
-  <!-- Navegação por Abas -->
-  <nav class="y2k-nav">
-    <button class="tab-btn active" data-tab="moodboard" onclick="switchTab('moodboard')">📌 Moodboard Pinterest</button>
-    <button class="tab-btn" data-tab="pet" onclick="switchTab('pet')">👾 Tamagotchi 3D</button>
-    <button class="tab-btn" data-tab="mente" onclick="switchTab('mente')">💬 Desabafo & Quotes</button>
-    <button class="tab-btn" data-tab="relax" onclick="switchTab('relax')">🎧 Chill Zone</button>
-  </nav>
-
-  <main>
-
-    <!-- ABA 1: PINTEREST MOODBOARD -->
-    <div id="tab-moodboard" class="tab-content active">
-      <div class="pinterest-grid">
-        
-        <!-- Item 1 -->
-        <div class="pin-item">
-          <div class="y2k-card">
-            <div class="y2k-card-header" style="background: var(--rosa);">
-              <span>pin_01.jpg</span>
-              <span>★</span>
-            </div>
-            <div class="y2k-card-body">
-              <img class="pin-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=500&q=80" alt="Céu pastel">
-              <p class="pin-caption">Nuances do fim de tarde 🌸</p>
-              <span class="sticker-tag" style="background: var(--rosa);">#CozyVibes</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 2 -->
-        <div class="pin-item">
-          <div class="y2k-card">
-            <div class="y2k-card-header" style="background: var(--amarelo);">
-              <span>quote_today.txt</span>
-              <span>★</span>
-            </div>
-            <div class="y2k-card-body" style="background: var(--amarelo); text-align: center;">
-              <h3 style="font-family: 'VT323'; font-size: 1.8rem;">"SEM PRESSA."</h3>
-              <p style="font-size: 0.85rem; margin-top: 0.4rem;">Vá no seu ritmo e respeite seu tempo.</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 3 -->
-        <div class="pin-item">
-          <div class="y2k-card">
-            <div class="y2k-card-header" style="background: var(--verde);">
-              <span>nature_aesthetic.png</span>
-              <span>★</span>
-            </div>
-            <div class="y2k-card-body">
-              <img class="pin-img" src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=500&q=80" alt="Planta verde">
-              <p class="pin-caption">Cantinho verde de paz 🍃</p>
-              <span class="sticker-tag" style="background: var(--verde);">#SoftGreen</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 4 -->
-        <div class="pin-item">
-          <div class="y2k-card">
-            <div class="y2k-card-header" style="background: var(--azul);">
-              <span>lofi_room.gif</span>
-              <span>★</span>
-            </div>
-            <div class="y2k-card-body">
-              <img class="pin-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=500&q=80" alt="Quarto aconchegante">
-              <p class="pin-caption">Estudo & Café ☕</p>
-              <span class="sticker-tag" style="background: var(--azul);">#StudyAesthetic</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Item 5 -->
-        <div class="pin-item">
-          <div class="y2k-card">
-            <div class="y2k-card-header" style="background: var(--rosa);">
-              <span>sea_breeze.jpg</span>
-              <span>★</span>
-            </div>
-            <div class="y2k-card-body">
-              <img class="pin-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80" alt="Ondas">
-              <p class="pin-caption">Som de ondas no mar 🌊</p>
-              <span class="sticker-tag" style="background: var(--rosa);">#CalmSea</span>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- ABA 2: TAMAGOTCHI 3D -->
-    <div id="tab-pet" class="tab-content">
-      <div class="y2k-card">
-        <div class="y2k-card-header" style="background: var(--azul);">
-          <span>PET_VIRTUAL_v1.0.exe</span>
-          <span>[X]</span>
-        </div>
-        <div class="y2k-card-body">
-          <p>Mova o mouse sobre a tela para o bichinho te seguir!</p>
-          <div class="pet-wrapper">
-            <div id="pet-canvas"></div>
-          </div>
-          <button class="y2k-btn" style="background: var(--rosa);" onclick="fazerCarinho()">💖 Carinho</button>
-          <button class="y2k-btn" style="background: var(--amarelo);" onclick="pularPet()">🎈 Pular</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA 3: DESABAFO E QUOTES -->
-    <div id="tab-mente" class="tab-content">
-      <div class="y2k-card">
-        <div class="y2k-card-header" style="background: var(--amarelo);">
-          <span>DELETER_DE_PENSAMENTOS.exe</span>
-          <span>[X]</span>
-        </div>
-        <div class="y2k-card-body">
-          <p style="margin-bottom: 0.6rem;">Digite o que está pesando na mente e delete:</p>
-          <textarea id="journal-input" class="y2k-input" placeholder="Escreva aqui..."></textarea>
-          <div style="margin-top: 0.8rem;">
-            <button class="y2k-btn" style="background: var(--rosa-dark); color: #fff;" onclick="dissolverText()">DELETAR PENSAMENTO 💣</button>
-          </div>
-        </div>
-      </div>
-
-      <div class="y2k-card">
-        <div class="y2k-card-header" style="background: var(--rosa);">
-          <span>MENSAGEM_ACOLHIMENTO.txt</span>
-          <span>[X]</span>
-        </div>
-        <div class="y2k-card-body" style="text-align: center;">
-          <p id="quote-display" style="font-size: 1.1rem; font-weight: 700; margin: 1rem 0;">"Você é suficiente exatamente do jeito que é."</p>
-          <button class="y2k-btn" style="background: var(--verde);" onclick="sortearQuote()">✨ Gerar Nova Mensagem</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABA 4: RELAX / CHILL -->
-    <div id="tab-relax" class="tab-content">
-      <div class="y2k-card">
-        <div class="y2k-card-header" style="background: var(--verde);">
-          <span>GUIA_RESPIRACAO.gif</span>
-          <span>[X]</span>
-        </div>
-        <div class="y2k-card-body">
-          <div class="breathe-box">
-            <p>Sincronize sua respiração com a bolha:</p>
-            <div class="breathe-circle" id="breathe-text">Inspire</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="y2k-card">
-        <div class="y2k-card-header" style="background: var(--azul);">
-          <span>SOUND_MIXER.wav</span>
-          <span>[X]</span>
-        </div>
-        <div class="y2k-card-body">
-          <p style="margin-bottom: 0.8rem;">Ligue os ruídos de fundo:</p>
-          <button class="y2k-btn" style="background: var(--azul);" onclick="toggleSound('chuva', this)">🌧️ Chuva</button>
-          <button class="y2k-btn" style="background: var(--verde);" onclick="toggleSound('vento', this)">🍃 Vento</button>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <footer>
-    <p>★ REFÚGIO Y2K x PINTEREST MOODBOARD • 2026 ★</p>
-  </footer>
-
   <script>
-    // 1. TROCA DE ABAS
-    function switchTab(tabId) {
-      document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    // Saudação dinâmica por horário
+    (function setGreeting() {
+      const hour = new Date().getHours();
+      const badge = document.getElementById('timeGreeting');
+      if (hour >= 5 && hour < 12) {
+        badge.innerHTML = "✨ Bom dia! Respire fundo e comece leve";
+      } else if (hour >= 12 && hour < 18) {
+        badge.innerHTML = "☕ Boa tarde! Faça uma pausa gostosa";
+      } else {
+        badge.innerHTML = "🌙 Boa noite! Descanse sua mente hoje";
+      }
+    })();
 
-      document.getElementById(`tab-${tabId}`).classList.add('active');
-      document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+    // Mensagens de Afeto
+    const quotes = [
+      "Você não precisa dar conta de tudo hoje. Vá no seu tempo.",
+      "Respire fundo. Esse momento difícil vai passar.",
+      "Sua jornada é única, não se compare aos outros.",
+      "É totalmente aceitável ter dias em que você só faz o possível.",
+      "Você é suficiente do jeitinho que é agora.",
+      "Permita-se descansar sem sentir culpa.",
+      "Pequenos passos ainda são progresso."
+    ];
+
+    function generateNewQuote() {
+      const display = document.getElementById('quoteDisplay');
+      const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+      display.style.opacity = 0;
+      setTimeout(() => {
+        display.innerText = `"${randomQuote}"`;
+        display.style.opacity = 1;
+      }, 200);
     }
 
-    // 2. PET 3D (THREE.JS)
-    const container = document.getElementById('pet-canvas');
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(40, container.clientWidth / container.clientHeight, 0.1, 1000);
-    camera.position.z = 4.2;
+    // Guia de Respiração
+    let breathingInterval = null;
+    let isBreathing = false;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setSize(container.clientWidth, container.clientHeight);
-    container.appendChild(renderer.domElement);
+    function toggleBreathing() {
+      const btn = document.getElementById('breathBtn');
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
 
-    const light = new THREE.AmbientLight(0xffffff, 0.9);
-    scene.add(light);
-
-    const petGroup = new THREE.Group();
-    scene.add(petGroup);
-
-    // Corpo Y2K Rosa
-    const bodyGeo = new THREE.SphereGeometry(1, 32, 32);
-    const bodyMat = new THREE.MeshPhongMaterial({ color: 0xFFB7D5, shininess: 30 });
-    const body = new THREE.Mesh(bodyGeo, bodyMat);
-    petGroup.add(body);
-
-    // Olhos Pixel/Black
-    const eyeGeo = new THREE.BoxGeometry(0.15, 0.25, 0.15);
-    const eyeMat = new THREE.MeshBasicMaterial({ color: 0x222222 });
-    const leftEye = new THREE.Mesh(eyeGeo, eyeMat);
-    leftEye.position.set(-0.3, 0.2, 0.9);
-    const rightEye = new THREE.Mesh(eyeGeo, eyeMat);
-    rightEye.position.set(0.3, 0.2, 0.9);
-    petGroup.add(leftEye, rightEye);
-
-    // Animação
-    function animatePet() {
-      requestAnimationFrame(animatePet);
-      petGroup.rotation.y += 0.008;
-      petGroup.position.y = Math.sin(Date.now() * 0.003) * 0.06;
-      renderer.render(scene, camera);
-    }
-    animatePet();
-
-    function fazerCarinho() {
-      bodyMat.color.setHex(0xFF6B9D);
-      setTimeout(() => bodyMat.color.setHex(0xFFB7D5), 400);
-    }
-
-    function pularPet() {
-      petGroup.position.y = 0.4;
-    }
-
-    // 3. DISSOLVER TEXTO
-    function dissolverText() {
-      const input = document.getElementById('journal-input');
-      if (input.value.trim() !== '') {
-        input.classList.add('dissolving');
-        setTimeout(() => {
-          input.value = '';
-          input.classList.remove('dissolving');
-        }, 600);
+      if (!isBreathing) {
+        isBreathing = true;
+        btn.innerText = "Pausar Respiração 🛑";
+        runBreathCycle();
+        breathingInterval = setInterval(runBreathCycle, 10000); // Ciclo de 10 segundos
+      } else {
+        isBreathing = false;
+        clearInterval(breathingInterval);
+        btn.innerText = "Iniciar Respiração ✨";
+        circle.className = "breath-circle";
+        text.innerText = "Clique em Iniciar";
       }
     }
 
-    // 4. QUOTES
-    const quotes = [
-      "Você é suficiente exatamente do jeito que é.",
-      "Tudo bem fazer uma pausa quando precisar.",
-      "Sua energia é preciosa, cuide dela.",
-      "Pequenos passos diários trazem grandes resultados."
-    ];
+    function runBreathCycle() {
+      const circle = document.getElementById('breathCircle');
+      const text = document.getElementById('breathText');
 
-    function sortearQuote() {
-      const rand = quotes[Math.floor(Math.random() * quotes.length)];
-      document.getElementById('quote-display').innerText = `"${rand}"`;
+      // Inspire (4s)
+      circle.className = "breath-circle inhale";
+      text.innerText = "Inspire... 🍃";
+
+      // Segure (2s)
+      setTimeout(() => {
+        if (!isBreathing) return;
+        circle.className = "breath-circle hold";
+        text.innerText = "Segure... ☁️";
+      }, 4000);
+
+      // Expire (4s)
+      setTimeout(() => {
+        if (!isBreathing) return;
+        circle.className = "breath-circle exhale";
+        text.innerText = "Expire... 🌸";
+      }, 6000);
     }
 
-    // 5. RESPIRAÇÃO
-    const breatheText = document.getElementById('breathe-text');
-    const steps = ['Inspire', 'Segure', 'Expire'];
-    let i = 0;
-    setInterval(() => {
-      i = (i + 1) % steps.length;
-      breatheText.innerText = steps[i];
-    }, 2000);
+    // Deletador de Pensamentos
+    function dissolveThought() {
+      const input = document.getElementById('thoughtInput');
+      const feedback = document.getElementById('thoughtFeedback');
 
-    // 6. AUDIO
-    let audioCtx = null;
-    function toggleSound(type, btn) {
-      btn.classList.toggle('active');
+      if (!input.value.trim()) return;
+
+      input.classList.add('dissolving');
+
+      setTimeout(() => {
+        input.value = '';
+        input.classList.remove('dissolving');
+        feedback.classList.add('show');
+
+        setTimeout(() => {
+          feedback.classList.remove('show');
+        }, 4000);
+      }, 1100);
+    }
+
+    // Gerador de Sons de Fundo (Web Audio API Synthesizer)
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const activeSounds = {};
+
+    function createNoiseNode(type) {
+      const bufferSize = audioCtx.sampleRate * 2;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      let lastOut = 0.0;
+
+      for (let i = 0; i < bufferSize; i++) {
+        const white = Math.random() * 2 - 1;
+        if (type === 'rain' || type === 'wind') {
+          // Brown noise (ruído grave acolhedor)
+          data[i] = (lastOut + (0.02 * white)) / 1.02;
+          lastOut = data[i];
+          data[i] *= 3.5;
+        } else {
+          // Waves / Pink noise
+          data[i] = (lastOut + (0.05 * white)) / 1.05;
+          lastOut = data[i];
+        }
+      }
+
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      noise.loop = true;
+      return noise;
+    }
+
+    function toggleSound(soundName) {
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+
+      const btn = event.target;
+
+      if (activeSounds[soundName]) {
+        activeSounds[soundName].gainNode.gain.setValueAtTime(0, audioCtx.currentTime);
+        activeSounds[soundName].source.stop();
+        delete activeSounds[soundName];
+        btn.classList.remove('active');
+        btn.innerText = 'Ligar';
+      } else {
+        const source = createNoiseNode(soundName);
+        const gainNode = audioCtx.createGain();
+        gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
+
+        source.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+        source.start();
+
+        activeSounds[soundName] = { source, gainNode };
+        btn.classList.add('active');
+        btn.innerText = 'Desligar';
+      }
+    }
+
+    function setVolume(soundName, val) {
+      if (activeSounds[soundName]) {
+        activeSounds[soundName].gainNode.gain.setValueAtTime(val / 200, audioCtx.currentTime);
+      }
     }
   </script>
 </body>
