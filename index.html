@@ -2,1742 +2,1148 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <title>Abraço em Palavras ✨</title>
+  <title>Pacote de Bem-Estar 🌈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     :root {
       --fundo: #f9f6f7;
-      --fundo-card: #fff9fb;
+      --card: #fff9fb;
       --primary: #b08fff;
       --secondary: #ffb6c1;
       --accent: #ffd1a6;
+      --verde: #b8e0c0;
+      --azul: #a6d6f1;
       --texto: #4a3f5c;
       --cinza: #d8d2e0;
-      --verde: #b8e0c0;
-      --amarelo: #ffe699;
-      --sombra: rgba(176, 143, 255, 0.08) 0 8px 32px;
+      --sombra: rgba(176, 143, 255, 0.12) 0 8px 32px;
+      --radius: 24px;
+      --transition: 0.25s cubic-bezier(.4,2,.6,1);
+      --font-main: 'Inter', 'Segoe UI', Arial, sans-serif;
     }
-    html, body {
-      height: 100%;
+
+    * { box-sizing: border-box; }
+    body {
       margin: 0;
-      padding: 0;
       background: var(--fundo);
-      font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+      font-family: var(--font-main);
       color: var(--texto);
       min-height: 100vh;
-    }
-    body {
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 32px 0 0 0;
+      transition: background var(--transition);
     }
-    header {
-      text-align: center;
-      margin-bottom: 32px;
-    }
-    .site-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      letter-spacing: 2px;
-      margin-bottom: 8px;
-    }
-    .subtitle {
-      font-size: 1.1rem;
-      color: var(--primary);
-      font-weight: 500;
-      margin-bottom: 0;
-    }
-    .main-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-      gap: 32px;
-      width: 100%;
-      max-width: 1200px;
-      padding: 0 24px;
-    }
-    .card {
-      background: var(--fundo-card);
-      border-radius: 24px;
+
+    /* NAVIGATION */
+    nav {
+      width: 100vw;
+      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+      padding: 0.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
       box-shadow: var(--sombra);
-      padding: 28px 24px 24px 24px;
-      margin-bottom: 8px;
+    }
+    .nav-container {
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .nav-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 1.05rem;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: background var(--transition), color var(--transition);
+      letter-spacing: 0.02em;
+      position: relative;
+      outline: none;
+    }
+    .nav-btn.active {
+      background: rgba(255,255,255,0.20);
+      color: var(--primary);
+      font-weight: 700;
+      box-shadow: 0 2px 8px rgba(176,143,255,0.08);
+    }
+    .nav-btn:hover:not(.active) {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+    }
+
+    /* PAGE STRUCTURE */
+    .page {
+      display: none;
+      width: 100vw;
+      min-height: 90vh;
+      justify-content: center;
+      animation: fadein 0.4s;
+    }
+    .page.active {
+      display: flex;
+    }
+    @keyframes fadein {
+      from { opacity: 0; transform: translateY(24px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* CARD */
+    .card {
+      background: var(--card);
+      box-shadow: var(--sombra);
+      border-radius: var(--radius);
+      margin: 2.5rem 1.5rem;
+      padding: 2.5rem 2rem 2rem 2rem;
+      max-width: 420px;
+      width: 95vw;
+      min-width: 280px;
+      min-height: 520px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      transition: transform 0.15s;
-      border: 1px solid rgba(176, 143, 255, 0.06);
+      gap: 1.5rem;
+      border: 1.5px solid rgba(176,143,255,0.06);
+      transition: box-shadow var(--transition);
     }
     .card:hover {
-      transform: translateY(-4px) scale(1.015);
-      box-shadow: var(--primary) 0 12px 40px 0.12;
+      box-shadow: var(--primary) 0 12px 48px 0;
     }
-    .card-title {
-      font-size: 1.3rem;
-      font-weight: 650;
+
+    h1, h2 {
+      font-weight: 700;
+      margin: 0 0 0.8rem 0;
+      text-align: center;
       color: var(--primary);
-      margin-bottom: 18px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.02em;
     }
-    .flex-row {
-      display: flex;
-      flex-direction: row;
-      gap: 16px;
-      margin: 12px 0;
-      justify-content: center;
-      align-items: flex-end;
-    }
-    /* --- Mimi, o Gatinho --- */
-    .pet-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .cat-svg {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 12px;
-      cursor: pointer;
-      filter: drop-shadow(0 4px 12px rgba(176, 143, 255, 0.10));
-      transition: transform 0.12s;
-    }
-    .cat-svg:active {
-      transform: scale(1.06) rotate(-3deg);
-    }
-    .hearts {
-      position: absolute;
-      pointer-events: none;
-      width: 120px;
-      height: 120px;
-      left: 0; top: 0;
-    }
-    .floating-heart {
-      position: absolute;
-      font-size: 1.6em;
-      opacity: 0;
-      animation: float-heart 1.2s cubic-bezier(.6,.01,.36,1) forwards;
-    }
-    @keyframes float-heart {
-      0% { transform: translateY(0) rotate(0); opacity: 0; }
-      15% { opacity: 1; }
-      100% { transform: translateY(-60px) rotate(15deg); opacity: 0; }
-    }
-    .happiness-bar-bg {
-      width: 140px;
-      height: 10px;
-      background: var(--cinza);
-      border-radius: 8px;
-      margin-top: 10px;
-      overflow: hidden;
-    }
-    .happiness-bar-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--secondary), var(--primary));
-      width: 60%;
-      transition: width 0.3s;
-      border-radius: 8px 0 0 8px;
-    }
-    .pet-btn {
-      margin-top: 8px;
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 10px 28px;
-      font-size: 1rem;
-      font-weight: 500;
-      cursor: pointer;
-      box-shadow: var(--primary) 0 2px 12px 0.08;
-      transition: background 0.18s;
-    }
-    .pet-btn:hover { background: #9a6fd6; }
+    h1 { font-size: 2.1rem; }
+    h2 { font-size: 1.4rem; margin-top: 0.2rem; }
 
-    /* --- Jardim da Calma --- */
-    .garden-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+    p {
+      text-align: center;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      margin: 0.5rem 0 1rem 0;
     }
-    .plant-stage {
-      font-size: 1.1em;
-      color: var(--verde);
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-    .plant-svg {
-      width: 110px;
-      height: 110px;
-      margin: 6px 0 12px 0;
-    }
-    .water-btn {
-      background: var(--verde);
-      color: #2d5a38;
-      border: none;
-      border-radius: 11px;
-      padding: 8px 24px;
-      font-size: 0.98rem;
+
+    .subtitle {
+      color: var(--secondary);
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
       font-weight: 600;
-      cursor: pointer;
-      margin-top: 4px;
-      box-shadow: var(--verde) 0 2px 10px 0.07;
-      transition: background 0.16s;
-    }
-    .water-btn:hover { background: #a3d4b4; }
-    .butterfly {
-      position: absolute;
-      animation: flutter 3s infinite linear alternate;
-      opacity: 0.85;
-    }
-    @keyframes flutter {
-      0% { transform: translate(0,0) rotate(0deg);}
-      33% { transform: translate(18px,-14px) rotate(8deg);}
-      66% { transform: translate(7px,-26px) rotate(-5deg);}
-      100% { transform: translate(0,-18px) rotate(0deg);}
+      text-align: center;
     }
 
-    /* --- Estação do Chá --- */
-    .tea-station {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-    }
-    .cup-selection {
-      display: flex;
-      gap: 12px;
-      margin: 6px 0 14px 0;
-      justify-content: center;
-    }
-    .cup-btn {
-      border: 2px solid var(--cinza);
-      border-radius: 18px 18px 22px 22px / 18px 18px 26px 26px;
-      background: #fff;
-      width: 48px;
-      height: 48px;
+    /* BUTTONS */
+    .btn-main {
+      background: linear-gradient(90deg, var(--primary), var(--secondary));
+      color: #fff;
+      border: none;
+      border-radius: 18px;
+      padding: 0.7rem 2rem;
+      font-size: 1.05rem;
+      font-weight: 700;
       cursor: pointer;
-      transition: border-color 0.18s, box-shadow 0.18s;
-      box-shadow: 0 2px 8px rgba(176,143,255,0.06);
+      margin-top: 0.5rem;
+      box-shadow: var(--sombra);
+      transition: transform var(--transition), box-shadow var(--transition);
       outline: none;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      padding-bottom: 4px;
-      font-size: 1.4em;
     }
-    .cup-btn.selected {
-      border-color: var(--primary);
-      box-shadow: var(--primary) 0 4px 16px 0.10;
+    .btn-main:active {
+      transform: scale(0.97);
+      box-shadow: none;
     }
-    .ingredients {
-      display: flex;
-      gap: 10px;
-      margin: 4px 0 16px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .ing-btn {
-      background: var(--accent);
-      color: #7a552b;
-      border: none;
-      border-radius: 10px;
-      padding: 6px 16px;
-      font-size: 0.93rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.15s, transform 0.12s;
-      box-shadow: 0 1px 6px rgba(255,213,161,0.09);
-    }
-    .ing-btn.selected {
-      background: var(--secondary);
-      color: #a34b7c;
-      transform: scale(1.07);
-    }
-    .cup-preview {
-      margin: 10px 0 8px 0;
-      font-size: 2.2em;
-      text-align: center;
-      min-height: 60px;
+
+    /* ───── 🐱 GATINHO ───── */
+    .gatinho-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-    }
-    .warm-message {
-      margin-top: 8px;
-      font-style: italic;
-      color: var(--primary);
-      font-size: 1.03em;
-      text-align: center;
-      min-height: 32px;
-    }
-    .sip-btn {
-      margin-top: 10px;
-      background: linear-gradient(90deg, var(--accent), var(--secondary));
-      color: #5a412c;
-      border: none;
-      border-radius: 13px;
-      padding: 9px 26px;
-      font-size: 1.02rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 2px 10px rgba(255,213,161,0.11);
-      transition: background 0.18s;
-    }
-    .sip-btn:hover { background: var(--primary); color: white; }
-
-    /* --- Plástico Bolha --- */
-    .bubble-wrap {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin: 8px 0 0 0;
-      justify-content: center;
-      width: 220px;
-      min-height: 140px;
-      background: #f5f0fa;
-      border-radius: 16px;
-      padding: 14px 10px 10px 10px;
-      border: 1.5px solid var(--cinza);
-      box-shadow: 0 2px 10px rgba(176,143,255,0.06);
-    }
-    .bubble {
-      width: 32px; height: 32px;
-      background: #ffffffcc;
-      border-radius: 50%;
-      border: 2px solid #e6daf5;
-      box-shadow: 0 2px 8px rgba(176,143,255,0.07);
-      cursor: pointer;
-      transition: background 0.08s, transform 0.08s;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2em;
-      user-select: none;
-      opacity: 0.98;
-    }
-    .bubble:active {
-      background: #ffd1a6;
-      transform: scale(0.92);
-      box-shadow: 0 1px 4px rgba(255,209,166,0.13);
-    }
-    .bubble.popped {
-      background: #e6daf5;
-      transform: scale(0.88);
-      opacity: 0.55;
-      pointer-events: none;
-      transition: background 0.22s, transform 0.18s, opacity 0.25s;
-    }
-
-    /* --- Rastreio do Humor --- */
-    .mood-picker {
-      display: flex;
-      gap: 12px;
-      margin: 10px 0 16px 0;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-    .mood-btn {
-      width: 46px; height: 46px;
-      border-radius: 50%;
-      border: 2.5px solid var(--cinza);
-      background: #fff;
-      font-size: 1.7em;
-      cursor: pointer;
-      transition: border-color 0.18s, box-shadow 0.18s, transform 0.12s;
-      box-shadow: 0 2px 8px rgba(176,143,255,0.07);
-      outline: none;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .mood-btn.selected {
-      border-color: var(--primary);
-      box-shadow: var(--primary) 0 4px 18px 0.13;
-      transform: scale(1.09) rotate(3deg);
-    }
-    .advice-box {
-      margin-top: 14px;
-      padding: 14px 20px;
-      background: var(--amarelo);
-      color: #6b5329;
-      border-radius: 14px;
-      font-size: 1.03em;
-      min-width: 200px;
-      min-height: 44px;
-      text-align: center;
-      box-shadow: 0 2px 10px rgba(255,230,153,0.11);
-      border: 1.5px solid #ffe08a;
-    }
-
-    /* --- Poeira de Estrelas --- */
-    .star-input-container {
+      gap: 1.2rem;
       width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      margin-top: 0.5rem;
     }
-    .star-input {
-      width: 88%;
-      max-width: 320px;
-      padding: 12px 16px;
-      border-radius: 14px;
-      border: 1.5px solid var(--cinza);
-      font-size: 1.05em;
-      background: #fffefc;
-      margin-bottom: 12px;
-      resize: none;
-      min-height: 54px;
-      font-family: inherit;
-      box-shadow: 0 2px 8px rgba(176,143,255,0.06);
-    }
-    .send-stars-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 9px 28px;
-      font-size: 1.02rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: var(--primary) 0 2px 12px 0.10;
-      transition: background 0.18s;
-    }
-    .send-stars-btn:hover { background: #9a6fd6; }
-    .stars-container {
+    .gatinho-box {
       position: relative;
-      width: 100%;
-      min-height: 120px;
-      margin-top: 12px;
-      pointer-events: none;
+      width: 220px;
+      height: 180px;
+      background: #fff7fa;
+      border-radius: 20px;
+      border: 2px solid #e6d6f1;
+      box-shadow: 0 4px 24px rgba(176,143,255,0.07);
       display: flex;
+      align-items: flex-end;
       justify-content: center;
+      overflow: visible;
+      cursor: pointer;
+      user-select: none;
     }
-    .star-particle {
+    .gatinho-svg {
+      width: 130px;
+      height: 110px;
+      margin-bottom: 12px;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.07));
+      transition: transform var(--transition);
+    }
+    .gatinho-svg.purr {
+      animation: purr 0.4s infinite alternate;
+    }
+    @keyframes purr {
+      0% { transform: scale(1.00); }
+      100% { transform: scale(1.04); }
+    }
+    .coracao {
       position: absolute;
-      top: 0;
-      font-size: 1.2em;
+      font-size: 2.2rem;
       opacity: 0;
-      will-change: transform, opacity;
-      filter: drop-shadow(0 0 4px #ffd1a6aa);
-      animation: star-float 1.6s cubic-bezier(.55,.01,.36,1) forwards;
+      pointer-events: none;
+      animation: flutuar 1.2s cubic-bezier(.6,-0.07,.36,1.01);
+      z-index: 10;
     }
-    @keyframes star-float {
+    @keyframes flutuar {
       0% {
-        transform: translateY(0) scale(0.9) rotate(0deg);
+        transform: translateY(0px) scale(0.8);
         opacity: 0;
       }
-      18% {
+      25% {
+        opacity: 1;
+      }
+      70% {
+        transform: translateY(-48px) scale(1.1);
         opacity: 1;
       }
       100% {
-        transform: translateY(-110px) scale(1.15) rotate(36deg);
+        transform: translateY(-70px) scale(0.9);
         opacity: 0;
       }
     }
-
-    /* --- Mixer de Sons --- */
-    .sound-btn {
-      background: var(--amarelo);
-      color: #6b5329;
-      border: none;
-      border-radius: 11px;
-      padding: 7px 20px;
-      font-size: 0.98rem;
+    .feliz-bar {
+      width: 170px;
+      height: 14px;
+      background: #f5e8f0;
+      border-radius: 8px;
+      margin-top: 1rem;
+      border: 1.5px solid #e6d6f1;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(176,143,255,0.04);
+    }
+    .feliz-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--verde) 0%, var(--secondary) 100%);
+      width: 50%;
+      border-radius: 8px 0 0 8px;
+      transition: width 0.3s;
+      box-shadow: 0 0 8px var(--verde);
+    }
+    .feliz-label {
+      font-size: 0.95rem;
+      color: var(--texto);
+      margin-top: 0.3rem;
+      text-align: center;
       font-weight: 500;
-      cursor: pointer;
-      margin: 0 6px 8px 6px;
-      box-shadow: 0 1px 7px rgba(255,230,153,0.09);
-      transition: background 0.16s, transform 0.10s;
-      border: 1.5px solid #ffe08a;
-    }
-    .sound-btn.active {
-      background: var(--primary);
-      color: white;
-      transform: scale(1.05);
-      box-shadow: var(--primary) 0 3px 14px 0.13;
     }
 
-    /* --- Respiração Guiada (Flor de Lótus) --- */
-    .lotus-container {
+    /* ───── 🍵 CHÁ JOGUINHO ───── */
+    .cha-container {
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1.2rem;
       width: 100%;
     }
-    .lotus-btn {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: white;
-      border: none;
-      border-radius: 13px;
-      padding: 10px 30px;
-      font-size: 1.05rem;
-      font-weight: 650;
-      cursor: pointer;
-      margin-top: 8px;
-      box-shadow: var(--primary) 0 3px 14px 0.11;
-      transition: background 0.18s, transform 0.12s;
-    }
-    .lotus-btn:hover { background: #9a6fd6; transform: scale(1.03); }
-    .lotus-btn.stop {
-      background: var(--secondary);
-      color: #a34b7c;
-    }
-    .lotus-animation {
-      width: 120px;
-      height: 120px;
-      margin: 18px 0 10px 0;
+    .cha-setup {
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
+      align-items: flex-end;
+      gap: 2.2rem;
+      margin-top: 0.5rem;
     }
-    .lotus-petal {
+    .ingredientes-list {
+      display: flex;
+      flex-direction: column;
+      gap: 1.3rem;
+      align-items: center;
+    }
+    .ingrediente-item {
+      background: var(--accent);
+      border-radius: 16px;
+      padding: 12px 18px;
+      box-shadow: 0 2px 12px rgba(255,209,166,0.10);
+      border: 2px solid #ffd8b1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      cursor: grab;
+      user-select: none;
+      transition: transform 0.15s, box-shadow 0.15s;
+      opacity: 1;
+      will-change: transform;
+    }
+    .ingrediente-item.dragging {
+      transform: scale(1.12) rotate(-8deg);
+      box-shadow: 0 8px 32px rgba(255,209,166,0.18);
+      opacity: 0.95;
+      z-index: 100;
+      cursor: grabbing;
+    }
+    .ingrediente-emoji {
+      font-size: 2.2rem;
+      margin-bottom: 4px;
+    }
+    .ingrediente-label {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #8a6a54;
+      text-align: center;
+    }
+
+    .xicara-box {
+      position: relative;
+      width: 180px;
+      height: 160px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      margin-left: 1rem;
+    }
+    .xicara-base {
       position: absolute;
-      width: 34px;
-      height: 14px;
-      background: var(--primary);
-      border-radius: 50%;
-      opacity: 0.65;
-      filter: blur(1.5px);
+      bottom: 0;
+      left: 0;
+      width: 160px;
+      height: 90px;
+      font-size: 5rem;
+      opacity: 0.95;
+      pointer-events: none;
+      user-select: none;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    .xicara-steam {
+      position: absolute;
+      left: 72px;
+      bottom: 88px;
+      width: 28px;
+      height: 48px;
+      opacity: 0.6;
+      animation: steam 2.2s infinite;
+      pointer-events: none;
+    }
+    @keyframes steam {
+      0% { opacity: 0.6; transform: translateY(0px) scale(1); }
+      40% { opacity: 1; transform: translateY(-18px) scale(1.08); }
+      100% { opacity: 0; transform: translateY(-40px) scale(0.95); }
+    }
+    .ingredientes-dentro {
+      position: absolute;
+      left: 52px;
+      bottom: 32px;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      justify-content: center;
+      align-items: flex-end;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .ingrediente-na-xicara {
+      font-size: 1.55rem;
+      opacity: 0.95;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+      animation: dropIn 0.3s cubic-bezier(.68,-0.55,.27,1.55);
       transform-origin: bottom center;
     }
-    .lotus-center {
-      width: 26px;
-      height: 26px;
-      background: var(--secondary);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 2;
-      box-shadow: 0 2px 10px rgba(255,182,193,0.18);
+    @keyframes dropIn {
+      0% { transform: translateY(-32px) scale(0.8); opacity: 0; }
+      70% { transform: translateY(6px) scale(1.06); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
     }
-    .lotus-label {
-      margin-top: 6px;
-      font-size: 1.05em;
+    .cha-feedback {
+      margin-top: 1.2rem;
+      min-height: 36px;
+      text-align: center;
+      font-size: 1.05rem;
       color: var(--primary);
       font-weight: 500;
-      min-height: 24px;
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+    .cha-feedback.show {
+      opacity: 1;
+      animation: fadeInShort 0.4s;
+    }
+    @keyframes fadeInShort {
+      from { opacity: 0; transform: translateY(10px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+    .cha-receita {
+      margin-top: 0.3rem;
+      font-size: 0.95rem;
+      color: #8a7f9c;
       text-align: center;
-    }
-    .cycle-controls {
-      display: flex;
-      gap: 8px;
-      margin-top: 8px;
-      align-items: center;
-    }
-    .cycle-btn {
-      background: var(--cinza);
-      border: none;
-      border-radius: 8px;
-      width: 32px;
-      height: 32px;
-      font-size: 1.2em;
-      cursor: pointer;
-      color: var(--primary);
-      font-weight: 700;
-      transition: background 0.14s;
-    }
-    .cycle-btn:hover { background: var(--primary); color: white; }
-    .cycle-value {
-      font-size: 1.05em;
-      min-width: 44px;
-      text-align: center;
-      font-weight: 600;
-      color: var(--primary);
-      margin: 0 4px;
+      opacity: 0.85;
+      line-height: 1.4;
     }
 
-    /* --- Descarregar & Soltar (seu já existente) --- */
-    .unload-container {
+    /* ───── 🆘 AJUDA ───── */
+    .ajuda-container {
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
+      gap: 1.2rem;
     }
-    .unload-input {
-      width: 90%;
-      max-width: 340px;
-      padding: 14px 18px;
-      border-radius: 16px;
-      border: 1.5px solid var(--cinza);
-      font-size: 1.06em;
-      background: #fffefc;
-      min-height: 60px;
-      resize: none;
-      font-family: inherit;
-      box-shadow: 0 2px 10px rgba(176,143,255,0.06);
-      margin-bottom: 12px;
+    .ajuda-card {
+      background: linear-gradient(105deg, #eef2ff 0%, #fff3fd 100%);
+      border: 2px solid #d8d2e0;
+      border-radius: 20px;
+      padding: 1.5rem 1.7rem 1.4rem 1.7rem;
+      max-width: 400px;
+      width: 98%;
+      margin-bottom: 0.8rem;
+      box-shadow: 0 6px 28px rgba(176,143,255,0.10);
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
     }
-    .unload-btn {
-      background: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 12px;
-      padding: 10px 28px;
-      font-size: 1.03rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: var(--primary) 0 2px 12px 0.10;
-      transition: background 0.18s;
-    }
-    .unload-btn:hover { background: #9a6fd6; }
-    .unload-message {
-      margin-top: 12px;
-      color: var(--secondary);
-      font-size: 1.08em;
-      font-weight: 600;
-      min-height: 28px;
-      text-align: center;
-    }
-
-    /* --- Galeria (seu já existente) --- */
-    .gallery {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 14px;
-      width: 100%;
-      margin-top: 8px;
-    }
-    .gallery-item {
-      border-radius: 16px;
-      overflow: hidden;
-      box-shadow: 0 4px 18px rgba(176,143,255,0.09);
-      transition: transform 0.14s;
-      border: 1px solid #eee6fb;
-      background: #fff;
-    }
-    .gallery-item:hover {
-      transform: scale(1.035);
-      box-shadow: var(--primary) 0 8px 28px 0.14;
-    }
-    .gallery-img {
-      width: 100%;
-      height: 130px;
-      object-fit: cover;
-      display: block;
-    }
-    .gallery-caption {
-      padding: 10px 8px;
-      font-size: 0.98em;
-      font-weight: 600;
+    .ajuda-title {
+      font-size: 1.22rem;
       color: var(--primary);
-      background: #f5f0fa;
-      text-align: center;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      text-align: left;
     }
-    .gallery-tag {
-      font-size: 0.85em;
-      color: var(--cinza);
-      margin-left: 4px;
-      font-weight: 400;
+    .ajuda-emoji {
+      font-size: 1.4rem;
+    }
+    .ajuda-info {
+      font-size: 1.03rem;
+      color: var(--texto);
+      text-align: left;
+      line-height: 1.6;
+      margin-left: 1.2rem;
+    }
+    .telefone {
+      font-family: monospace;
+      color: #b08fff;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+    }
+    .link-ajuda {
+      color: #8a6fa8;
+      text-decoration: underline;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .link-ajuda:hover {
+      color: var(--primary);
+    }
+    .local-title {
+      font-size: 1.08rem;
+      color: var(--secondary);
+      font-weight: 600;
+      margin-top: 0.4rem;
+      margin-bottom: 0.1rem;
+      text-align: left;
+    }
+    .recursos-lista {
+      margin-left: 1.2rem;
+      padding-left: 0.3rem;
+      font-size: 1.02rem;
+      color: var(--texto);
+      line-height: 1.7;
+    }
+    .recursos-lista li {
+      margin-bottom: 0.25rem;
+    }
+    .nota-ajuda {
+      background: #fff4e8;
+      color: #8a6a54;
+      border-left: 5px solid var(--accent);
+      padding: 0.6rem 1rem;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      margin-top: 1.2rem;
+      text-align: center;
+      box-shadow: 0 2px 8px rgba(255,209,166,0.07);
     }
 
-    /* --- Responsividade --- */
-    @media (max-width: 700px) {
-      .main-grid {
-        grid-template-columns: 1fr;
-        gap: 22px;
-      }
+    /* ───── HOME ───── */
+    .home-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+    .home-title {
+      font-size: 2.3rem;
+      color: var(--primary);
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.2rem;
+      text-shadow: 0 2px 8px rgba(176,143,255,0.06);
+    }
+    .home-slogan {
+      color: var(--secondary);
+      font-size: 1.15rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+      text-align: center;
+    }
+    .home-emoji {
+      font-size: 3.2rem;
+      margin-bottom: 0.5rem;
+      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
+    }
+    .home-desc {
+      font-size: 1.08rem;
+      color: #6a5c7b;
+      text-align: center;
+      margin-bottom: 1.2rem;
+      line-height: 1.6;
+    }
+
+    /* ───── RESPONSIVO ───── */
+    @media (max-width: 600px) {
       .card {
-        max-width: 98vw;
-        padding: 20px 10px 16px 10px;
+        min-width: 98vw;
+        max-width: 99vw;
+        padding: 1.3rem 0.6rem 1.4rem 0.6rem;
+        min-height: 44vw;
+        margin: 1.2rem 0;
       }
-      .bubble-wrap {
-        width: 96vw;
-        min-width: unset;
-        padding: 10px 4px 6px 4px;
-        gap: 5px;
+      nav {
+        font-size: 0.95rem;
+        padding: 0.35rem 0;
       }
+      .cha-setup {
+        flex-direction: column;
+        gap: 1.2rem;
+        align-items: center;
+      }
+      .cha-container {
+        margin-top: 0.2rem;
+      }
+      .gatinho-box {
+        width: 90vw;
+        max-width: 260px;
+        height: 190px;
+      }
+      .feliz-bar {
+        width: 85vw;
+        max-width: 220px;
+      }
+    }
+
+    /* ───── ANIMAÇÕES SUTIS ───── */
+    .card {
+      animation: cardAppear 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+    }
+    @keyframes cardAppear {
+      0% { opacity: 0; transform: translateY(40px) scale(0.96);}
+      70% { opacity: 1; transform: translateY(-8px) scale(1.02);}
+      100% { opacity: 1; transform: translateY(0) scale(1);}
+    }
+    .nav-btn {
+      animation: navFadeIn 0.6s;
+    }
+    @keyframes navFadeIn {
+      from { opacity: 0; transform: translateY(-12px);}
+      to { opacity: 1; transform: translateY(0);}
     }
   </style>
 </head>
 <body>
-  <header>
-    <div class="site-title">✨ Abraço em Palavras</div>
-    <div class="subtitle">Você não precisa dar conta de tudo hoje. Vá no seu tempo.</div>
-  </header>
+  <!-- NAVIGATION -->
+  <nav>
+    <div class="nav-container">
+      <button class="nav-btn active" data-page="home">🏠 Início</button>
+      <button class="nav-btn" data-page="gatinho">🐱 Mimi</button>
+      <button class="nav-btn" data-page="cha">🍵 Estação do Chá</button>
+      <button class="nav-btn" data-page="ajuda">🆘 Ajuda</button>
+    </div>
+  </nav>
 
-  <div class="main-grid">
-
-    <!-- 🧘 Exercício da Flor de Lótus -->
-    <div class="card">
-      <div class="card-title">🧘 Exercício da Flor de Lótus</div>
-      <div class="lotus-container">
-        <div class="lotus-animation" id="lotusAnim">
-          <!-- petals rendered by JS -->
-          <div class="lotus-center">🌸</div>
-        </div>
-        <button class="lotus-btn" id="lotusBtn">
-          ✨ Iniciar Respiração
-        </button>
-        <div class="lotus-label" id="lotusLabel">Sincronize com o círculo</div>
-        <div class="cycle-controls">
-          <button class="cycle-btn" id="decCycle">−</button>
-          <span class="cycle-value" id="cycleValue">4</span>
-          <button class="cycle-btn" id="incCycle">+</button>
-          <span style="font-size:0.93em; color:var(--cinza); margin-left:4px;">s</span>
-        </div>
+  <!-- HOME -->
+  <section id="page-home" class="page active">
+    <div class="card home-container">
+      <span class="home-emoji">🌈</span>
+      <div class="home-title">Pacote de Bem-Estar</div>
+      <div class="home-slogan">Um cantinho pra respirar, cuidar e acolher</div>
+      <div class="home-desc">
+        Olá! Aqui você encontra atividades para relaxar e se expressar.<br>
+        <b>Clique no menu</b> acima para brincar com o gatinho 🐱,<br>
+        preparar um chá virtual ☕ ou encontrar ajuda 🆘.<br><br>
+        <span style="color:#8a7f9c;opacity:0.8;font-size:0.98rem">
+          Feito com carinho para adolescentes de escolas públicas do Paraná.<br>
+          Você não está sozinho(a).
+        </span>
       </div>
     </div>
+  </section>
 
-    <!-- 🐱 Mimi, o Gatinho -->
-    <div class="card">
-      <div class="card-title">🐱 Mimi, o Gatinho Virtual</div>
-      <div class="pet-container">
-        <div style="position:relative; width:120px; height:120px;">
-          <svg class="cat-svg" id="catSvg" viewBox="0 0 120 120">
-            <ellipse cx="60" cy="75" rx="32" ry="18" fill="#ffb6c1cc" />
-            <ellipse cx="60" cy="60" rx="28" ry="24" fill="#ffffffcc" />
-            <ellipse cx="46" cy="52" rx="9" ry="7" fill="#e6daf5" />
-            <ellipse cx="74" cy="52" rx="9" ry="7" fill="#e6daf5" />
-            <ellipse cx="60" cy="68" rx="7" ry="9" fill="#ffd1a6cc" />
-            <ellipse cx="54" cy="48" rx="4" ry="3" fill="#9a6fd6" />
-            <ellipse cx="66" cy="48" rx="4" ry="3" fill="#9a6fd6" />
-            <ellipse cx="60" cy="66" rx="2.5" ry="3.5" fill="#a34b7c" />
-            <path d="M56 78 Q60 84 64 78" stroke="#a34b7c" stroke-width="2" fill="none" />
-            <ellipse cx="40" cy="82" rx="10" ry="6" fill="#ffffffcc" transform="rotate(-18 40 82)" />
-            <ellipse cx="80" cy="82" rx="10" ry="6" fill="#ffffffcc" transform="rotate(18 80 82)" />
-            <ellipse cx="60" cy="92" rx="18" ry="8" fill="#e6daf5" />
-            <path d="M48 92 Q60 98 72 92" stroke="#b08fff" stroke-width="2" fill="none" />
-          </svg>
-          <div class="hearts" id="catHearts"></div>
+  <!-- GATINHO -->
+  <section id="page-gatinho" class="page">
+    <div class="card gatinho-container">
+      <h1>Mimi, o Gatinho</h1>
+      <div class="subtitle">Faça carinho com o mouse 💖</div>
+      <div class="gatinho-box" id="gatinho-box">
+        <!-- SVG do gatinho -->
+        <svg class="gatinho-svg" id="gatinho-svg" viewBox="0 0 130 110" fill="#b08fff">
+          <!-- Corpo -->
+          <ellipse cx="65" cy="72" rx="42" ry="28" fill="#ffb6c1" stroke="#d8d2e0" stroke-width="2"/>
+          <!-- Cabeça -->
+          <ellipse cx="65" cy="48" rx="28" ry="24" fill="#ffb6c1" stroke="#d8d2e0" stroke-width="2"/>
+          <!-- Orelhas -->
+          <polygon points="50,34 44,22 58,28" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
+          <polygon points="80,34 96,22 82,28" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
+          <!-- Olhos -->
+          <ellipse cx="58" cy="46" rx="4" ry="3" fill="#4a3f5c"/>
+          <ellipse cx="72" cy="46" rx="4" ry="3" fill="#4a3f5c"/>
+          <ellipse cx="56" cy="44" rx="1.2" ry="1" fill="#fff9fb" opacity="0.9"/>
+          <ellipse cx="70" cy="44" rx="1.2" ry="1" fill="#fff9fb" opacity="0.9"/>
+          <!-- Nariz -->
+          <polygon points="65,51 62,54 68,54" fill="#ff9eb7"/>
+          <!-- Bigodes -->
+          <line x1="42" y1="50" x2="28" y2="46" stroke="#4a3f5c" stroke-width="1.5"/>
+          <line x1="42" y1="54" x2="28" y2="56" stroke="#4a3f5c" stroke-width="1.5"/>
+          <line x1="88" y1="50" x2="102" y2="46" stroke="#4a3f5c" stroke-width="1.5"/>
+          <line x1="88" y1="54" x2="102" y2="56" stroke="#4a3f5c" stroke-width="1.5"/>
+          <!-- Cauda -->
+          <path d="M100,78 Q108,68 112,60 Q114,52 108,48 Q104,50 100,56" fill="none" stroke="#d8d2e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Patinhas -->
+          <ellipse cx="50" cy="86" rx="8" ry="5" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
+          <ellipse cx="80" cy="86" rx="8" ry="5" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
+        </svg>
+      </div>
+      <div class="feliz-bar">
+        <div class="feliz-fill" id="feliz-fill" style="width:50%"></div>
+      </div>
+      <div class="feliz-label">
+        <span id="feliz-texto">Humor: <b>neutro</b></span>
+      </div>
+      <p style="margin-top:0.2rem;opacity:0.7;font-size:0.98rem">
+        Clique ou arraste o mouse sobre o corpo do Mimi.<br>
+        Quanto mais carinho, mais feliz ele fica! 🧡
+      </p>
+    </div>
+  </section>
+
+  <!-- CHÁ -->
+  <section id="page-cha" class="page">
+    <div class="card cha-container">
+      <h1>Estação do Chá</h1>
+      <div class="subtitle">Arraste os ingredientes para dentro da xícara ☕</div>
+      <div class="cha-setup">
+        <!-- Ingredientes -->
+        <div class="ingredientes-list">
+          <div class="ingrediente-item" draggable="true" data-ing="camomila">
+            <span class="ingrediente-emoji">🌼</span>
+            <span class="ingrediente-label">Camomila</span>
+          </div>
+          <div class="ingrediente-item" draggable="true" data-ing="mel">
+            <span class="ingrediente-emoji">🍯</span>
+            <span class="ingrediente-label">Mel</span>
+          </div>
+          <div class="ingrediente-item" draggable="true" data-ing="marshmallow">
+            <span class="ingrediente-emoji">🍡</span>
+            <span class="ingrediente-label">Marshmallow</span>
+          </div>
+          <div class="ingrediente-item" draggable="true" data-ing="hortela">
+            <span class="ingrediente-emoji">🍃</span>
+            <span class="ingrediente-label">Hortelã</span>
+          </div>
         </div>
-        <button class="pet-btn" id="petBtn">🐾 Fazer Carinho</button>
-        <div style="margin-top:6px; font-size:0.98em; color:var(--primary);">
-          Felicidade:
+        <!-- Xícara -->
+        <div class="xicara-box">
+          <span class="xicara-base">☕</span>
+          <div class="xicara-steam"></div>
+          <div class="ingredientes-dentro" id="ingredientes-dentro">
+            <!-- Ingredientes arrastados aparecem aqui -->
+          </div>
         </div>
-        <div class="happiness-bar-bg">
-          <div class="happiness-bar-fill" id="happinessBar" style="width:60%"></div>
-        </div>
+      </div>
+      <div class="cha-feedback" id="cha-feedback">
+        <!-- Feedback aparece aqui -->
+      </div>
+      <div class="cha-receita" id="cha-receita">
+        <b>Receitas que o Mimi aprova:</b><br>
+        🌼 → chá de camomila para relaxar<br>
+        🍯 → chá com mel para conforto<br>
+        🍃 → hortelã para respirar melhor<br>
+        🍡 → marshmallow para adoçar o dia
       </div>
     </div>
+  </section>
 
-    <!-- 🪴 Jardim da Calma -->
-    <div class="card">
-      <div class="card-title">🪴 Jardim da Calma</div>
-      <div class="garden-container">
-        <div class="plant-stage" id="plantStage">🌱 Brotinho</div>
-        <div style="position:relative; width:110px; height:110px;">
-          <svg class="plant-svg" id="plantSvg" viewBox="0 0 110 110">
-            <!-- broto por padrão -->
-            <ellipse cx="55" cy="85" rx="18" ry="8" fill="#b8e0c0cc" />
-            <ellipse cx="55" cy="78" rx="14" ry="10" fill="#ffffffcc" />
-            <ellipse cx="51" cy="80" rx="5" ry="4" fill="#ffd1a6cc" />
-            <ellipse cx="59" cy="80" rx="5" ry="4" fill="#ffd1a6cc" />
-          </svg>
-        </div>
-        <button class="water-btn" id="waterBtn"> 💧 Regar </button>
-      </div>
-    </div>
+  <!-- AJUDA -->
+  <section id="page-ajuda" class="page">
+    <div class="card ajuda-container">
+      <h1>🆘 Recursos de Ajuda</h1>
+      <div class="subtitle">Você não está sozinho(a)</div>
 
-    <!-- 🫧 Plástico Bolha -->
-    <div class="card">
-      <div class="card-title">🫧 Plástico Bolha Anti-estresse</div>
-      <div class="bubble-wrap" id="bubbleWrap">
-        <!-- bolhas geradas pelo JS -->
-      </div>
-    </div>
-
-    <!-- 🍵 Estação do Chá -->
-    <div class="card">
-      <div class="card-title">🍵 Estação do Chá / Café</div>
-      <div class="tea-station">
-        <div style="font-size:0.98em; margin-bottom:4px; color:var(--primary);">Escolha sua xícara:</div>
-        <div class="cup-selection">
-          <button class="cup-btn selected" data-cup="tea" title="Xícara de chá">☕</button>
-          <button class="cup-btn" data-cup="mug" title="Caneca aconchegante"> mug </button>
-          <button class="cup-btn" data-cup="latte" title="Xícara de leite">🧋</button>
-        </div>
-        <div style="font-size:0.96em; color:var(--primary); margin-bottom:-4px;">Adicione ingredientes:</div>
-        <div class="ingredients">
-          <button class="ing-btn" data-ing="camomila" title="Camomila">🌼</button>
-          <button class="ing-btn" data-ing="mel" title="Mel">🍯</button>
-          <button class="ing-btn" data-ing="marshmallow" title="Marshmallow">🍡</button>
-          <button class="ing-btn" data-ing="canela" title="Canela"> cinnamon </button>
-        </div>
-        <div class="cup-preview" id="cupPreview">
-          <span>☕</span>
-        </div>
-        <button class="sip-btn" id="sipBtn">呷一口 ✨</button>
-        <div class="warm-message" id="warmMessage"></div>
-      </div>
-    </div>
-
-    <!-- 🌈 Rastreio do Humor -->
-    <div class="card">
-      <div class="card-title">🌈 Rastreio do Humor do Dia</div>
-      <div class="mood-picker">
-        <button class="mood-btn" data-mood="muito-bem" title="Muito bem 😊">&#128578;</button>
-        <button class="mood-btn" data-mood="bem" title="Bem 🙂">&#128579;</button>
-        <button class="mood-btn" data-mood="ok" title="Ok 😐">&#128528;</button>
-        <button class="mood-btn" data-mood="cansado" title="Cansado 😑">&#128564;</button>
-        <button class="mood-btn" data-mood="triste" title="Triste 😢">&#128577;</button>
-      </div>
-      <div class="advice-box" id="moodAdvice">
-        Como você está se sentindo hoje?
-      </div>
-    </div>
-
-    <!-- ✨ Poeira de Estrelas -->
-    <div class="card">
-      <div class="card-title">✨ Gerador de Poeira de Estrelas</div>
-      <div class="star-input-container">
-        <textarea class="star-input" id="starInput" placeholder="Digite o que está pesando na sua mente..."></textarea>
-        <button class="send-stars-btn" id="sendStarsBtn">✨ Soltar Pensamento</button>
-        <div class="stars-container" id="starsContainer"></div>
-      </div>
-    </div>
-
-    <!-- 🗑️ Descarregar & Soltar (seu elemento existente) -->
-    <div class="card">
-      <div class="card-title">🗑️ Descarregar & Soltar</div>
-      <div class="unload-container">
-        <textarea class="unload-input" id="unloadInput" placeholder="Escreva aqui tudo o que está pesando na sua mente e solte para o universo."></textarea>
-        <button class="unload-btn" id="unloadBtn">Liberar e Apagar ✨</button>
-        <div class="unload-message" id="unloadMessage"></div>
-      </div>
-    </div>
-
-    <!-- 🎶 Mixer de Sons -->
-    <div class="card">
-      <div class="card-title">🎶 Mixer de Sons Naturais</div>
-      <div class="flex-row">
-        <button class="sound-btn active" data-sound="rain">🌧️ Chuva Suave</button>
-        <button class="sound-btn" data-sound="fireplace">🔥 Lareira</button>
-        <button class="sound-btn" data-sound="birds">🐦 Passarinhos</button>
-        <button class="sound-btn" data-sound="lofi">🎧 Lofi</button>
-      </div>
-    </div>
-
-    <!-- 🌸 Galeria do Aconchego (seu elemento existente) -->
-    <div class="card" style="grid-column: span 2; min-width:320px;">
-      <div class="card-title">🌸 Galeria do Aconchego</div>
-      <div class="gallery">
-        <div class="gallery-item">
-          <img class="gallery-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=600&q=80" alt="Café e livros">
-          <div class="gallery-caption">Café &amp; Leitura <span class="gallery-tag">#PausaGostosa</span></div>
-        </div>
-        <div class="gallery-item">
-          <img class="gallery-img" src="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" alt="Céu pastel">
-          <div class="gallery-caption">Nuances do Fim de Tarde <span class="gallery-tag">#CeuPastel</span></div>
-        </div>
-        <div class="gallery-item">
-          <img class="gallery-img" src="https://images.unsplash.com/photo-1518241353330-0f7941c2d9b5?auto=format&fit=crop&w=600&q=80" alt="Plantas verdes">
-          <div class="gallery-caption">Cantinho Verde <span class="gallery-tag">#PazEVerde</span></div>
-        </div>
-        <div class="gallery-item">
-          <img class="gallery-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Praia calma">
-          <div class="gallery-caption">Brisa do Mar <span class="gallery-tag">#Calmaria</span></div>
+      <!-- CVV -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">☎️</span> CVV – Centro de Valorização da Vida</span>
+        <div class="ajuda-info">
+          <b>Ligue <span class="telefone">188</span></b> — gratuito, 24h por dia, todos os dias.<br>
+          Atendimento sigiloso por voluntários treinados.<br>
+          Também disponível por <a class="link-ajuda" href="https://cvv.org.br/chat/" target="_blank">chat</a> e <a class="link-ajuda" href="https://cvv.org.br/fale-conosco/" target="_blank">e-mail</a>.<br>
+          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://cvv.org.br/" target="_blank">cvv.org.br</a></span>
         </div>
       </div>
-    </div>
 
-  </div>
+      <!-- Pode Falar (UNICEF) -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">💬</span> Pode Falar (UNICEF)</span>
+        <div class="ajuda-info">
+          Canal de escuta acolhedora <b>gratuito e anônimo</b> para adolescentes e jovens de <b>13 a 24 anos</b>.<br>
+          Atendimento por chat, WhatsApp e pelo app <b>Meu SUS Digital</b>.<br>
+          <a class="link-ajuda" href="https://www.podefalar.org.br/" target="_blank">Acesse aqui</a><br>
+          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://www.unicef.org/brazil/comunicados-de-imprensa/pode-falar-completa-um-ano-de-existencia-como-canal-de-ajuda-em-saude-mental" target="_blank">UNICEF</a></span>
+        </div>
+      </div>
+
+      <!-- Disque 100 -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">🚨</span> Disque 100 – Violência contra Crianças e Adolescentes</span>
+        <div class="ajuda-info">
+          Denuncie violações de direitos de crianças e adolescentes.<br>
+          <b>Ligue <span class="telefone">100</span></b> — gratuito e anônimo.<br>
+          Também pelo WhatsApp: <span class="telefone">(61) 99611-0100</span><br>
+          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos" target="_blank">gov.br</a></span>
+        </div>
+      </div>
+
+      <!-- CAPS Guarapuava -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">🏥</span> CAPS – Saúde Mental em Guarapuava</span>
+        <div class="ajuda-info">
+          <span class="local-title">CAPS AD III (Adulto e Infantojuvenil)</span>
+          <ul class="recursos-lista">
+            <li><b>Endereço:</b> Rua Profª Leonídia, 1203 – Centro (anexo ao CIS)</li>
+            <li><b>Telefone:</b> (42) 3622-1427</li>
+            <li><b>Horário:</b> Segunda a sexta, 8h às 17h</li>
+          </ul>
+          <span class="local-title">CAPS unificado (AD + II)</span>
+          <ul class="recursos-lista">
+            <li><b>Endereço:</b> Rua Brigadeiro Rocha, 2777 – Centro</li>
+            <li><b>Telefone:</b> (42) 3142-1000</li>
+          </ul>
+          <span style="font-size:0.97rem">Fontes: <a class="link-ajuda" href="https://guarapuava.pr.gov.br/noticias/caps-ad-e-caps-ii-iniciam-atendimento-unificado/" target="_blank">Prefeitura de Guarapuava</a> · <a class="link-ajuda" href="https://www.instagram.com/simprguarapuava/" target="_blank">@simprguarapuava</a></span>
+        </div>
+      </div>
+
+      <!-- CRAS/CREAS -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">🏢</span> CRAS / CREAS – Assistência Social</span>
+        <div class="ajuda-info">
+          <b>CRAS</b> (Centro de Referência de Assistência Social):<br>
+          📞 (42) 3142-0536 · Rua Vicente Machado, 1015 – Centro<br><br>
+          <b>CREAS</b> (Centro de Referência Especializado):<br>
+          📞 (42) 3651-8050 · Rua Guarapuava, 2977 – Centro<br>
+          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://guarapuava.pr.gov.br/administracao-direta/assistencia-social/" target="_blank">Prefeitura de Guarapuava</a></span>
+        </div>
+      </div>
+
+      <!-- Mapa da Saúde Mental -->
+      <div class="ajuda-card">
+        <span class="ajuda-title"><span class="ajuda-emoji">🗺️</span> Mapa da Saúde Mental</span>
+        <div class="ajuda-info">
+          Encontre CAPS, ambulatórios e outros serviços de saúde mental em todo o Brasil.<br>
+          <a class="link-ajuda" href="https://mapasaudemental.com.br/" target="_blank">Acesse o mapa aqui</a>
+        </div>
+      </div>
+
+      <div class="nota-ajuda">
+        ⚠️ <b>Emergência:</b> se você ou alguém corre risco imediato, ligue <b>190</b> (Polícia) ou <b>192</b> (SAMU).
+      </div>
+    </div>
+  </section>
+
+  <!-- AUDIO (sons carregados uma vez) -->
+  <audio id="audio-purr" src="https://cdn.freesound.org/previews/422/422459_1034226-lq.mp3" preload="auto"></audio>
+  <audio id="audio-meow" src="https://cdn.freesound.org/previews/110/110444_1966264-lq.mp3" preload="auto"></audio>
+  <audio id="audio-drop" src="https://cdn.freesound.org/previews/106/106056_1726866-lq.mp3" preload="auto"></audio>
+  <audio id="audio-steam" src="https://cdn.freesound.org/previews/125/125778_2162665-lq.mp3" preload="auto"></audio>
 
 <script>
-// ====== UTILS DE SOM ======
-// Sons sintéticos gerados pelo navegador (Web Audio API)
-const audioContext = typeof window !== 'undefined' ? new (window.AudioContext || window.webkitAudioContext)() : null;
+// ───── SPA NAVIGATION ─────
+const navBtns = document.querySelectorAll('.nav-btn');
+const pages = document.querySelectorAll('.page');
 
-function playPurr() {
-  // Gato ronronando: LFO modulando dois osciladores (corpo + peito)
-  if (!audioContext) return;
-  const gain = audioContext.createGain();
-  gain.gain.value = 0.13;
-  gain.connect(audioContext.destination);
+function showPage(pageId) {
+  // Atualiza hash sem recarregar
+  if (location.hash.replace('#', '') !== pageId) {
+    location.hash = pageId;
+  }
+}
 
-  const freqs = [28, 42]; // ronronar grave
-  const oscs = freqs.map(freq => {
-    const o = audioContext.createOscillator();
-    o.type = 'sine';
-    o.frequency.value = freq;
-    // LFO ~20Hz para o "vibração" do ronronar
-    const lfo = audioContext.createOscillator();
-    lfo.type = 'sine';
-    lfo.frequency.value = 20;
-    const lfoGain = audioContext.createGain();
-    lfoGain.gain.value = 4;
-    lfo.connect(lfoGain).connect(o.frequency);
-    lfo.start();
-    o.connect(gain);
-    return {osc: o, lfo: lfo};
+// Roteamento via hash
+function route() {
+  let hash = location.hash.replace('#', '');
+  if (!hash) hash = 'home';
+  // Esconde todas
+  pages.forEach(p => p.classList.remove('active'));
+  // Mostra a correta
+  const target = document.getElementById(`page-${hash}`);
+  if (target) {
+    target.classList.add('active');
+  }
+  // Atualiza navegação
+  navBtns.forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.page === hash);
   });
-  oscs.forEach(({osc}) => osc.start());
-  setTimeout(() => {
-    oscs.forEach(({osc, lfo}) => { osc.stop(); lfo.stop(); });
-    gain.disconnect();
-  }, 1200);
 }
 
-function playMeow() {
-  if (!audioContext) return;
-  const gain = audioContext.createGain();
-  gain.gain.value = 0.18;
-  gain.connect(audioContext.destination);
+// Inicializa navegação por hash
+window.addEventListener('hashchange', route);
+window.addEventListener('DOMContentLoaded', route);
 
-  const osc = audioContext.createOscillator();
-  osc.type = 'triangle';
-  // "miau" sobe de tom rapidamente
-  const freq = audioContext.createParameter();
-  freq.value = 440;
-  osc.frequency = freq;
-  freq.setValueAtTime(380, audioContext.currentTime);
-  freq.linearRampToValueAtTime(700, audioContext.currentTime + 0.18);
-  freq.linearRampToValueAtTime(320, audioContext.currentTime + 0.38);
-
-  osc.connect(gain).connect(audioContext.destination);
-  osc.start();
-  osc.stop(audioContext.currentTime + 0.42);
-}
-
-function playBubblePop() {
-  if (!audioContext) return;
-  const ctx = audioContext;
-  const gain = ctx.createGain();
-  gain.gain.value = 0.14;
-  gain.connect(ctx.destination);
-
-  const osc = ctx.createOscillator();
-  osc.type = 'square';
-  osc.frequency.value = 1200;
-  // ataque rápido + queda exponencial
-  const now = ctx.currentTime;
-  osc.frequency.setValueAtTime(1200, now);
-  osc.frequency.exponentialRampToValueAtTime(600, now + 0.09);
-  osc.connect(gain).connect(ctx.destination);
-  osc.start(now);
-  osc.stop(now + 0.11);
-  gain.gain.setValueAtTime(0.14, now);
-  gain.gain.exponentialRampToValueAtTime(0.001, now + 0.11);
-}
-
-function playSip() {
-  if (!audioContext) return;
-  const ctx = audioContext;
-  const gain = ctx.createGain();
-  gain.gain.value = 0.10;
-  gain.connect(ctx.destination);
-
-  const noise = ctx.createBufferSource();
-  const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.25, ctx.sampleRate);
-  const data = buffer.getChannelData(0);
-  for (let i = 0; i < data.length; i++) {
-    data[i] = (Math.random() * 2 - 1) * 0.18 * Math.exp(-3 * i / data.length);
-  }
-  noise.buffer = buffer;
-  noise.connect(gain).connect(ctx.destination);
-  noise.start();
-}
-
-// ====== MIMI, O GATINHO ======
-const happinessBar = document.getElementById('happinessBar');
-const petBtn = document.getElementById('petBtn');
-const catSvg = document.getElementById('catSvg');
-const catHearts = document.getElementById('catHearts');
-let happiness = 60; // 0..100
-
-function showHearts(count = 3) {
-  catHearts.innerHTML = '';
-  for (let i = 0; i < count; i++) {
-    const heart = document.createElement('span');
-    heart.textContent = '❤️';
-    heart.className = 'floating-heart';
-    // posição aleatória na cabeça do gato
-    heart.style.left = (35 + Math.random() * 50) + 'px';
-    heart.style.top = (18 + Math.random() * 25) + 'px';
-    heart.style.animationDelay = (i * 0.15) + 's';
-    catHearts.appendChild(heart);
-  }
-  setTimeout(() => { catHearts.innerHTML = ''; }, 1300);
-}
-
-petBtn.addEventListener('click', () => {
-  // Aumenta felicidade (máx 100)
-  happiness = Math.min(happiness + 12, 100);
-  happinessBar.style.width = happiness + '%';
-  showHearts(2 + Math.floor(Math.random() * 2));
-  playPurr();
-  // Animação no SVG
-  catSvg.animate([
-    { transform: 'scale(1.00)' },
-    { transform: 'scale(1.06)' },
-    { transform: 'scale(1.00)' }
-  ], { duration: 350 });
-});
-
-// ====== JARDIM DA CALMA ======
-const plantStage = document.getElementById('plantStage');
-const plantSvg = document.getElementById('plantSvg');
-const waterBtn = document.getElementById('waterBtn');
-let plantLevel = 0; // 0=brotinho, 1=broto, 2=folhas, 3=flor, 4=borboletas
-
-const plantStages = [
-  { // 0 - Brotinho
-    label: '🌱 Brotinho',
-    svg: `<ellipse cx="55" cy="85" rx="18" ry="8" fill="#b8e0c0cc" />
-          <ellipse cx="55" cy="78" rx="14" ry="10" fill="#ffffffcc" />
-          <ellipse cx="51" cy="80" rx="5" ry="4" fill="#ffd1a6cc" />
-          <ellipse cx="59" cy="80" rx="5" ry="4" fill="#ffd1a6cc" />`
-  },
-  { // 1 - Broto crescendo
-    label: '🌿 Pequena',
-    svg: `<ellipse cx="55" cy="82" rx="20" ry="10" fill="#b8e0c0cc" />
-          <ellipse cx="55" cy="72" rx="18" ry="13" fill="#ffffffcc" />
-          <ellipse cx="48" cy="75" rx="6" ry="5" fill="#e6daf5" />
-          <ellipse cx="62" cy="75" rx="6" ry="5" fill="#e6daf5" />
-          <ellipse cx="55" cy="68" rx="10" ry="7" fill="#b8e0c0cc" />`
-  },
-  { // 2 - Folhas
-    label: '🍃 Com Folhas',
-    svg: `<ellipse cx="55" cy="78" rx="22" ry="11" fill="#b8e0c0cc" />
-          <ellipse cx="55" cy="68" rx="20" ry="15" fill="#ffffffcc" />
-          <ellipse cx="42" cy="74" rx="8" ry="5" fill="#e6daf5" transform="rotate(-12 42 74)" />
-          <ellipse cx="68" cy="74" rx="8" ry="5" fill="#e6daf5" transform="rotate(12 68 74)" />
-          <ellipse cx="55" cy="62" rx="12" ry="9" fill="#b8e0c0cc" />
-          <ellipse cx="50" cy="60" rx="6" ry="4" fill="#ffd1a6cc" />
-          <ellipse cx="60" cy="60" rx="6" ry="4" fill="#ffd1a6cc" />`
-  },
-  { // 3 - Flor
-    label: '🌸 Florescendo',
-    svg: `<ellipse cx="55" cy="76" rx="23" ry="12" fill="#b8e0c0cc" />
-          <ellipse cx="55" cy="66" rx="21" ry="16" fill="#ffffffcc" />
-          <ellipse cx="40" cy="72" rx="9" ry="6" fill="#e6daf5" transform="rotate(-14 40 72)" />
-          <ellipse cx="70" cy="72" rx="9" ry="6" fill="#e6daf5" transform="rotate(14 70 72)" />
-          <ellipse cx="55" cy="60" rx="14" ry="10" fill="#b8e0c0cc" />
-          <!-- flor no topo -->
-          <ellipse cx="55" cy="54" rx="10" ry="7" fill="#ffb6c1cc" />
-          <ellipse cx="51" cy="54" rx="3.5" ry="2.5" fill="#ffd1a6cc" />
-          <ellipse cx="59" cy="54" rx="3.5" ry="2.5" fill="#ffd1a6cc" />
-          <ellipse cx="55" cy="50" rx="2.5" ry="3" fill="#a34b7c" />`
-  },
-  { // 4 - Borboletas
-    label: '🦋 Flores com Borboletas',
-    svg: `<ellipse cx="55" cy="76" rx="23" ry="12" fill="#b8e0c0cc" />
-          <ellipse cx="55" cy="66" rx="21" ry="16" fill="#ffffffcc" />
-          <ellipse cx="40" cy="72" rx="9" ry="6" fill="#e6daf5" transform="rotate(-14 40 72)" />
-          <ellipse cx="70" cy="72" rx="9" ry="6" fill="#e6daf5" transform="rotate(14 70 72)" />
-          <ellipse cx="55" cy="60" rx="14" ry="10" fill="#b8e0c0cc" />
-          <!-- flor -->
-          <ellipse cx="55" cy="54" rx="10" ry="7" fill="#ffb6c1cc" />
-          <ellipse cx="51" cy="54" rx="3.5" ry="2.5" fill="#ffd1a6cc" />
-          <ellipse cx="59" cy="54" rx="3.5" ry="2.5" fill="#ffd1a6cc" />
-          <ellipse cx="55" cy="50" rx="2.5" ry="3" fill="#a34b7c" />`
-  }
-];
-
-function updatePlantStage() {
-  plantStage.innerHTML = plantStages[plantLevel].label;
-  plantSvg.innerHTML = plantStages[plantLevel].svg;
-  // Se for estágio 4, adicionar borboletas animadas
-  if (plantLevel === 4) {
-    setTimeout(() => {
-      let butterflies = plantSvg.querySelectorAll('.butterfly');
-      if (butterflies.length > 0) return; // já tem
-
-      const butterflySvg = `<svg class="butterfly" style="left:32px;top:28px;width:32px;height:32px;">
-        <ellipse cx="16" cy="16" rx="11" ry="6" fill="#ffb6c1cc" stroke="#a34b7c" stroke-width="1.5"/>
-        <ellipse cx="16" cy="16" rx="7" ry="10" fill="#b08fffcc" stroke="#9a6fd6" stroke-width="1.5"/>
-        <ellipse cx="16" cy="16" rx="4" ry="3" fill="#ffd1a6" />
-      </svg>`;
-      plantSvg.insertAdjacentHTML('beforeend', butterflySvg);
-      setTimeout(() => {
-        const b = plantSvg.querySelector('.butterfly');
-        if (b) b.style.opacity = '0.95';
-      }, 50);
-    }, 300);
-  }
-}
-
-waterBtn.addEventListener('click', () => {
-  if (plantLevel < 4) {
-    plantLevel++;
-    updatePlantStage();
-  }
-  // Animação de água caindo
-  const drop = document.createElement('span');
-  drop.textContent = '💧';
-  drop.style.position = 'absolute';
-  drop.style.left = '48px';
-  drop.style.top = '18px';
-  drop.style.fontSize = '2.2em';
-  drop.style.opacity = '0';
-  drop.style.animation = 'water-drop 0.55s cubic-bezier(.65,.01,.36,1)';
-  plantSvg.style.position = 'relative';
-  plantSvg.appendChild(drop);
-
-  // Som de água pingando
-  if (audioContext) {
-    const ctx = audioContext;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.11;
-    gain.connect(ctx.destination);
-    const osc = ctx.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.value = 550;
-    osc.frequency.exponentialRampToValueAtTime(320, ctx.currentTime + 0.22);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.24);
-    gain.gain.setValueAtTime(0.11, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.24);
-  }
-
-  setTimeout(() => { drop.remove(); }, 600);
-  updatePlantStage();
-});
-
-// ====== PLÁSTICO BOLHA ======
-const bubbleWrap = document.getElementById('bubbleWrap');
-function createBubbles() {
-  bubbleWrap.innerHTML = '';
-  const rows = 4, cols = 6;
-  for (let i = 0; i < rows * cols; i++) {
-    const b = document.createElement('div');
-    b.className = 'bubble';
-    b.innerHTML = '🔘';
-    b.addEventListener('click', () => {
-      if (b.classList.contains('popped')) return;
-      b.classList.add('popped');
-      b.innerHTML = '';
-      playBubblePop();
-      // Verificar se todas estouraram
-      setTimeout(() => {
-        if (bubbleWrap.querySelectorAll('.popped').length === rows * cols) {
-          // Reset automático após 1.5s
-          setTimeout(() => {
-            createBubbles();
-          }, 1600);
-        }
-      }, 100);
-    });
-    bubbleWrap.appendChild(b);
-  }
-}
-createBubbles();
-
-// ====== ESTAÇÃO DO CHÁ ======
-const cupBtns = document.querySelectorAll('.cup-btn');
-const ingBtns = document.querySelectorAll('.ing-btn');
-const cupPreview = document.getElementById('cupPreview');
-const warmMessage = document.getElementById('warmMessage');
-const sipBtn = document.getElementById('sipBtn');
-let selectedCup = 'tea';
-let selectedIngs = [];
-
-cupBtns.forEach(btn => {
+// Clique nos botões de navegação
+navBtns.forEach(btn => {
   btn.addEventListener('click', () => {
-    cupBtns.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    selectedCup = btn.dataset.cup;
-    updateCupPreview();
-  });
-});
-ingBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const ing = btn.dataset.ing;
-    if (selectedIngs.includes(ing)) {
-      selectedIngs = selectedIngs.filter(i => i !== ing);
-    } else {
-      selectedIngs.push(ing);
-    }
-    btn.classList.toggle('selected');
-    updateCupPreview();
+    showPage(btn.dataset.page);
   });
 });
 
-function updateCupPreview() {
-  let emoji = '';
-  switch(selectedCup) {
-    case 'tea': emoji = '☕'; break;
-    case 'mug': emoji = ' mug '; break;
-    case 'latte': emoji = '🧋'; break;
-  }
-  // Ingredientes animados dentro da xícara
-  let deco = '';
-  if (selectedIngs.length > 0) {
-    deco = '<div style="position:absolute; top:22px; left:0; width:100%; display:flex; justify-content:center; gap:6px; font-size:1.3em;">';
-    selectedIngs.forEach(ing => {
-      switch(ing) {
-        case 'camomila': deco += '🌼'; break;
-        case 'mel': deco += '🍯'; break;
-        case 'marshmallow': deco += '🍡'; break;
-        case 'canela': deco += ' cinnamon '; break;
-      }
-    });
-    deco += '</div>';
-  }
-  cupPreview.innerHTML = `
-    <span style="font-size:2.4em; position:relative; display:inline-block;">
-      ${emoji}
-      ${deco}
-    </span>
-  `;
-}
+// ───── 🐱 GATINHO INTERATIVO ─────
+const gatinhoBox = document.getElementById('gatinho-box');
+const gatinhoSvg = document.getElementById('gatinho-svg');
+const felizFill = document.getElementById('feliz-fill');
+const felizTexto = document.getElementById('feliz-texto');
+const audioPurr = document.getElementById('audio-purr');
+const audioMeow = document.getElementById('audio-meow');
 
-updateCupPreview();
+let felicidade = 50; // 0 a 100
+let purring = false;
+let lastHeartTime = 0;
 
-sipBtn.addEventListener('click', () => {
-  playSip();
-  // Mensagem quentinha baseada nos ingredientes
-  const msgs = [
-    "Que o calor desta xícara aqueça também seu coração. 🌸",
-    "Respire fundo e sinta o sabor da calma. ✨",
-    "Um gole de pausa merecida — você trabalhou bem hoje.",
-    "O aroma da camomila leva embora o que não serve mais.",
-    "Mel para adoçar o dia que foi difícil. Está tudo bem.",
-    "Marshmallows flutuando como pensamentos leves.",
-    "Canela trazendo aquele toque de aconchego que você merece."
-  ];
-  let baseMsg = "";
-  if (selectedIngs.includes('camomila')) {
-    baseMsg = "A camomila acalma o corpo e a mente — respire e deixe o vapor levar o peso. 🌼";
-  } else if (selectedIngs.includes('mel')) {
-    baseMsg = "Mel puro para adoçar o que ficou amargo — você merece doçura. 🍯";
-  } else if (selectedIngs.includes('marshmallow')) {
-    baseMsg = "Marshmallows macios como abraços: leves, fofos e reconfortantes. 🧸";
+function updateFelizBar() {
+  felizFill.style.width = `${felicidade}%`;
+  // Texto descritivo
+  if (felicidade >= 80) {
+    felizTexto.innerHTML = 'Humor: <b>muito feliz</b> 😸';
+  } else if (felicidade >= 60) {
+    felizTexto.innerHTML = 'Humor: <b>feliz</b> 🧡';
+  } else if (felicidade >= 40) {
+    felizTexto.innerHTML = 'Humor: <b>neutro</b>';
+  } else if (felicidade >= 20) {
+    felizTexto.innerHTML = 'Humor: <b>triste</b> 😿';
   } else {
-    baseMsg = msgs[Math.floor(Math.random() * msgs.length)];
+    felizTexto.innerHTML = 'Humor: <b>muito triste</b> 🙀';
   }
-  warmMessage.textContent = baseMsg;
-  // Animação de "gole"
-  cupPreview.animate([
-    { transform: 'scale(1.00)' },
-    { transform: 'scale(1.08)' },
-    { transform: 'scale(1.00)' }
-  ], { duration: 400 });
-});
-
-// ====== RASTREIO DO HUMOR ======
-const moodBtns = document.querySelectorAll('.mood-btn');
-const moodAdvice = document.getElementById('moodAdvice');
-const moodAdvices = {
-  'muito-bem': "Que alegria! 🌞 Aproveite esse pique para fazer algo que te energize ainda mais — ou simplesmente curta o momento sem culpa.",
-  'bem': "Ótimo sinal! 🌸 Respire fundo e reconheça as pequenas vitórias do dia. Cuide para manter esse equilíbrio.",
-  'ok': "Normal é válido. 🌧️ Dê a si mesmo(a) permissão para não estar 100% todos os dias. Uma pausa pode ajudar.",
-  'cansado': "Você merece descanso. 🛏️ Não é fraqueza — é seu corpo pedindo cuidado. Permita-se recarregar sem culpa.",
-  'triste': "Está tudo bem não estar bem. 🌧️ Você não está sozinho(a). Falar com alguém de confiança pode aliviar. Se precisar, peça ajuda."
-};
-moodBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    moodBtns.forEach(b => b.classList.remove('selected'));
-    btn.classList.add('selected');
-    const mood = btn.dataset.mood;
-    moodAdvice.textContent = moodAdvices[mood];
-  });
-});
-
-// ====== POEIRA DE ESTRELAS ======
-const starInput = document.getElementById('starInput');
-const sendStarsBtn = document.getElementById('sendStarsBtn');
-const starsContainer = document.getElementById('starsContainer');
-
-function createStarParticle(word, x, y) {
-  const span = document.createElement('span');
-  span.textContent = word;
-  span.className = 'star-particle';
-  span.style.left = x + 'px';
-  span.style.top = y + 'px';
-  // cor aleatória entre tons pastel
-  const colors = ['#b08fff', '#ffb6c1', '#ffd1a6', '#b8e0c0', '#e6daf5'];
-  span.style.color = colors[Math.floor(Math.random() * colors.length)];
-  span.style.fontSize = (Math.random() * 0.6 + 1.0) + 'em';
-  span.style.fontWeight = '700';
-  return span;
 }
 
-sendStarsBtn.addEventListener('click', () => {
-  const text = starInput.value.trim();
-  if (!text) return;
-  // Dividir em palavras
-  const words = text.split(/\s+/);
-  starsContainer.innerHTML = '';
-  const rect = starsContainer.getBoundingClientRect();
-  const centerX = rect.width / 2;
-  words.forEach((word, i) => {
-    setTimeout(() => {
-      const x = centerX + (Math.random() * 60 - 30);
-      const y = rect.height - 20;
-      const star = createStarParticle(word, x, y);
-      starsContainer.appendChild(star);
-      // Remover após animação
-      setTimeout(() => { star.remove(); }, 1700);
-    }, i * 120);
-  });
-  // Som suave de "pó mágico"
-  if (audioContext) {
-    const ctx = audioContext;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.09;
-    gain.connect(ctx.destination);
-    const osc = ctx.createOscillator();
-    osc.type = 'sine';
-    osc.frequency.value = 1800;
-    osc.frequency.exponentialRampToValueAtTime(600, ctx.currentTime + 0.7);
-    osc.connect(gain).connect(ctx.destination);
-    osc.start();
-    osc.stop(ctx.currentTime + 0.72);
-    gain.gain.setValueAtTime(0.09, ctx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.72);
+// Cria um coração flutuante
+function criarCoracao(x, y) {
+  const coracao = document.createElement('span');
+  coracao.textContent = '❤️';
+  coracao.className = 'coracao';
+  // Posição relativa ao box
+  coracao.style.left = `${x}px`;
+  coracao.style.top = `${y}px`;
+  // Deslocamento aleatório no eixo X
+  const offsetX = Math.random() * 24 - 12;
+  coracao.style.setProperty('--offset-x', `${offsetX}px`);
+  coracao.style.animation = `flutuar ${0.8 + Math.random()*0.4}s cubic-bezier(.6,-0.07,.36,1.01)`;
+  gatinhoBox.appendChild(coracao);
+
+  // Remove após animação
+  setTimeout(() => coracao.remove(), 1300);
+}
+
+// Purr contínuo (ativa uma vez, desativa ao sair)
+function startPurr() {
+  if (purring) return;
+  purring = true;
+  gatinhoSvg.classList.add('purr');
+  // Tenta tocar em loop (mas browsers bloqueiam loop de audio sem user gesture)
+  audioPurr.currentTime = 0;
+  audioPurr.play().catch(()=>{});
+  // Efeito visual: pulsação suave
+  setTimeout(() => {
+    if (purring && felicidade >= 60) {
+      audioPurr.currentTime = 0;
+      audioPurr.play().catch(()=>{});
+    }
+  }, 2200);
+}
+
+function stopPurr() {
+  purring = false;
+  gatinhoSvg.classList.remove('purr');
+  audioPurr.pause();
+  audioPurr.currentTime = 0;
+}
+
+// Carinho com clique ou arraste
+let isDragging = false;
+
+function handleCarinho(e) {
+  // Só se o mouse estiver sobre o corpo (não nas bordas)
+  const rect = gatinhoBox.getBoundingClientRect();
+  const relX = e.clientX - rect.left;
+  const relY = e.clientY - rect.top;
+  // Limita à área do corpo do gato (não cabeça nem cauda)
+  if (relX < 25 || relX > 195 || relY < 30 || relY > 155) return;
+
+  // Adiciona felicidade
+  const increment = isDragging ? 0.8 : 2.2;
+  felicidade = Math.min(100, felicidade + increment);
+  updateFelizBar();
+
+  // Cria coração
+  criarCoracao(relX, relY);
+
+  // Som de ronronar se estiver feliz
+  if (felicidade >= 55) {
+    startPurr();
   }
-  // Limpar input
-  setTimeout(() => { starInput.value = ''; }, 800);
+
+  // Som de miado ocasional (aleatório)
+  if (Math.random() < 0.08 && !isDragging) {
+    audioMeow.currentTime = 0;
+    audioMeow.play().catch(()=>{});
+  }
+}
+
+// Mouse down = início do carinho
+gatinhoBox.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  handleCarinho(e);
+  // Ativa tracking do mouse move
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
 });
 
-// ====== DESCARREGAR & SOLTAR ======
-const unloadInput = document.getElementById('unloadInput');
-const unloadBtn = document.getElementById('unloadBtn');
-const unloadMessage = document.getElementById('unloadMessage');
+function handleMouseMove(e) {
+  if (!isDragging) return;
+  handleCarinho(e);
+}
 
-unloadBtn.addEventListener('click', () => {
-  const text = unloadInput.value.trim();
-  if (!text) {
-    unloadMessage.textContent = 'Escreva algo primeiro. 🍃';
-    unloadMessage.style.color = '#a34b7c';
+function handleMouseUp(e) {
+  if (isDragging) {
+    stopPurr();
+    isDragging = false;
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  }
+}
+
+// Toque em mobile (opcional)
+let isTouching = false;
+gatinhoBox.addEventListener('touchstart', (e) => {
+  isTouching = true;
+  // Pega a primeira posição do toque
+  const touch = e.touches[0];
+  handleCarinho({
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });
+});
+
+gatinhoBox.addEventListener('touchmove', (e) => {
+  if (!isTouching) return;
+  const touch = e.touches[0];
+  handleCarinho({
+    clientX: touch.clientX,
+    clientY: touch.clientY
+  });
+});
+
+gatinhoBox.addEventListener('touchend', () => {
+  stopPurr();
+  isTouching = false;
+});
+
+// ───── 🍵 JOGUINHO DO CHÁ ─────
+const ingredientes = document.querySelectorAll('.ingrediente-item');
+const ingredientesDentro = document.getElementById('ingredientes-dentro');
+const chaFeedback = document.getElementById('cha-feedback');
+const chaReceita = document.getElementById('cha-receita');
+const audioDrop = document.getElementById('audio-drop');
+const audioSteam = document.getElementById('audio-steam');
+
+let ingredientesAtuais = new Set();
+
+// Drag events para cada ingrediente
+ingredientes.forEach(item => {
+  let offsetX, offsetY;
+
+  item.addEventListener('dragstart', (e) => {
+    item.classList.add('dragging');
+    // Armazena offset do clique dentro do item
+    const rect = item.getBoundingClientRect();
+    offsetX = e.clientX - rect.left;
+    offsetY = e.clientY - rect.top;
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData('text/plain', item.dataset.ing);
+  });
+
+  item.addEventListener('dragend', () => {
+    setTimeout(() => item.classList.remove('dragging'), 50);
+  });
+});
+
+const xicaraBox = document.querySelector('.xicara-box');
+
+xicaraBox.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'copy';
+  // Efeito visual: leve brilho na xícara
+  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 16px #ffb6c1aa)';
+});
+
+xicaraBox.addEventListener('dragleave', () => {
+  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))';
+});
+
+xicaraBox.addEventListener('drop', (e) => {
+  e.preventDefault();
+  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))';
+  
+  const ing = e.dataTransfer.getData('text/plain');
+  if (ingredientesAtuais.has(ing)) {
+    // Já está na xícara — feedback diferente
+    showFeedback('Esse ingrediente já está na xícara! 🥄');
     return;
   }
-  unloadInput.value = '';
-  unloadMessage.textContent = 'Pensamento liberado. Está tudo bem recomeçar 🍃';
-  unloadMessage.style.color = 'var(--secondary)';
-  // Animação de fumaça
-  unloadBtn.innerHTML = '✨ Liberando...';
-  setTimeout(() => {
-    unloadBtn.innerHTML = 'Liberar e Apagar ✨';
-  }, 1200);
-  // Som de "soltar"
-  if (audioContext) {
-    const ctx = audioContext;
-    const gain = ctx.createGain();
-    gain.gain.value = 0.08;
-    gain.connect(ctx.destination);
-    const noise = ctx.createBufferSource();
-    const buffer = ctx.createBuffer(1, ctx.sampleRate * 0.22, ctx.sampleRate);
-    const data = buffer.getChannelData(0);
-    for (let i = 0; i < data.length; i++) {
-      data[i] = (Math.random() * 2 - 1) * 0.12 * Math.exp(-5 * i / data.length);
-    }
-    noise.buffer = buffer;
-    noise.connect(gain).connect(ctx.destination);
-    noise.start();
-  }
+
+  // Adiciona ingrediente
+  ingredientesAtuais.add(ing);
+  playDropSound();
+
+  // Renderiza os ingredientes dentro da xícara
+  renderIngredientesNaXicara();
+
+  // Feedback contextual
+  const nomes = {
+    'camomila': '🌼 Camomila',
+    'mel': '🍯 Mel',
+    'marshmallow': '🍡 Marshmallow',
+    'hortela': '🍃 Hortelã'
+  };
+  showFeedback(`${nomes[ing]} adicionado(a) à xícara! ☕`);
+
+  // Receita especial se combinação interessante
+  checkReceitaEspecial();
 });
 
-// ====== MIXER DE SONS ======
-const soundBtns = document.querySelectorAll('.sound-btn');
-let activeSoundNodes = {};
-let activeSoundName = null;
-
-function stopAllSounds() {
-  Object.entries(activeSoundNodes).forEach(([name, nodes]) => {
-    try {
-      if (nodes.osc) nodes.osc.disconnect();
-      if (nodes.gain) nodes.gain.disconnect();
-      if (nodes.noise) nodes.noise.disconnect();
-    } catch(e) {}
-  });
-  activeSoundNodes = {};
-  activeSoundName = null;
-  soundBtns.forEach(btn => btn.classList.remove('active'));
-}
-
-soundBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    const sound = btn.dataset.sound;
-    if (activeSoundName === sound) {
-      stopAllSounds();
-      btn.classList.remove('active');
+// Tocar em mobile (alternativa ao drag)
+ingredientes.forEach(item => {
+  item.addEventListener('click', () => {
+    // Simula drop na xícara
+    const ing = item.dataset.ing;
+    if (ingredientesAtuais.has(ing)) {
+      showFeedback('Esse ingrediente já está na xícara! 🥄');
       return;
     }
-    stopAllSounds();
-    btn.classList.add('active');
-    activeSoundName = sound;
-    const ctx = audioContext;
-
-    // Cada som tem um tipo diferente de geração
-    if (sound === 'rain') {
-      // Chuva: ruído branco com envelope lento
-      const gain = ctx.createGain();
-      gain.gain.value = 0.07;
-      const noise = ctx.createBufferSource();
-      const buffer = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < data.length; i++) {
-        data[i] = (Math.random() * 2 - 1) * 0.18 * Math.sin(i / 300);
-      }
-      noise.buffer = buffer;
-      noise.loop = true;
-      noise.connect(gain).connect(ctx.destination);
-      noise.start();
-      activeSoundNodes[sound] = { noise, gain };
-    } else if (sound === 'fireplace') {
-      // Lareira: LFO modulando ruído + estalos
-      const gain = ctx.createGain();
-      gain.gain.value = 0.11;
-      // Ruído contínuo (crepitar)
-      const noise = ctx.createBufferSource();
-      const buf = ctx.createBuffer(1, ctx.sampleRate * 3, ctx.sampleRate);
-      const d = buf.getChannelData(0);
-      for (let i = 0; i < d.length; i++) {
-        d[i] = (Math.random() * 2 - 1) * 0.12 * Math.exp(-i/d.length * 2) * (0.7 + Math.sin(i/800));
-      }
-      noise.buffer = buf;
-      noise.loop = true;
-      noise.connect(gain).connect(ctx.destination);
-      noise.start();
-
-      // Estalos periódicos (pops de lenha)
-      function makePop() {
-        const popGain = ctx.createGain();
-        popGain.gain.value = 0.16;
-        const popOsc = ctx.createOscillator();
-        popOsc.type = 'triangle';
-        popOsc.frequency.value = 440;
-        popOsc.frequency.exponentialRampToValueAtTime(120, ctx.currentTime + 0.13);
-        popOsc.connect(popGain).connect(ctx.destination);
-        popOsc.start();
-        popOsc.stop(ctx.currentTime + 0.15);
-        setTimeout(() => { popGain.disconnect(); }, 200);
-      }
-      let popInterval = setInterval(() => {
-        if (activeSoundName !== 'fireplace') {
-          clearInterval(popInterval);
-          return;
-        }
-        makePop();
-      }, 1800 + Math.random() * 1200);
-      activeSoundNodes[sound] = { noise, gain, popInterval };
-    } else if (sound === 'birds') {
-      // Passarinhos: sequência de trinados curtos
-      const gain = ctx.createGain();
-      gain.gain.value = 0.10;
-      gain.connect(ctx.destination);
-
-      function birdChirp() {
-        if (activeSoundName !== 'birds') return;
-        const osc = ctx.createOscillator();
-        osc.type = 'sine';
-        const base = 1200 + Math.random() * 600;
-        osc.frequency.value = base;
-        osc.frequency.exponentialRampToValueAtTime(base * 0.6, ctx.currentTime + 0.14);
-        osc.connect(gain);
-        osc.start();
-        osc.stop(ctx.currentTime + 0.16);
-      }
-      let birdInterval = setInterval(() => {
-        if (activeSoundName !== 'birds') {
-          clearInterval(birdInterval);
-          return;
-        }
-        birdChirp();
-      }, 450 + Math.random() * 350);
-      activeSoundNodes[sound] = { gain, birdInterval };
-    } else if (sound === 'lofi') {
-      // Lofi: batida + melodia simples
-      const gain = ctx.createGain();
-      gain.gain.value = 0.09;
-      gain.connect(ctx.destination);
-
-      // Batida (kick)
-      function lofiKick() {
-        const kickOsc = ctx.createOscillator();
-        kickOsc.type = 'sine';
-        kickOsc.frequency.value = 60;
-        kickOsc.frequency.exponentialRampToValueAtTime(30, ctx.currentTime + 0.13);
-        const kickGain = ctx.createGain();
-        kickGain.gain.value = 0.22;
-        kickOsc.connect(kickGain).connect(gain);
-        kickOsc.start();
-        kickOsc.stop(ctx.currentTime + 0.15);
-      }
-      // Hi-hat
-      function lofiHat() {
-        const hatOsc = ctx.createOscillator();
-        hatOsc.type = 'square';
-        hatOsc.frequency.value = 3500;
-        const hatGain = ctx.createGain();
-        hatGain.gain.value = 0.07;
-        hatOsc.connect(hatGain).connect(gain);
-        hatOsc.start();
-        hatOsc.stop(ctx.currentTime + 0.07);
-      }
-      let beatTime = 0;
-      let lofiInterval = setInterval(() => {
-        if (activeSoundName !== 'lofi') {
-          clearInterval(lofiInterval);
-          return;
-        }
-        // 4/4: kick no 1 e 3, hat nos outros
-        if (beatTime % 4 === 0 || beatTime % 4 === 2) lofiKick();
-        else lofiHat();
-        beatTime++;
-      }, 520);
-      activeSoundNodes[sound] = { gain, lofiInterval };
-    }
+    ingredientesAtuais.add(ing);
+    playDropSound();
+    renderIngredientesNaXicara();
+    showFeedback(`${ing[0].toUpperCase() + ing.slice(1)} adicionado(a) à xícara! ☕`);
+    checkReceitaEspecial();
   });
 });
 
-// ====== FLOR DE LÓTUS - RESPIRAÇÃO GUIADA ======
-const lotusBtn = document.getElementById('lotusBtn');
-const lotusAnim = document.getElementById('lotusAnim');
-const lotusLabel = document.getElementById('lotusLabel');
-const cycleValue = document.getElementById('cycleValue');
-const decCycle = document.getElementById('decCycle');
-const incCycle = document.getElementById('incCycle');
-let lotusInterval = null;
-let lotusActive = false;
-let cycleSec = 4; // segundos por ciclo (inspira + expira)
-let petals = [];
-
-function createLotusPetals() {
-  lotusAnim.innerHTML = '';
-  // Criar 8 pétalas
-  petals = [];
-  for (let i = 0; i < 8; i++) {
-    const petal = document.createElement('div');
-    petal.className = 'lotus-petal';
-    // Posição circular
-    const angle = (i * 45) * Math.PI / 180;
-    const rX = 38 * Math.cos(angle);
-    const rY = 38 * Math.sin(angle);
-    petal.style.transform = `rotate(${i * 45}deg) translate(${rX}px, ${rY}px)`;
-    lotusAnim.appendChild(petal);
-    petals.push(petal);
-  }
-  // Centro
-  const center = document.createElement('div');
-  center.className = 'lotus-center';
-  center.innerHTML = '🌸';
-  lotusAnim.appendChild(center);
+function renderIngredientesNaXicara() {
+  // Limpa
+  ingredientesDentro.innerHTML = '';
+  // Converte set para array e renderiza
+  const arr = Array.from(ingredientesAtuais);
+  // Distribui em até 2 linhas (3 por linha)
+  let html = '';
+  arr.forEach((ing, idx) => {
+    // Posicionamento aleatório dentro do círculo
+    const angle = (idx / arr.length) * 360 + Math.random()*30;
+    const r = 26 + Math.random()*8;
+    const x = 36 + r * Math.cos(angle * Math.PI/180);
+    const y = 36 + r * Math.sin(angle * Math.PI/180);
+    html += `<span class="ingrediente-na-xicara" style="position:absolute; left:${x}px; top:${y}px; font-size:1.65rem">${getIngEmoji(ing)}</span>`;
+  });
+  ingredientesDentro.innerHTML = html;
 }
 
-createLotusPetals();
+function getIngEmoji(ing) {
+  const map = {
+    'camomila': '🌼', 'mel': '🍯', 'marshmallow': '🍡', 'hortela': '🍃'
+  };
+  return map[ing] || '❓';
+}
 
-function startLotusBreathing() {
-  if (lotusActive) {
-    lotusActive = false;
-    lotusBtn.classList.remove('stop');
-    lotusBtn.textContent = '✨ Iniciar Respiração';
-    lotusLabel.textContent = 'Sincronize com o círculo';
-    if (lotusInterval) clearInterval(lotusInterval);
-    // Retornar pétalas ao estado original
-    petals.forEach(p => p.style.transform = p.style.transform.replace(/scale$[0-9.]+$/, ''));
+function showFeedback(texto) {
+  chaFeedback.innerHTML = texto;
+  chaFeedback.classList.remove('show');
+  setTimeout(() => chaFeedback.classList.add('show'), 30);
+  // Esconde após 2s
+  setTimeout(() => chaFeedback.classList.remove('show'), 2300);
+}
+
+function playDropSound() {
+  // Toca som de gota
+  audioDrop.currentTime = 0;
+  audioDrop.play().catch(()=>{});
+  // Efeito de vapor
+  audioSteam.currentTime = 0;
+  audioSteam.play().catch(()=>{});
+}
+
+function checkReceitaEspecial() {
+  const arr = Array.from(ingredientesAtuais);
+  // Combinações especiais
+  if (arr.includes('camomila') && arr.includes('mel')) {
+    showFeedback('✨ Chá relaxante pronto! Camomila + Mel = conforto');
+  } else if (arr.includes('hortela') && arr.includes('mel')) {
+    showFeedback('🌿✨ Chá refrescante com mel — bom para respirar melhor!');
+  } else if (arr.includes('marshmallow') && arr.includes('camomila')) {
+    showFeedback('🍡🌼 Chá doce com marshmallow — para dias difíceis');
+  } else if (arr.length >= 3) {
+    showFeedback('🎉 Receita criativa completa! Parabéns, mestre-chá 🫖');
+  }
+}
+
+// Botão "Limpar xícara"
+const limparBtn = document.createElement('button');
+limparBtn.className = 'btn-main';
+limparBtn.style.marginTop = '0.8rem';
+limparBtn.textContent = 'Limpar xícara';
+limparBtn.addEventListener('click', () => {
+  if (ingredientesAtuais.size === 0) {
+    showFeedback('A xícara já está limpa! ☕✨');
     return;
   }
-  lotusActive = true;
-  lotusBtn.classList.add('stop');
-  lotusBtn.textContent = '❚❚ Parar';
-  let phase = 0; // 0=inspira, 1=segura, 2=expira, 3=segura
-  const phases = ['inspira', 'segura', 'expira', 'pausa'];
-  // Tempos: inspira 40%, segura 20%, expira 40%
-  const tIn = cycleSec * 0.4;
-  const tHold = cycleSec * 0.2;
-  const tOut = cycleSec * 0.4;
-  const total = tIn + tHold + tOut + tHold;
-
-  function updatePhase(p) {
-    phase = p;
-    // Escala das pétalas: expande na inspira, contrai na expira
-    let scale = 1.0;
-    let label = '';
-    switch(phases[p]) {
-      case 'inspira':
-        scale = 1.18;
-        label = '✨ Inspire profundamente';
-        break;
-      case 'segura':
-        scale = 1.22;
-        label = phases[(p-1+4)%4] === 'inspira' ? '✨ Segure o ar' : '✨ Solte devagar';
-        break;
-      case 'expira':
-        scale = 0.92;
-        label = '✨ Expire lentamente';
-        break;
-      case 'pausa':
-        scale = 1.0;
-        label = '🌸 Relaxe entre ciclos';
-        break;
-    }
-    lotusLabel.textContent = label;
-    // Animar cada pétala
-    petals.forEach((p, i) => {
-      p.style.transition = 'transform 0.35s cubic-bezier(.6,.01,.36,1)';
-      // ângulo base + escala
-      const angle = (i * 45) * Math.PI / 180;
-      const rX = 38 * Math.cos(angle);
-      const rY = 38 * Math.sin(angle);
-      p.style.transform = `rotate(${i * 45}deg) translate(${rX}px, ${rY}px) scale(${scale})`;
-    });
-  }
-
-  // Iniciar ciclo
-  let currentPhase = 0;
-  let phaseStart = Date.now();
-  updatePhase(currentPhase);
-
-  lotusInterval = setInterval(() => {
-    const elapsed = (Date.now() - phaseStart) / 1000;
-    if (currentPhase === 0 && elapsed >= tIn) {
-      currentPhase = 1;
-      phaseStart = Date.now();
-      updatePhase(currentPhase);
-    } else if (currentPhase === 1 && elapsed >= tHold) {
-      currentPhase = 2;
-      phaseStart = Date.now();
-      updatePhase(currentPhase);
-    } else if (currentPhase === 2 && elapsed >= tOut) {
-      currentPhase = 3;
-      phaseStart = Date.now();
-      updatePhase(currentPhase);
-    } else if (currentPhase === 3 && elapsed >= tHold) {
-      currentPhase = 0;
-      phaseStart = Date.now();
-      updatePhase(currentPhase);
-    }
-  }, 40);
-
-  // Som suave de "inspira/expira" (opcional)
-  if (audioContext) {
-    // to be improved: breath sounds
-  }
+  ingredientesAtuais.clear();
+  renderIngredientesNaXicara();
+  showFeedback('Xícara limpa! Que tal preparar um novo chá?');
+  chaFeedback.classList.add('show');
+});
+// Adiciona ao card do chá (se não existir)
+if (!document.querySelector('.cha-container .btn-main')) {
+  const container = document.querySelector('.cha-container');
+  container.appendChild(limparBtn);
 }
 
-lotusBtn.addEventListener('click', () => {
-  if (!lotusActive) {
-    startLotusBreathing();
-  } else {
-    lotusActive = false;
-    lotusBtn.classList.remove('stop');
-    lotusBtn.textContent = '✨ Iniciar Respiração';
-    lotusLabel.textContent = 'Sincronize com o círculo';
-    if (lotusInterval) clearInterval(lotusInterval);
-    // Reset pétalas
-    createLotusPetals();
-  }
-});
+// ───── INICIALIZAÇÃO ─────
+// Garante que a página inicial esteja visível
+route();
 
-// Controles de ciclo
-decCycle.addEventListener('click', () => {
-  if (cycleSec > 3) {
-    cycleSec -= 1;
-    cycleValue.textContent = cycleSec;
-    if (lotusActive) { startLotusBreathing(); }
-  }
-});
-incCycle.addEventListener('click', () => {
-  if (cycleSec < 8) {
-    cycleSec += 1;
-    cycleValue.textContent = cycleSec;
-    if (lotusActive) { startLotusBreathing(); }
-  }
-});
+// Se vier de volta do hash, atualiza barra de felicidade
+updateFelizBar();
 
-// ====== ABRACO EM PALAVRAS (seu carinho já existente) ======
-// Adicionando funcionalidade ao botão "Sortear outro carinho"
-document.addEventListener('DOMContentLoaded', () => {
-  const carinhoBtn = document.querySelector('button[onclick*="sortear"]');
-  if (carinhoBtn) {
-    carinhoBtn.addEventListener('click', () => {
-      const frases = [
-        "Você é mais forte do que pensa, mesmo que hoje não pareça.",
-        "Respire fundo: este momento vai passar, e você vai lembrar que sobreviveu.",
-        "Seu valor não depende da produtividade. Você vale só por existir.",
-        "Ainda que tudo pareça caos, dentro de você existe um lugar calmo.",
-        "Você merece descanso sem culpa. Permita-se recarregar.",
-        "Não precisa ter todas as respostas. Apenas estar aqui já é suficiente.",
-        "Cada passo pequeno é movimento. Celebre o que você fez hoje.",
-        "Você não está sozinho(a). Mesmo agora, alguém torce por você.",
-        "Seu coração sabe o que precisa antes da sua mente entender.",
-        "Acolha seus sentimentos como nuvens: eles passam, mas não definem o céu."
-      ];
-      const frase = frases[Math.floor(Math.random() * frases.length)];
-      const el = document.createElement('div');
-      el.style = 'margin-top:10px; color:var(--secondary); font-size:1.05em; font-weight:600; animation:fadein 0.6s;';
-      el.textContent = frase;
-      const card = document.querySelector('.card:first-child');
-      if (card) {
-        const old = card.querySelector('.carinho-msg');
-        if (old) old.remove();
-        el.className = 'carinho-msg';
-        card.appendChild(el);
-      }
-    });
-  }
-});
-
-// ====== INICIALIZAÇÃO ======
-// Se não houver nenhum botão de carinho, criar um fallback
-if (!document.querySelector('button[onclick*="sortear"]')) {
-  const header = document.querySelector('header');
-  if (header) {
-    const btn = document.createElement('button');
-    btn.textContent = '🌸 Sortear outro carinho';
-    btn.style = `
-      background: var(--secondary);
-      color: #a34b7c;
-      border: none;
-      border-radius: 12px;
-      padding: 8px 22px;
-      font-size: 1rem;
-      font-weight: 600;
-      margin-top: 12px;
-      cursor: pointer;
-      box-shadow: var(--secondary) 0 2px 10px 0.10;
-      transition: background 0.18s;
-    `;
-    btn.addEventListener('click', () => {
-      const frases = [
-        "Você é mais forte do que pensa.",
-        "Respire fundo: você vai ficar bem.",
-        "Seu valor não depende do que você produz.",
-        "Permita-se descansar sem culpa.",
-        "Você não está sozinho(a).",
-        "Hoje basta ser gentil consigo mesmo(a).",
-        "Cada passo, por menor que seja, é progresso.",
-        "Acolha seus sentimentos — eles são visitantes, não donos da casa."
-      ];
-      const frase = frases[Math.floor(Math.random() * frases.length)];
-      const msg = document.createElement('div');
-      msg.style = 'margin-top:10px; color:var(--secondary); font-size:1.08em; font-weight:600; animation:fadein 0.6s;';
-      msg.textContent = frase;
-      const container = btn.parentNode;
-      let old = container.querySelector('.carinho-msg');
-      if (old) old.remove();
-      msg.className = 'carinho-msg';
-      container.appendChild(msg);
-    });
-    header.appendChild(btn);
-  }
-}
-
-// ====== TOQUE FINAL: animações suaves ======
-document.body.style.transition = 'background 0.5s';
-// Fade-in para cards ao carregar
-document.querySelectorAll('.card').forEach((c,i) => {
-  c.style.opacity = '0';
-  c.style.transform = 'translateY(30px)';
-  setTimeout(() => {
-    c.style.transition = 'opacity 0.6s, transform 0.6s cubic-bezier(.6,.01,.36,1)';
-    c.style.opacity = '1';
-    c.style.transform = 'translateY(0)';
-  }, 100 + i * 60);
-});
+// ───── DADOS LOCAIS ─────
+// (Os dados de CAPS Guarapuava já estão no HTML acima)
 
 </script>
-
-  <!-- Dica para a desenvolvedora -->
-  <div style="margin: 38px 0 10px 0; text-align:center; color:var(--cinza); font-size:0.93em;">
-    💡 <b>Dica:</b> Este arquivo é autocontido — cole como <code>index.html</code> e suba direto.
-    <br>
-    Se quiser customizar cores, edite as variáveis <code>:root</code> no <code>&lt;style&gt;</code>.
-    <br>
-    Todos os sons usam <b>Web Audio API</b> do navegador — sem arquivos externos, sem falhas.
-  </div>
 </body>
 </html>
