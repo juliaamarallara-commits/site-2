@@ -1,1149 +1,1727 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Pacote de Bem-Estar 🌈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Pacote de Bem-Estar — um cantinho de acolhimento, relaxamento e recursos de ajuda para adolescentes.">
+  <meta property="og:title" content="Pacote de Bem-Estar">
+  <meta property="og:description" content="Um cantinho pra respirar, cuidar e acolher — atividades lúdicas e recursos de ajuda para adolescentes.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://juliaamarallara-commits.github.io/site-2/">
+  <meta property="og:image" content="https://raw.githubusercontent.com/juliaamarallara-commits/site-2/main/assets/og-image.png">
+
+  <title>Pacote de Bem-Estar 🌈</title>
+  
+  <!-- Favicon (base64 simples, sem arquivo externo) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 32 32%22><circle cx=%2216%22 cy=%2216%22 r=%2214%22 fill=%22%23F9D6B4%22/><circle cx=%2212%22 cy=%2214%22 r=%222%22 fill=%22%235B4B8A%22/><circle cx=%2220%22 cy=%2214%22 r=%222%22 fill=%22%235B4B8A%22/><path d=%22M12,18 Q16,22 20,18%22 stroke=%22%23B886C9%22 stroke-width=%222%22 fill=%22none%22/></svg>">
+
+  <!-- Google Fonts: Baloo 2 (display) + Quicksand (base) -->
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+
   <style>
     :root {
-      --fundo: #f9f6f7;
-      --card: #fff9fb;
-      --primary: #b08fff;
-      --secondary: #ffb6c1;
-      --accent: #ffd1a6;
-      --verde: #b8e0c0;
-      --azul: #a6d6f1;
-      --texto: #4a3f5c;
-      --cinza: #d8d2e0;
-      --sombra: rgba(176, 143, 255, 0.12) 0 8px 32px;
-      --radius: 24px;
-      --transition: 0.25s cubic-bezier(.4,2,.6,1);
-      --font-main: 'Inter', 'Segoe UI', Arial, sans-serif;
+      /* Paleta pastel */
+      --cor-fundo: #f9f6ff;
+      --cor-fundo-card: #ffffffee;
+      --cor-primaria: #b886c9;  /* lilás */
+      --cor-secundaria: #7fc8a9; /* verde-menta */
+      --cor-acento: #ffd6b4;    /* pêssego */
+      --cor-destaque: #ffadad;  /* coral */
+      --cor-texto: #3a3454;
+      --cor-texto-suave: #6b6482;
+      --cor-shadow: 0 4px 24px 0 rgba(184, 134, 201, 0.12);
+      --cor-header: #fffaf6ee;
+      --cor-progress: linear-gradient(90deg, var(--cor-primaria), var(--cor-secundaria));
     }
 
-    * { box-sizing: border-box; }
-    body {
+    * {
+      box-sizing: border-box;
       margin: 0;
-      background: var(--fundo);
-      font-family: var(--font-main);
-      color: var(--texto);
+      padding: 0;
+    }
+
+    html, body {
+      font-family: 'Quicksand', Arial, sans-serif;
+      background: var(--cor-fundo);
+      color: var(--cor-texto);
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: background var(--transition);
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* NAVIGATION */
-    nav {
-      width: 100vw;
-      background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
-      padding: 0.5rem 0;
-      position: sticky;
+    body {
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* --- Progresso de scroll --- */
+    .progress-bar {
+      position: fixed;
       top: 0;
-      z-index: 100;
-      box-shadow: var(--sombra);
-    }
-    .nav-container {
-      max-width: 600px;
-      margin: 0 auto;
-      display: flex;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .nav-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      font-size: 1.05rem;
-      font-weight: 600;
-      padding: 0.5rem 1rem;
-      border-radius: 16px;
-      cursor: pointer;
-      transition: background var(--transition), color var(--transition);
-      letter-spacing: 0.02em;
-      position: relative;
-      outline: none;
-    }
-    .nav-btn.active {
-      background: rgba(255,255,255,0.20);
-      color: var(--primary);
-      font-weight: 700;
-      box-shadow: 0 2px 8px rgba(176,143,255,0.08);
-    }
-    .nav-btn:hover:not(.active) {
-      background: rgba(255,255,255,0.12);
-      color: #fff;
-    }
-
-    /* PAGE STRUCTURE */
-    .page {
-      display: none;
-      width: 100vw;
-      min-height: 90vh;
-      justify-content: center;
-      animation: fadein 0.4s;
-    }
-    .page.active {
-      display: flex;
-    }
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(24px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-
-    /* CARD */
-    .card {
-      background: var(--card);
-      box-shadow: var(--sombra);
-      border-radius: var(--radius);
-      margin: 2.5rem 1.5rem;
-      padding: 2.5rem 2rem 2rem 2rem;
-      max-width: 420px;
-      width: 95vw;
-      min-width: 280px;
-      min-height: 520px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.5rem;
-      border: 1.5px solid rgba(176,143,255,0.06);
-      transition: box-shadow var(--transition);
-    }
-    .card:hover {
-      box-shadow: var(--primary) 0 12px 48px 0;
-    }
-
-    h1, h2 {
-      font-weight: 700;
-      margin: 0 0 0.8rem 0;
-      text-align: center;
-      color: var(--primary);
-      letter-spacing: 0.02em;
-    }
-    h1 { font-size: 2.1rem; }
-    h2 { font-size: 1.4rem; margin-top: 0.2rem; }
-
-    p {
-      text-align: center;
-      font-size: 1.05rem;
-      line-height: 1.6;
-      margin: 0.5rem 0 1rem 0;
-    }
-
-    .subtitle {
-      color: var(--secondary);
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-      font-weight: 600;
-      text-align: center;
-    }
-
-    /* BUTTONS */
-    .btn-main {
-      background: linear-gradient(90deg, var(--primary), var(--secondary));
-      color: #fff;
-      border: none;
-      border-radius: 18px;
-      padding: 0.7rem 2rem;
-      font-size: 1.05rem;
-      font-weight: 700;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      box-shadow: var(--sombra);
-      transition: transform var(--transition), box-shadow var(--transition);
-      outline: none;
-    }
-    .btn-main:active {
-      transform: scale(0.97);
-      box-shadow: none;
-    }
-
-    /* ───── 🐱 GATINHO ───── */
-    .gatinho-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-      width: 100%;
-      margin-top: 0.5rem;
-    }
-    .gatinho-box {
-      position: relative;
-      width: 220px;
-      height: 180px;
-      background: #fff7fa;
-      border-radius: 20px;
-      border: 2px solid #e6d6f1;
-      box-shadow: 0 4px 24px rgba(176,143,255,0.07);
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      overflow: visible;
-      cursor: pointer;
-      user-select: none;
-    }
-    .gatinho-svg {
-      width: 130px;
-      height: 110px;
-      margin-bottom: 12px;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.07));
-      transition: transform var(--transition);
-    }
-    .gatinho-svg.purr {
-      animation: purr 0.4s infinite alternate;
-    }
-    @keyframes purr {
-      0% { transform: scale(1.00); }
-      100% { transform: scale(1.04); }
-    }
-    .coracao {
-      position: absolute;
-      font-size: 2.2rem;
-      opacity: 0;
-      pointer-events: none;
-      animation: flutuar 1.2s cubic-bezier(.6,-0.07,.36,1.01);
-      z-index: 10;
-    }
-    @keyframes flutuar {
-      0% {
-        transform: translateY(0px) scale(0.8);
-        opacity: 0;
-      }
-      25% {
-        opacity: 1;
-      }
-      70% {
-        transform: translateY(-48px) scale(1.1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-70px) scale(0.9);
-        opacity: 0;
-      }
-    }
-    .feliz-bar {
-      width: 170px;
-      height: 14px;
-      background: #f5e8f0;
-      border-radius: 8px;
-      margin-top: 1rem;
-      border: 1.5px solid #e6d6f1;
-      overflow: hidden;
-      box-shadow: 0 1px 4px rgba(176,143,255,0.04);
-    }
-    .feliz-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--verde) 0%, var(--secondary) 100%);
-      width: 50%;
-      border-radius: 8px 0 0 8px;
-      transition: width 0.3s;
-      box-shadow: 0 0 8px var(--verde);
-    }
-    .feliz-label {
-      font-size: 0.95rem;
-      color: var(--texto);
-      margin-top: 0.3rem;
-      text-align: center;
-      font-weight: 500;
-    }
-
-    /* ───── 🍵 CHÁ JOGUINHO ───── */
-    .cha-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1.2rem;
-      width: 100%;
-    }
-    .cha-setup {
-      display: flex;
-      align-items: flex-end;
-      gap: 2.2rem;
-      margin-top: 0.5rem;
-    }
-    .ingredientes-list {
-      display: flex;
-      flex-direction: column;
-      gap: 1.3rem;
-      align-items: center;
-    }
-    .ingrediente-item {
-      background: var(--accent);
-      border-radius: 16px;
-      padding: 12px 18px;
-      box-shadow: 0 2px 12px rgba(255,209,166,0.10);
-      border: 2px solid #ffd8b1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      cursor: grab;
-      user-select: none;
-      transition: transform 0.15s, box-shadow 0.15s;
-      opacity: 1;
-      will-change: transform;
-    }
-    .ingrediente-item.dragging {
-      transform: scale(1.12) rotate(-8deg);
-      box-shadow: 0 8px 32px rgba(255,209,166,0.18);
-      opacity: 0.95;
-      z-index: 100;
-      cursor: grabbing;
-    }
-    .ingrediente-emoji {
-      font-size: 2.2rem;
-      margin-bottom: 4px;
-    }
-    .ingrediente-label {
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #8a6a54;
-      text-align: center;
-    }
-
-    .xicara-box {
-      position: relative;
-      width: 180px;
-      height: 160px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      margin-left: 1rem;
-    }
-    .xicara-base {
-      position: absolute;
-      bottom: 0;
       left: 0;
-      width: 160px;
-      height: 90px;
-      font-size: 5rem;
-      opacity: 0.95;
+      right: 0;
+      height: 4px;
+      background: var(--cor-progress);
+      z-index: 100;
+      opacity: 0.8;
       pointer-events: none;
-      user-select: none;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
-    }
-    .xicara-steam {
-      position: absolute;
-      left: 72px;
-      bottom: 88px;
-      width: 28px;
-      height: 48px;
-      opacity: 0.6;
-      animation: steam 2.2s infinite;
-      pointer-events: none;
-    }
-    @keyframes steam {
-      0% { opacity: 0.6; transform: translateY(0px) scale(1); }
-      40% { opacity: 1; transform: translateY(-18px) scale(1.08); }
-      100% { opacity: 0; transform: translateY(-40px) scale(0.95); }
-    }
-    .ingredientes-dentro {
-      position: absolute;
-      left: 52px;
-      bottom: 32px;
-      width: 72px;
-      height: 72px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      justify-content: center;
-      align-items: flex-end;
-      pointer-events: none;
-      z-index: 2;
-    }
-    .ingrediente-na-xicara {
-      font-size: 1.55rem;
-      opacity: 0.95;
-      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
-      animation: dropIn 0.3s cubic-bezier(.68,-0.55,.27,1.55);
-      transform-origin: bottom center;
-    }
-    @keyframes dropIn {
-      0% { transform: translateY(-32px) scale(0.8); opacity: 0; }
-      70% { transform: translateY(6px) scale(1.06); opacity: 1; }
-      100% { transform: translateY(0) scale(1); opacity: 1; }
-    }
-    .cha-feedback {
-      margin-top: 1.2rem;
-      min-height: 36px;
-      text-align: center;
-      font-size: 1.05rem;
-      color: var(--primary);
-      font-weight: 500;
-      opacity: 0;
       transition: opacity 0.2s;
     }
-    .cha-feedback.show {
-      opacity: 1;
-      animation: fadeInShort 0.4s;
-    }
-    @keyframes fadeInShort {
-      from { opacity: 0; transform: translateY(10px);}
-      to { opacity: 1; transform: translateY(0);}
-    }
-    .cha-receita {
-      margin-top: 0.3rem;
-      font-size: 0.95rem;
-      color: #8a7f9c;
-      text-align: center;
-      opacity: 0.85;
-      line-height: 1.4;
+    .progress-bar:hidden {
+      opacity: 0;
     }
 
-    /* ───── 🆘 AJUDA ───── */
-    .ajuda-container {
+    /* --- Header fixo --- */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       width: 100%;
+      background: var(--cor-header);
+      box-shadow: var(--cor-shadow);
+      z-index: 99;
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+      padding: 0.5rem 0 0.5rem 0;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+
+    .container-header {
+      max-width: 1100px;
+      margin: 0 auto;
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
+      justify-content: space-between;
+      padding: 0 1.5rem;
     }
-    .ajuda-card {
-      background: linear-gradient(105deg, #eef2ff 0%, #fff3fd 100%);
-      border: 2px solid #d8d2e0;
-      border-radius: 20px;
-      padding: 1.5rem 1.7rem 1.4rem 1.7rem;
-      max-width: 400px;
-      width: 98%;
-      margin-bottom: 0.8rem;
-      box-shadow: 0 6px 28px rgba(176,143,255,0.10);
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-    .ajuda-title {
-      font-size: 1.22rem;
-      color: var(--primary);
-      font-weight: 700;
-      margin-bottom: 0.2rem;
+
+    .logo {
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      text-align: left;
-    }
-    .ajuda-emoji {
-      font-size: 1.4rem;
-    }
-    .ajuda-info {
-      font-size: 1.03rem;
-      color: var(--texto);
-      text-align: left;
-      line-height: 1.6;
-      margin-left: 1.2rem;
-    }
-    .telefone {
-      font-family: monospace;
-      color: #b08fff;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.8rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-    }
-    .link-ajuda {
-      color: #8a6fa8;
-      text-decoration: underline;
-      font-weight: 500;
+      color: var(--cor-primaria);
+      text-decoration: none;
+      letter-spacing: 1px;
       transition: color 0.2s;
     }
-    .link-ajuda:hover {
-      color: var(--primary);
-    }
-    .local-title {
-      font-size: 1.08rem;
-      color: var(--secondary);
-      font-weight: 600;
-      margin-top: 0.4rem;
-      margin-bottom: 0.1rem;
-      text-align: left;
-    }
-    .recursos-lista {
-      margin-left: 1.2rem;
-      padding-left: 0.3rem;
-      font-size: 1.02rem;
-      color: var(--texto);
-      line-height: 1.7;
-    }
-    .recursos-lista li {
-      margin-bottom: 0.25rem;
-    }
-    .nota-ajuda {
-      background: #fff4e8;
-      color: #8a6a54;
-      border-left: 5px solid var(--accent);
-      padding: 0.6rem 1rem;
-      border-radius: 10px;
-      font-size: 0.98rem;
-      margin-top: 1.2rem;
-      text-align: center;
-      box-shadow: 0 2px 8px rgba(255,209,166,0.07);
+    .logo:hover, .logo:focus {
+      color: var(--cor-secundaria);
+      outline: none;
     }
 
-    /* ───── HOME ───── */
-    .home-container {
+    nav {
+      display: flex;
+      gap: 0.8rem;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--cor-texto);
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      border-radius: 24px;
+      transition: background 0.2s, color 0.2s;
+      outline: none;
+    }
+    nav a:hover, nav a:focus {
+      background: var(--cor-acento);
+      color: var(--cor-primaria);
+      outline: none;
+    }
+
+    .menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 2rem;
+      color: var(--cor-primaria);
+      cursor: pointer;
+      padding: 0.5rem;
+      margin-left: 1rem;
+    }
+
+    /* --- Seções --- */
+    section {
+      scroll-margin-top: 70px;
+      padding: 6rem 1.5rem 4rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    /* Home */
+    #home {
+      text-align: center;
+      padding-top: 8rem;
+      padding-bottom: 3rem;
+    }
+    .home-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2.8rem;
+      color: var(--cor-primaria);
+      margin-bottom: 1rem;
+      letter-spacing: 2px;
+      line-height: 1.15;
+    }
+    .home-subtitle {
+      font-size: 1.3rem;
+      color: var(--cor-texto-suave);
+      margin-bottom: 2rem;
+      font-weight: 500;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: var(--cor-primaria);
+      color: white;
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.1rem;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border: none;
+      border-radius: 32px;
+      box-shadow: 0 2px 12px rgba(184, 134, 201, 0.15);
+      cursor: pointer;
+      margin-top: 1.5rem;
+      transition: background 0.2s, transform 0.2s;
+      outline: none;
+    }
+    .cta-btn:hover, .cta-btn:focus {
+      background: var(--cor-secundaria);
+      color: #fff;
+      transform: translateY(-3px) scale(1.05);
+      outline: none;
+    }
+
+    /* Mimi */
+    #mimi {
+      background: var(--cor-fundo-card);
+      box-shadow: var(--cor-shadow);
+      border-radius: 24px;
+      padding: 2.5rem 1.5rem 3rem 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2rem;
+    }
+    @media (min-width: 700px) {
+      #mimi {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 3.5rem;
+      }
+    }
+
+    .mimi-col-left {
+      flex: 1 1 0;
+      min-width: 260px;
+      max-width: 340px;
       width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1.2rem;
-      margin-top: 1rem;
-    }
-    .home-title {
-      font-size: 2.3rem;
-      color: var(--primary);
-      font-weight: 800;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.2rem;
-      text-shadow: 0 2px 8px rgba(176,143,255,0.06);
-    }
-    .home-slogan {
-      color: var(--secondary);
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 1.5rem;
-      text-align: center;
-    }
-    .home-emoji {
-      font-size: 3.2rem;
-      margin-bottom: 0.5rem;
-      filter: drop-shadow(0 4px 12px rgba(0,0,0,0.08));
-    }
-    .home-desc {
-      font-size: 1.08rem;
-      color: #6a5c7b;
-      text-align: center;
-      margin-bottom: 1.2rem;
-      line-height: 1.6;
     }
 
-    /* ───── RESPONSIVO ───── */
-    @media (max-width: 600px) {
-      .card {
-        min-width: 98vw;
-        max-width: 99vw;
-        padding: 1.3rem 0.6rem 1.4rem 0.6rem;
-        min-height: 44vw;
-        margin: 1.2rem 0;
+    .mimi-svg-container {
+      width: 220px;
+      height: 220px;
+      margin-bottom: 1rem;
+      position: relative;
+      cursor: pointer;
+      filter: drop-shadow(0 4px 12px rgba(184, 134, 201, 0.10));
+      transition: transform 0.15s;
+    }
+    .mimi-svg-container:active {
+      transform: scale(0.97);
+    }
+    .mimi-svg {
+      width: 220px;
+      height: 220px;
+      display: block;
+    }
+
+    .mimi-hearts {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+    .mimi-heart {
+      opacity: 0;
+      transform: translateY(10px) scale(0.8);
+      transition: opacity 0.3s, transform 0.3s;
+      color: #ff6b9d;
+      font-size: 1.5rem;
+      filter: drop-shadow(0 2px 4px rgba(255,107,157,0.15));
+    }
+    .mimi-heart.active {
+      opacity: 1;
+      transform: translateY(0) scale(1.15);
+    }
+
+    .mimi-info {
+      flex: 2 1 0;
+      min-width: 240px;
+      max-width: 420px;
+      width: 100%;
+    }
+    .mimi-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--cor-primaria);
+      margin-bottom: 0.5rem;
+      text-align: left;
+    }
+    .mimi-desc {
+      color: var(--cor-texto-suave);
+      font-size: 1.08rem;
+      margin-bottom: 1.2rem;
+      text-align: left;
+    }
+    .mimi-humor {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      margin-bottom: 0.5rem;
+    }
+    .mimi-humor-label {
+      font-weight: 600;
+      color: var(--cor-secundaria);
+    }
+    .mimi-meter {
+      width: 160px;
+      height: 14px;
+      background: #f0e8f6;
+      border-radius: 7px;
+      overflow: hidden;
+      border: 1.5px solid #e6d6f0;
+      box-shadow: 0 1px 3px rgba(184,134,201,0.06);
+    }
+    .mimi-meter-fill {
+      height: 100%;
+      background: var(--cor-progress);
+      width: 0%;
+      transition: width 0.3s cubic-bezier(.4,2,.6,1);
+      border-radius: 7px 0 0 7px;
+      box-shadow: 0 0 8px 2px rgba(127,200,169,0.15);
+    }
+    .mimi-tip {
+      background: var(--cor-acento);
+      color: var(--cor-texto);
+      padding: 0.5rem 1rem;
+      border-radius: 16px;
+      font-size: 0.98rem;
+      margin-top: 1rem;
+      text-align: left;
+      box-shadow: 0 2px 8px rgba(255,214,180,0.10);
+    }
+
+    /* Estação do Chá */
+    #chá {
+      background: var(--cor-fundo-card);
+      box-shadow: var(--cor-shadow);
+      border-radius: 24px;
+      padding: 2.5rem 1.5rem 3rem 1.5rem;
+      margin-top: 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2.5rem;
+    }
+    @media (min-width: 700px) {
+      #chá {
+        flex-direction: row;
+        align-items: flex-start;
+        gap: 3.5rem;
+      }
+    }
+
+    .cha-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--cor-secundaria);
+      margin-bottom: -1.5rem;
+      width: 100%;
+      text-align: center;
+    }
+
+    .cha-ingredients {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      margin-right: 1.5rem;
+    }
+    .ingredient {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      background: #f5f9ff;
+      padding: 0.7rem 1.2rem;
+      border-radius: 18px;
+      border: 1.5px dashed #e0d6f6;
+      cursor: grab;
+      user-select: none;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
+      font-size: 1.05rem;
+      color: var(--cor-texto);
+      box-shadow: 0 2px 8px rgba(184,134,201,0.06);
+      /* drag data attribute */
+      data-ingredient: none;
+    }
+    .ingredient.dragging {
+      background: var(--cor-acento);
+      box-shadow: 0 6px 24px rgba(255,214,180,0.18);
+      transform: scale(1.06) rotate(-2deg);
+      cursor: grabbing;
+    }
+    .ingredient-icon {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 2px 4px rgba(127,200,169,0.15));
+    }
+
+    .cha-cup-area {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      min-width: 220px;
+    }
+    .cha-cup-container {
+      position: relative;
+      width: 160px;
+      height: 180px;
+      margin-bottom: 0.5rem;
+    }
+    .cha-cup {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 160px;
+      height: 180px;
+      background: #fff;
+      border-radius: 50% 50% 60% 60% / 60% 60% 80% 80%;
+      border: 4px solid #e6d6f0;
+      box-shadow: 0 6px 24px rgba(184,134,201,0.12);
+      transition: border-color 0.3s, background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cha-liquid {
+      position: absolute;
+      bottom: 18px;
+      left: 18px;
+      right: 18px;
+      height: 0px;
+      background: #f5e8d6; /* chá claro por padrão */
+      border-radius: 40% 40% 60% 60%;
+      transition: height 0.3s, background 0.3s;
+      opacity: 0;
+    }
+    .cha-steam {
+      position: absolute;
+      top: -40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .cha-steam-bubble {
+      width: 10px;
+      height: 10px;
+      background: rgba(255,255,255,0.85);
+      border-radius: 50%;
+      margin-bottom: 6px;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.4s;
+    }
+    .cha-steam-bubble.active {
+      opacity: 1;
+      animation: float-up 1.2s ease-in-out infinite;
+    }
+    @keyframes float-up {
+      0% { transform: translateY(0px) scale(1); opacity: 1; }
+      40% { opacity: 1; }
+      70% { transform: translateY(-18px) scale(1.12); opacity: 0.8; }
+      100% { transform: translateY(-32px) scale(0.9); opacity: 0; }
+    }
+
+    .cha-drag-hint {
+      color: var(--cor-texto-suave);
+      font-size: 0.98rem;
+      margin-top: 0.5rem;
+      text-align: center;
+      min-width: 180px;
+    }
+
+    .cha-recipe {
+      margin-top: 1.2rem;
+      padding: 1rem 1.3rem;
+      background: #f0f8f4;
+      border-radius: 16px;
+      border-left: 6px solid var(--cor-secundaria);
+      color: var(--cor-texto);
+      font-size: 1rem;
+      box-shadow: 0 2px 8px rgba(127,200,169,0.08);
+      text-align: left;
+    }
+    .cha-recipe-title {
+      font-weight: 700;
+      color: var(--cor-secundaria);
+      margin-bottom: 0.3rem;
+      font-family: 'Baloo 2', cursive;
+    }
+
+    .cha-clear-btn {
+      background: none;
+      border: none;
+      color: var(--cor-destaque);
+      font-size: 0.98rem;
+      margin-top: 0.5rem;
+      cursor: pointer;
+      padding: 0.3rem 1rem;
+      border-radius: 16px;
+      transition: background 0.18s;
+    }
+    .cha-clear-btn:hover, .cha-clear-btn:focus {
+      background: #fff0ee;
+      outline: none;
+    }
+
+    /* Recursos */
+    #recursos {
+      margin-top: 2rem;
+      padding-top: 1rem;
+    }
+    .recursos-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--cor-destaque);
+      text-align: center;
+      margin-bottom: 1.5rem;
+    }
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 600px) {
+      .cards-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 2rem;
+      }
+    }
+    @media (min-width: 900px) {
+      .cards-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
+    .resource-card {
+      background: var(--cor-fundo-card);
+      border-radius: 20px;
+      box-shadow: var(--cor-shadow);
+      padding: 1.5rem 1.3rem 1.3rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.8rem;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: 1.5px solid #f0e8f6;
+      position: relative;
+      overflow: hidden;
+    }
+    .resource-card:hover, .resource-card:focus-within {
+      transform: translateY(-6px) scale(1.03);
+      box-shadow: 0 8px 32px rgba(184,134,201,0.18);
+      outline: 2px solid var(--cor-acento);
+      outline-offset: -2px;
+    }
+    .card-icon {
+      font-size: 2.8rem;
+      margin-bottom: 0.3rem;
+      filter: drop-shadow(0 4px 12px rgba(184,134,201,0.15));
+    }
+    .card-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 1.2rem;
+      color: var(--cor-primaria);
+      margin-bottom: 0.3rem;
+      text-align: center;
+    }
+    .card-desc {
+      color: var(--cor-texto-suave);
+      font-size: 0.98rem;
+      text-align: center;
+      margin-bottom: 0.7rem;
+      min-height: 48px;
+    }
+    .card-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      width: 100%;
+      align-items: center;
+    }
+    .card-btn {
+      display: inline-block;
+      background: var(--cor-primaria);
+      color: white;
+      font-weight: 600;
+      font-size: 0.98rem;
+      padding: 0.5rem 1.3rem;
+      border: none;
+      border-radius: 24px;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 2px 8px rgba(184,134,201,0.10);
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 0.15rem;
+      outline: none;
+    }
+    .card-btn:hover, .card-btn:focus {
+      background: var(--cor-secundaria);
+      color: #fff;
+      transform: scale(1.04);
+      outline: none;
+    }
+    .card-btn.secondary {
+      background: var(--cor-acento);
+      color: var(--cor-primaria);
+    }
+    .card-btn.secondary:hover, .card-btn.secondary:focus {
+      background: var(--cor-secundaria);
+      color: #fff;
+    }
+
+    /* Sobre */
+    #sobre {
+      background: var(--cor-fundo-card);
+      box-shadow: var(--cor-shadow);
+      border-radius: 24px;
+      padding: 2.5rem 1.5rem 3rem 1.5rem;
+      margin-top: 2rem;
+      max-width: 800px;
+      text-align: center;
+    }
+    .sobre-title {
+      font-family: 'Baloo 2', cursive;
+      font-size: 2rem;
+      color: var(--cor-secundaria);
+      margin-bottom: 1rem;
+    }
+    .sobre-text {
+      color: var(--cor-texto-suave);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+    .sobre-quote {
+      font-style: italic;
+      color: var(--cor-primaria);
+      margin: 1.2rem 0;
+      font-size: 1.15rem;
+      padding: 0.5rem 1.5rem;
+      border-left: 4px solid var(--cor-primaria);
+      background: #f6effa;
+      border-radius: 0 8px 8px 0;
+      display: inline-block;
+    }
+    .sobre-contact {
+      margin-top: 1rem;
+      padding: 0.8rem 1.2rem;
+      background: #f0e8f6;
+      border-radius: 18px;
+      font-size: 1rem;
+      color: var(--cor-texto);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      border: 1px solid #e6d6f6;
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 2rem 1.5rem 1.2rem 1.5rem;
+      color: var(--cor-texto-suave);
+      font-size: 0.95rem;
+      margin-top: 2rem;
+      border-top: 1px solid #eee6fa;
+    }
+    .footer-links {
+      margin-top: 0.5rem;
+    }
+    .footer-links a {
+      color: var(--cor-primaria);
+      text-decoration: none;
+      margin: 0 0.5rem;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover {
+      color: var(--cor-secundaria);
+      text-decoration: underline;
+    }
+
+    /* --- Scrollbar (webkit) --- */
+    ::-webkit-scrollbar {
+      width: 8px;
+      background: #f0e8f6;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--cor-primaria);
+      border-radius: 4px;
+      opacity: 0.3;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      opacity: 0.6;
+    }
+
+    /* --- Animações de entrada --- */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.5s, transform 0.5s;
+    }
+    .fade-in-section.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* --- Modo escuro --- */
+    .theme-dark {
+      --cor-fundo: #23203a;
+      --cor-fundo-card: #2d294a;
+      --cor-primaria: #d4a6f2;
+      --cor-secundaria: #9fd4be;
+      --cor-acento: #443c5a;
+      --cor-destaque: #ffbebe;
+      --cor-texto: #f0eaf6;
+      --cor-texto-suave: #b8b0d0;
+      --cor-header: #23203aee;
+    }
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background: var(--cor-acento);
+      color: var(--cor-primaria);
+      border: none;
+      border-radius: 50%;
+      width: 52px;
+      height: 52px;
+      font-size: 1.8rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px rgba(184,134,201,0.15);
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+      z-index: 90;
+      outline: none;
+    }
+    .theme-toggle:hover, .theme-toggle:focus {
+      background: var(--cor-primaria);
+      color: #fff;
+      transform: scale(1.08) rotate(-15deg);
+      outline: none;
+    }
+
+    /* --- Menu hambúrguer (mobile) --- */
+    .nav-mobile {
+      position: fixed;
+      top: 65px;
+      right: 0;
+      width: 220px;
+      height: calc(100vh - 65px);
+      background: var(--cor-header);
+      box-shadow: -2px 0 16px rgba(184,134,201,0.15);
+      z-index: 98;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+      transform: translateX(100%);
+      transition: transform 0.25s;
+      border-bottom-left-radius: 18px;
+      border-top-left-radius: 18px;
+    }
+    .nav-mobile.open {
+      transform: translateX(0);
+    }
+    .nav-mobile-backdrop {
+      position: fixed;
+      top: 65px;
+      right: 0;
+      left: 0;
+      bottom: 0;
+      background: rgba(58,52,84,0.18);
+      z-index: 97;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .nav-mobile-backdrop.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .menu-btn {
+      display: block;
+      background: none;
+      border: none;
+      font-size: 2.2rem;
+      color: var(--cor-primaria);
+      cursor: pointer;
+      padding: 0.5rem;
+      margin-left: 1rem;
+      transition: color 0.2s;
+    }
+    .menu-btn:hover, .menu-btn:focus {
+      color: var(--cor-secundaria);
+      outline: none;
+    }
+
+    @media (min-width: 900px) {
+      .nav-mobile, .nav-mobile-backdrop, .menu-btn {
+        display: none !important;
       }
       nav {
-        font-size: 0.95rem;
-        padding: 0.35rem 0;
-      }
-      .cha-setup {
-        flex-direction: column;
         gap: 1.2rem;
-        align-items: center;
-      }
-      .cha-container {
-        margin-top: 0.2rem;
-      }
-      .gatinho-box {
-        width: 90vw;
-        max-width: 260px;
-        height: 190px;
-      }
-      .feliz-bar {
-        width: 85vw;
-        max-width: 220px;
       }
     }
 
-    /* ───── ANIMAÇÕES SUTIS ───── */
-    .card {
-      animation: cardAppear 0.5s cubic-bezier(.68,-0.55,.27,1.55);
+    /* --- Responsividade mobile --- */
+    @media (max-width: 600px) {
+      section {
+        padding: 5.2rem 0.8rem 3.2rem 0.8rem;
+      }
+      #home {
+        padding-top: 7rem;
+        padding-bottom: 2rem;
+      }
+      .home-title {
+        font-size: 2.1rem;
+      }
+      #mimi, #chá {
+        padding: 1.5rem 0.6rem 2rem 0.6rem;
+        flex-direction: column;
+        gap: 1.5rem;
+        align-items: center;
+      }
+      .cha-title {
+        margin-bottom: 0.5rem;
+      }
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+      #sobre {
+        padding: 1.8rem 0.7rem 2.2rem 0.7rem;
+      }
+      .theme-toggle {
+        right: 1rem;
+        bottom: 1rem;
+        width: 44px;
+        height: 44px;
+        font-size: 1.4rem;
+      }
     }
-    @keyframes cardAppear {
-      0% { opacity: 0; transform: translateY(40px) scale(0.96);}
-      70% { opacity: 1; transform: translateY(-8px) scale(1.02);}
-      100% { opacity: 1; transform: translateY(0) scale(1);}
+
+    /* --- Acessibilidade: focus styles --- */
+    a:focus, button:focus, input:focus {
+      outline: 3px solid var(--cor-primaria);
+      outline-offset: 2px;
+      z-index: 10;
     }
-    .nav-btn {
-      animation: navFadeIn 0.6s;
-    }
-    @keyframes navFadeIn {
-      from { opacity: 0; transform: translateY(-12px);}
-      to { opacity: 1; transform: translateY(0);}
+
+    /* --- Prefers-reduced-motion --- */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0s !important;
+        transition-duration: 0s !important;
+      }
+      .mimi-meter-fill {
+        transition: none !important;
+      }
     }
   </style>
 </head>
-<body>
-  <!-- NAVIGATION -->
-  <nav>
-    <div class="nav-container">
-      <button class="nav-btn active" data-page="home">🏠 Início</button>
-      <button class="nav-btn" data-page="gatinho">🐱 Mimi</button>
-      <button class="nav-btn" data-page="cha">🍵 Estação do Chá</button>
-      <button class="nav-btn" data-page="ajuda">🆘 Ajuda</button>
-    </div>
-  </nav>
+<body class="fade-in-section">
 
-  <!-- HOME -->
-  <section id="page-home" class="page active">
-    <div class="card home-container">
-      <span class="home-emoji">🌈</span>
-      <div class="home-title">Pacote de Bem-Estar</div>
-      <div class="home-slogan">Um cantinho pra respirar, cuidar e acolher</div>
-      <div class="home-desc">
-        Olá! Aqui você encontra atividades para relaxar e se expressar.<br>
-        <b>Clique no menu</b> acima para brincar com o gatinho 🐱,<br>
-        preparar um chá virtual ☕ ou encontrar ajuda 🆘.<br><br>
-        <span style="color:#8a7f9c;opacity:0.8;font-size:0.98rem">
-          Feito com carinho para adolescentes de escolas públicas do Paraná.<br>
-          Você não está sozinho(a).
-        </span>
-      </div>
+  <!-- Barra de progresso de scroll -->
+  <div class="progress-bar" id="progress-bar" hidden></div>
+
+  <!-- Header fixo -->
+  <header>
+    <div class="container-header">
+      <a href="#home" class="logo" aria-label="Ir para a página inicial">
+        🌈 Pacote de Bem-Estar
+      </a>
+      <nav aria-label="Navegação principal" id="main-nav">
+        <a href="#mimi">Mimi</a>
+        <a href="#chá">Estação do Chá</a>
+        <a href="#recursos">Recursos</a>
+        <a href="#sobre">Sobre</a>
+      </nav>
+      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-mobile">&#9776;</button>
     </div>
+  </header>
+
+  <!-- Menu hambúrguer (mobile) -->
+  <nav class="nav-mobile" id="nav-mobile" aria-label="Menu mobile">
+    <a href="#home" onclick="document.querySelector('.nav-mobile').classList.remove('open'); document.querySelector('.nav-mobile-backdrop').classList.remove('open');">Início</a>
+    <a href="#mimi" onclick="document.querySelector('.nav-mobile').classList.remove('open'); document.querySelector('.nav-mobile-backdrop').classList.remove('open');">Mimi</a>
+    <a href="#chá" onclick="document.querySelector('.nav-mobile').classList.remove('open'); document.querySelector('.nav-mobile-backdrop').classList.remove('open');">Estação do Chá</a>
+    <a href="#recursos" onclick="document.querySelector('.nav-mobile').classList.remove('open'); document.querySelector('.nav-mobile-backdrop').classList.remove('open');">Recursos de Ajuda</a>
+    <a href="#sobre" onclick="document.querySelector('.nav-mobile').classList.remove('open'); document.querySelector('.nav-mobile-backdrop').classList.remove('open');">Sobre</a>
+  </nav>
+  <div class="nav-mobile-backdrop" id="nav-mobile-backdrop"></div>
+
+  <!-- Seção Home -->
+  <section id="home" class="fade-in-section">
+    <h1 class="home-title">Um cantinho pra respirar, cuidar e acolher</h1>
+    <p class="home-subtitle">Olá! Aqui você encontra atividades para relaxar, se expressar e encontrar apoio.<br>
+    Feito com carinho para adolescentes de escolas públicas do Paraná.</p>
+    <a href="#mimi" class="cta-btn">Comece pelo Mimi 🐱</a>
   </section>
 
-  <!-- GATINHO -->
-  <section id="page-gatinho" class="page">
-    <div class="card gatinho-container">
-      <h1>Mimi, o Gatinho</h1>
-      <div class="subtitle">Faça carinho com o mouse 💖</div>
-      <div class="gatinho-box" id="gatinho-box">
-        <!-- SVG do gatinho -->
-        <svg class="gatinho-svg" id="gatinho-svg" viewBox="0 0 130 110" fill="#b08fff">
+  <!-- Seção Mimi -->
+  <section id="mimi" class="fade-in-section">
+    <div class="mimi-col-left">
+      <div class="mimi-svg-container" tabindex="0" role="button" aria-label="Faça carinho no Mimi clicando ou arrastando">
+        <div class="mimi-hearts" id="mimi-hearts">
+          <span class="mimi-heart" id="heart1">💖</span>
+          <span class="mimi-heart" id="heart2">💖</span>
+          <span class="mimi-heart" id="heart3">💖</span>
+          <span class="mimi-heart" id="heart4">💖</span>
+          <span class="mimi-heart" id="heart5">💖</span>
+        </div>
+        <svg class="mimi-svg" id="mimi-svg" viewBox="0 0 220 220" role="img" aria-label="Mimi, o gatinho">
           <!-- Corpo -->
-          <ellipse cx="65" cy="72" rx="42" ry="28" fill="#ffb6c1" stroke="#d8d2e0" stroke-width="2"/>
+          <ellipse cx="110" cy="135" rx="75" ry="55" fill="#f9d6b4" stroke="#b886c9" stroke-width="3"/>
           <!-- Cabeça -->
-          <ellipse cx="65" cy="48" rx="28" ry="24" fill="#ffb6c1" stroke="#d8d2e0" stroke-width="2"/>
+          <ellipse cx="110" cy="85" rx="58" ry="48" fill="#f9d6b4" stroke="#b886c9" stroke-width="3"/>
           <!-- Orelhas -->
-          <polygon points="50,34 44,22 58,28" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
-          <polygon points="80,34 96,22 82,28" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
-          <!-- Olhos -->
-          <ellipse cx="58" cy="46" rx="4" ry="3" fill="#4a3f5c"/>
-          <ellipse cx="72" cy="46" rx="4" ry="3" fill="#4a3f5c"/>
-          <ellipse cx="56" cy="44" rx="1.2" ry="1" fill="#fff9fb" opacity="0.9"/>
-          <ellipse cx="70" cy="44" rx="1.2" ry="1" fill="#fff9fb" opacity="0.9"/>
+          <polygon points="85,55 95,75 75,72" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
+          <polygon points="135,55 125,75 145,72" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
+          <!-- Bochechas -->
+          <ellipse cx="88" cy="95" rx="7" ry="5" fill="#ffd6b4" opacity="0.8"/>
+          <ellipse cx="132" cy="95" rx="7" ry="5" fill="#ffd6b4" opacity="0.8"/>
+          <!-- Olhos (serão atualizados pelo JS) -->
+          <circle cx="95" cy="88" r="7" fill="#5b4b8a" id="mimi-eye-left"/>
+          <circle cx="125" cy="88" r="7" fill="#5b4b8a" id="mimi-eye-right"/>
+          <!-- Pupilas (serão atualizadas pelo JS) -->
+          <circle cx="95" cy="88" r="2.8" fill="#fff" id="mimi-pupil-left"/>
+          <circle cx="125" cy="88" r="2.8" fill="#fff" id="mimi-pupil-right"/>
           <!-- Nariz -->
-          <polygon points="65,51 62,54 68,54" fill="#ff9eb7"/>
-          <!-- Bigodes -->
-          <line x1="42" y1="50" x2="28" y2="46" stroke="#4a3f5c" stroke-width="1.5"/>
-          <line x1="42" y1="54" x2="28" y2="56" stroke="#4a3f5c" stroke-width="1.5"/>
-          <line x1="88" y1="50" x2="102" y2="46" stroke="#4a3f5c" stroke-width="1.5"/>
-          <line x1="88" y1="54" x2="102" y2="56" stroke="#4a3f5c" stroke-width="1.5"/>
-          <!-- Cauda -->
-          <path d="M100,78 Q108,68 112,60 Q114,52 108,48 Q104,50 100,56" fill="none" stroke="#d8d2e0" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-          <!-- Patinhas -->
-          <ellipse cx="50" cy="86" rx="8" ry="5" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
-          <ellipse cx="80" cy="86" rx="8" ry="5" fill="#ffd1a6" stroke="#d8d2e0" stroke-width="1"/>
+          <polygon points="110,102 105,108 115,108" fill="#b886c9"/>
+          <!-- Boca (será atualizada pelo JS) -->
+          <path d="M98,114 Q110,122 122,114" stroke="#5b4b8a" stroke-width="3" fill="none" id="mimi-mouth"/>
+          <!-- Rabo -->
+          <path d="M165,135 Q180,115 188,98" stroke="#b886c9" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <!-- Patas -->
+          <ellipse cx="85" cy="165" rx="16" ry="10" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
+          <ellipse cx="135" cy="165" rx="16" ry="10" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
         </svg>
       </div>
-      <div class="feliz-bar">
-        <div class="feliz-fill" id="feliz-fill" style="width:50%"></div>
+      <div class="mimi-tip" id="mimi-tip">
+        💡 <strong>Dica:</strong> Clique ou arraste sobre o corpo do Mimi para dar carinho.<br>
+        Cada carinho aumenta o humor dele! 🧡
       </div>
-      <div class="feliz-label">
-        <span id="feliz-texto">Humor: <b>neutro</b></span>
-      </div>
-      <p style="margin-top:0.2rem;opacity:0.7;font-size:0.98rem">
-        Clique ou arraste o mouse sobre o corpo do Mimi.<br>
-        Quanto mais carinho, mais feliz ele fica! 🧡
-      </p>
     </div>
-  </section>
-
-  <!-- CHÁ -->
-  <section id="page-cha" class="page">
-    <div class="card cha-container">
-      <h1>Estação do Chá</h1>
-      <div class="subtitle">Arraste os ingredientes para dentro da xícara ☕</div>
-      <div class="cha-setup">
-        <!-- Ingredientes -->
-        <div class="ingredientes-list">
-          <div class="ingrediente-item" draggable="true" data-ing="camomila">
-            <span class="ingrediente-emoji">🌼</span>
-            <span class="ingrediente-label">Camomila</span>
-          </div>
-          <div class="ingrediente-item" draggable="true" data-ing="mel">
-            <span class="ingrediente-emoji">🍯</span>
-            <span class="ingrediente-label">Mel</span>
-          </div>
-          <div class="ingrediente-item" draggable="true" data-ing="marshmallow">
-            <span class="ingrediente-emoji">🍡</span>
-            <span class="ingrediente-label">Marshmallow</span>
-          </div>
-          <div class="ingrediente-item" draggable="true" data-ing="hortela">
-            <span class="ingrediente-emoji">🍃</span>
-            <span class="ingrediente-label">Hortelã</span>
-          </div>
-        </div>
-        <!-- Xícara -->
-        <div class="xicara-box">
-          <span class="xicara-base">☕</span>
-          <div class="xicara-steam"></div>
-          <div class="ingredientes-dentro" id="ingredientes-dentro">
-            <!-- Ingredientes arrastados aparecem aqui -->
-          </div>
-        </div>
+    <div class="mimi-info">
+      <div class="mimi-title">Mimi, o Gatinho</div>
+      <div class="mimi-desc">Faça carinho no Mimi para ajudá-lo a ficar mais feliz. Gatos gostam de atenção no ritmo deles — nada de pressa! Cada toque conta.</div>
+      <div class="mimi-humor">
+        <span class="mimi-humor-label">Humor:</span>
+        <span id="mimi-humor-text" style="font-weight:600; color:var(--cor-secundaria);">neutro</span>
       </div>
-      <div class="cha-feedback" id="cha-feedback">
-        <!-- Feedback aparece aqui -->
+      <div class="mimi-meter">
+        <div class="mimi-meter-fill" id="mimi-meter-fill" style="width: 20%"></div>
       </div>
-      <div class="cha-receita" id="cha-receita">
-        <b>Receitas que o Mimi aprova:</b><br>
-        🌼 → chá de camomila para relaxar<br>
-        🍯 → chá com mel para conforto<br>
-        🍃 → hortelã para respirar melhor<br>
-        🍡 → marshmallow para adoçar o dia
+      <div style="margin-top:0.8rem; color:var(--cor-texto-suave); font-size:0.95rem;">
+        Nível de carinho: <span id="mimi-level-text">1/5</span>
       </div>
     </div>
   </section>
 
-  <!-- AJUDA -->
-  <section id="page-ajuda" class="page">
-    <div class="card ajuda-container">
-      <h1>🆘 Recursos de Ajuda</h1>
-      <div class="subtitle">Você não está sozinho(a)</div>
+  <!-- Seção Estação do Chá -->
+  <section id="chá" class="fade-in-section">
+    <div>
+      <div class="cha-title">Estação do Chá ☕</div>
+      <div class="cha-ingredients" id="cha-ingredients">
+        <div class="ingredient" draggable="true" data-ingredient="camomila">
+          <span class="ingredient-icon">🌼</span>
+          <span>Camomila</span>
+        </div>
+        <div class="ingredient" draggable="true" data-ingredient="mel">
+          <span class="ingredient-icon">🍯</span>
+          <span>Mel</span>
+        </div>
+        <div class="ingredient" draggable="true" data-ingredient="marshmallow">
+          <span class="ingredient-icon">🍡</span>
+          <span>Marshmallow</span>
+        </div>
+        <div class="ingredient" draggable="true" data-ingredient="hortela">
+          <span class="ingredient-icon">🍃</span>
+          <span>Hortelã</span>
+        </div>
+      </div>
+    </div>
+    <div class="cha-cup-area">
+      <div class="cha-cup-container">
+        <div class="cha-cup" id="cha-cup">
+          <div class="cha-liquid" id="cha-liquid"></div>
+          <div class="cha-steam" id="cha-steam">
+            <span class="cha-steam-bubble" id="steam1"></span>
+            <span class="cha-steam-bubble" id="steam2"></span>
+            <span class="cha-steam-bubble" id="steam3"></span>
+          </div>
+        </div>
+      </div>
+      <div class="cha-drag-hint" id="cha-drag-hint">
+        🤲 Arraste um ingrediente para dentro da xícara acima
+      </div>
+      <button class="cha-clear-btn" id="cha-clear-btn" type="button" aria-label="Limpar xícara">
+        🧽 Limpar xícara
+      </button>
+      <div class="cha-recipe" id="cha-recipe">
+        <span class="cha-recipe-title">Receitas que o Mimi aprova</span>
+        Escolha um ingrediente para ver a receita.<br>
+        <span style="color:var(--cor-texto-suave); font-size:0.95rem;">Combine até 4 ingredientes e descubra seu chá personalizado!</span>
+      </div>
+    </div>
+  </section>
 
-      <!-- CVV -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">☎️</span> CVV – Centro de Valorização da Vida</span>
-        <div class="ajuda-info">
-          <b>Ligue <span class="telefone">188</span></b> — gratuito, 24h por dia, todos os dias.<br>
+  <!-- Seção Recursos de Ajuda -->
+  <section id="recursos" class="fade-in-section">
+    <div class="recursos-title">🆘 Recursos de Ajuda</div>
+    <div class="cards-grid">
+      <!-- Card CVV -->
+      <div class="resource-card">
+        <span class="card-icon">☎️</span>
+        <div class="card-title">CVV – Centro de Valorização da Vida</div>
+        <div class="card-desc">
           Atendimento sigiloso por voluntários treinados.<br>
-          Também disponível por <a class="link-ajuda" href="https://cvv.org.br/chat/" target="_blank">chat</a> e <a class="link-ajuda" href="https://cvv.org.br/fale-conosco/" target="_blank">e-mail</a>.<br>
-          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://cvv.org.br/" target="_blank">cvv.org.br</a></span>
+          <strong>Ligue 188</strong> — gratuito, 24h por dia, todos os dias.
+        </div>
+        <div class="card-links">
+          <a class="card-btn" href="tel:188" aria-label="Ligar para CVV 188">
+            📞 Ligar 188
+          </a>
+          <a class="card-btn secondary" href="https://cvv.org.br/chat/" target="_blank" rel="noopener noreferrer">
+            💬 Chat online
+          </a>
         </div>
       </div>
 
-      <!-- Pode Falar (UNICEF) -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">💬</span> Pode Falar (UNICEF)</span>
-        <div class="ajuda-info">
-          Canal de escuta acolhedora <b>gratuito e anônimo</b> para adolescentes e jovens de <b>13 a 24 anos</b>.<br>
-          Atendimento por chat, WhatsApp e pelo app <b>Meu SUS Digital</b>.<br>
-          <a class="link-ajuda" href="https://www.podefalar.org.br/" target="_blank">Acesse aqui</a><br>
-          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://www.unicef.org/brazil/comunicados-de-imprensa/pode-falar-completa-um-ano-de-existencia-como-canal-de-ajuda-em-saude-mental" target="_blank">UNICEF</a></span>
+      <!-- Card Pode Falar -->
+      <div class="resource-card">
+        <span class="card-icon">💬</span>
+        <div class="card-title">Pode Falar (UNICEF)</div>
+        <div class="card-desc">
+          Canal de escuta acolhedora gratuito e anônimo para jovens de 13 a 24 anos.<br>
+          Atendimento por chat, WhatsApp e app.
+        </div>
+        <div class="card-links">
+          <a class="card-btn" href="https://www.podefalar.org.br/" target="_blank" rel="noopener noreferrer">
+            Acessar site
+          </a>
         </div>
       </div>
 
-      <!-- Disque 100 -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">🚨</span> Disque 100 – Violência contra Crianças e Adolescentes</span>
-        <div class="ajuda-info">
-          Denuncie violações de direitos de crianças e adolescentes.<br>
-          <b>Ligue <span class="telefone">100</span></b> — gratuito e anônimo.<br>
-          Também pelo WhatsApp: <span class="telefone">(61) 99611-0100</span><br>
-          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos" target="_blank">gov.br</a></span>
+      <!-- Card Disque 100 -->
+      <div class="resource-card">
+        <span class="card-icon">🚨</span>
+        <div class="card-title">Disque 100</div>
+        <div class="card-desc">
+          Denúncia de violações de direitos de crianças e adolescentes.<br>
+          Gratuito e anônimo, todos os dias.
+        </div>
+        <div class="card-links">
+          <a class="card-btn" href="tel:100" aria-label="Ligar para Disque 100">
+            📞 Ligar 100
+          </a>
+          <a class="card-btn secondary" href="https://www.gov.br/pt-br/servicos/denunciar-violacao-de-direitos-humanos" target="_blank" rel="noopener noreferrer">
+            Mais info
+          </a>
         </div>
       </div>
 
-      <!-- CAPS Guarapuava -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">🏥</span> CAPS – Saúde Mental em Guarapuava</span>
-        <div class="ajuda-info">
-          <span class="local-title">CAPS AD III (Adulto e Infantojuvenil)</span>
-          <ul class="recursos-lista">
-            <li><b>Endereço:</b> Rua Profª Leonídia, 1203 – Centro (anexo ao CIS)</li>
-            <li><b>Telefone:</b> (42) 3622-1427</li>
-            <li><b>Horário:</b> Segunda a sexta, 8h às 17h</li>
-          </ul>
-          <span class="local-title">CAPS unificado (AD + II)</span>
-          <ul class="recursos-lista">
-            <li><b>Endereço:</b> Rua Brigadeiro Rocha, 2777 – Centro</li>
-            <li><b>Telefone:</b> (42) 3142-1000</li>
-          </ul>
-          <span style="font-size:0.97rem">Fontes: <a class="link-ajuda" href="https://guarapuava.pr.gov.br/noticias/caps-ad-e-caps-ii-iniciam-atendimento-unificado/" target="_blank">Prefeitura de Guarapuava</a> · <a class="link-ajuda" href="https://www.instagram.com/simprguarapuava/" target="_blank">@simprguarapuava</a></span>
+      <!-- Card CAPS -->
+      <div class="resource-card">
+        <span class="card-icon">🏥</span>
+        <div class="card-title">CAPS – Saúde Mental (Guarapuava)</div>
+        <div class="card-desc">
+          Serviço público de saúde mental para adultos e infantojuvenil.<br>
+          Atendimento presencial em horário comercial.
+        </div>
+        <div class="card-links">
+          <div style="width:100%;text-align:left;font-size:0.96rem;color:var(--cor-texto-suave);margin-bottom:0.3rem;">
+            <strong>CAPS AD III</strong><br>
+            R. Profª Leonídia, 1203 – Centro<br>
+            ☎️ (42) 3622-1427
+          </div>
+          <div style="width:100%;text-align:left;font-size:0.96rem;color:var(--cor-texto-suave);">
+            <strong>CAPS Unificado</strong><br>
+            R. Brigadeiro Rocha, 2777 – Centro<br>
+            ☎️ (42) 3142-1000
+          </div>
         </div>
       </div>
 
-      <!-- CRAS/CREAS -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">🏢</span> CRAS / CREAS – Assistência Social</span>
-        <div class="ajuda-info">
-          <b>CRAS</b> (Centro de Referência de Assistência Social):<br>
-          📞 (42) 3142-0536 · Rua Vicente Machado, 1015 – Centro<br><br>
-          <b>CREAS</b> (Centro de Referência Especializado):<br>
-          📞 (42) 3651-8050 · Rua Guarapuava, 2977 – Centro<br>
-          <span style="font-size:0.97rem">Fonte: <a class="link-ajuda" href="https://guarapuava.pr.gov.br/administracao-direta/assistencia-social/" target="_blank">Prefeitura de Guarapuava</a></span>
+      <!-- Card CRAS/CREAS -->
+      <div class="resource-card">
+        <span class="card-icon">🏢</span>
+        <div class="card-title">CRAS / CREAS</div>
+        <div class="card-desc">
+          Centros de Assistência Social do município.<br>
+          Apoio em situações de vulnerabilidade social.
+        </div>
+        <div class="card-links">
+          <div style="width:100%;text-align:left;font-size:0.96rem;color:var(--cor-texto-suave);margin-bottom:0.3rem;">
+            <strong>CRAS</strong><br>
+            R. Vicente Machado, 1015 – Centro<br>
+            ☎️ (42) 3142-0536
+          </div>
+          <div style="width:100%;text-align:left;font-size:0.96rem;color:var(--cor-texto-suave);">
+            <strong>CREAS</strong><br>
+            R. Guarapuava, 2977 – Centro<br>
+            ☎️ (42) 3651-8050
+          </div>
         </div>
       </div>
 
-      <!-- Mapa da Saúde Mental -->
-      <div class="ajuda-card">
-        <span class="ajuda-title"><span class="ajuda-emoji">🗺️</span> Mapa da Saúde Mental</span>
-        <div class="ajuda-info">
-          Encontre CAPS, ambulatórios e outros serviços de saúde mental em todo o Brasil.<br>
-          <a class="link-ajuda" href="https://mapasaudemental.com.br/" target="_blank">Acesse o mapa aqui</a>
+      <!-- Card Mapa da Saúde Mental -->
+      <div class="resource-card">
+        <span class="card-icon">🗺️</span>
+        <div class="card-title">Mapa da Saúde Mental</div>
+        <div class="card-desc">
+          Encontre CAPS, ambulatórios e outros serviços de saúde mental em todo o Brasil.
+        </div>
+        <div class="card-links">
+          <a class="card-btn" href="https://mapasaudemental.com.br/" target="_blank" rel="noopener noreferrer">
+            Abrir mapa
+          </a>
         </div>
       </div>
-
-      <div class="nota-ajuda">
-        ⚠️ <b>Emergência:</b> se você ou alguém corre risco imediato, ligue <b>190</b> (Polícia) ou <b>192</b> (SAMU).
-      </div>
+    </div>
+    <div style="margin-top:1.5rem;text-align:center;color:var(--cor-texto-suave);font-size:0.95rem;">
+      ⚠️ <strong>Emergência:</strong> se você ou alguém corre risco imediato, ligue <strong>190</strong> (Polícia) ou <strong>192</strong> (SAMU).
     </div>
   </section>
 
-  <!-- AUDIO (sons carregados uma vez) -->
-  <audio id="audio-purr" src="https://cdn.freesound.org/previews/422/422459_1034226-lq.mp3" preload="auto"></audio>
-  <audio id="audio-meow" src="https://cdn.freesound.org/previews/110/110444_1966264-lq.mp3" preload="auto"></audio>
-  <audio id="audio-drop" src="https://cdn.freesound.org/previews/106/106056_1726866-lq.mp3" preload="auto"></audio>
-  <audio id="audio-steam" src="https://cdn.freesound.org/previews/125/125778_2162665-lq.mp3" preload="auto"></audio>
+  <!-- Seção Sobre -->
+  <section id="sobre" class="fade-in-section">
+    <div class="sobre-title">Sobre o Projeto</div>
+    <div class="sobre-text">
+      O <strong>Pacote de Bem-Estar</strong> nasceu de um desejo simples: criar um espaço seguro e acolhedor na internet para adolescentes que precisam de um respiro.<br><br>
+      A proposta é oferecer atividades lúdicas — como o Mimi e a Estação do Chá — que ajudam a relaxar, se expressar e redirecionar a atenção de forma gentil.<br><br>
+      Além disso, reuni aqui recursos confiáveis de apoio emocional, denúncia e atendimento presencial, com informações claras e acessíveis.<br><br>
+      <span class="sobre-quote">
+        "Você não está sozinho(a). Cuidar de si é um ato de coragem." 🧡
+      </span>
+    </div>
+    <div class="sobre-contact">
+      <span>✉️</span>
+      <span>Feito com carinho por Julia Amaral</span>
+    </div>
+  </section>
 
-<script>
-// ───── SPA NAVIGATION ─────
-const navBtns = document.querySelectorAll('.nav-btn');
-const pages = document.querySelectorAll('.page');
+  <!-- Footer -->
+  <footer>
+    <div>
+      &copy; 2026 Pacote de Bem-Estar 🌈 — Feito para adolescentes do Paraná
+    </div>
+    <div class="footer-links">
+      <a href="#home">Início</a> •
+      <a href="#mimi">Mimi</a> •
+      <a href="#chá">Estação do Chá</a> •
+      <a href="#recursos">Recursos</a> •
+      <a href="#sobre">Sobre</a>
+    </div>
+  </footer>
 
-function showPage(pageId) {
-  // Atualiza hash sem recarregar
-  if (location.hash.replace('#', '') !== pageId) {
-    location.hash = pageId;
-  }
-}
+  <!-- Botão de modo escuro -->
+  <button class="theme-toggle" id="theme-toggle" aria-label="Alternar modo escuro/claro" title="Alternar tema">
+    🌙
+  </button>
 
-// Roteamento via hash
-function route() {
-  let hash = location.hash.replace('#', '');
-  if (!hash) hash = 'home';
-  // Esconde todas
-  pages.forEach(p => p.classList.remove('active'));
-  // Mostra a correta
-  const target = document.getElementById(`page-${hash}`);
-  if (target) {
-    target.classList.add('active');
-  }
-  // Atualiza navegação
-  navBtns.forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.page === hash);
-  });
-}
-
-// Inicializa navegação por hash
-window.addEventListener('hashchange', route);
-window.addEventListener('DOMContentLoaded', route);
-
-// Clique nos botões de navegação
-navBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    showPage(btn.dataset.page);
-  });
-});
-
-// ───── 🐱 GATINHO INTERATIVO ─────
-const gatinhoBox = document.getElementById('gatinho-box');
-const gatinhoSvg = document.getElementById('gatinho-svg');
-const felizFill = document.getElementById('feliz-fill');
-const felizTexto = document.getElementById('feliz-texto');
-const audioPurr = document.getElementById('audio-purr');
-const audioMeow = document.getElementById('audio-meow');
-
-let felicidade = 50; // 0 a 100
-let purring = false;
-let lastHeartTime = 0;
-
-function updateFelizBar() {
-  felizFill.style.width = `${felicidade}%`;
-  // Texto descritivo
-  if (felicidade >= 80) {
-    felizTexto.innerHTML = 'Humor: <b>muito feliz</b> 😸';
-  } else if (felicidade >= 60) {
-    felizTexto.innerHTML = 'Humor: <b>feliz</b> 🧡';
-  } else if (felicidade >= 40) {
-    felizTexto.innerHTML = 'Humor: <b>neutro</b>';
-  } else if (felicidade >= 20) {
-    felizTexto.innerHTML = 'Humor: <b>triste</b> 😿';
-  } else {
-    felizTexto.innerHTML = 'Humor: <b>muito triste</b> 🙀';
-  }
-}
-
-// Cria um coração flutuante
-function criarCoracao(x, y) {
-  const coracao = document.createElement('span');
-  coracao.textContent = '❤️';
-  coracao.className = 'coracao';
-  // Posição relativa ao box
-  coracao.style.left = `${x}px`;
-  coracao.style.top = `${y}px`;
-  // Deslocamento aleatório no eixo X
-  const offsetX = Math.random() * 24 - 12;
-  coracao.style.setProperty('--offset-x', `${offsetX}px`);
-  coracao.style.animation = `flutuar ${0.8 + Math.random()*0.4}s cubic-bezier(.6,-0.07,.36,1.01)`;
-  gatinhoBox.appendChild(coracao);
-
-  // Remove após animação
-  setTimeout(() => coracao.remove(), 1300);
-}
-
-// Purr contínuo (ativa uma vez, desativa ao sair)
-function startPurr() {
-  if (purring) return;
-  purring = true;
-  gatinhoSvg.classList.add('purr');
-  // Tenta tocar em loop (mas browsers bloqueiam loop de audio sem user gesture)
-  audioPurr.currentTime = 0;
-  audioPurr.play().catch(()=>{});
-  // Efeito visual: pulsação suave
-  setTimeout(() => {
-    if (purring && felicidade >= 60) {
-      audioPurr.currentTime = 0;
-      audioPurr.play().catch(()=>{});
+  <!-- Script principal -->
+  <script>
+    // ======== FADE-IN AO SCROLL (animações de entrada) ========
+    function onScrollFadeIn() {
+      document.querySelectorAll('.fade-in-section:not(.visible)').forEach(section => {
+        const rect = section.getBoundingClientRect();
+        const windowHeight = window.innerHeight;
+        // Se a seção está a 150px do topo da viewport ou já passou
+        if (rect.top <= windowHeight - 150 || rect.bottom >= 100) {
+          section.classList.add('visible');
+        }
+      });
     }
-  }, 2200);
-}
+    // Inicializar visibilidade imediata para quem já está no meio da página
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        onScrollFadeIn();
+        document.querySelectorAll('.fade-in-section').forEach(s => s.classList.add('visible'));
+      }, 100);
+    });
+    window.addEventListener('scroll', onScrollFadeIn);
 
-function stopPurr() {
-  purring = false;
-  gatinhoSvg.classList.remove('purr');
-  audioPurr.pause();
-  audioPurr.currentTime = 0;
-}
-
-// Carinho com clique ou arraste
-let isDragging = false;
-
-function handleCarinho(e) {
-  // Só se o mouse estiver sobre o corpo (não nas bordas)
-  const rect = gatinhoBox.getBoundingClientRect();
-  const relX = e.clientX - rect.left;
-  const relY = e.clientY - rect.top;
-  // Limita à área do corpo do gato (não cabeça nem cauda)
-  if (relX < 25 || relX > 195 || relY < 30 || relY > 155) return;
-
-  // Adiciona felicidade
-  const increment = isDragging ? 0.8 : 2.2;
-  felicidade = Math.min(100, felicidade + increment);
-  updateFelizBar();
-
-  // Cria coração
-  criarCoracao(relX, relY);
-
-  // Som de ronronar se estiver feliz
-  if (felicidade >= 55) {
-    startPurr();
-  }
-
-  // Som de miado ocasional (aleatório)
-  if (Math.random() < 0.08 && !isDragging) {
-    audioMeow.currentTime = 0;
-    audioMeow.play().catch(()=>{});
-  }
-}
-
-// Mouse down = início do carinho
-gatinhoBox.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  handleCarinho(e);
-  // Ativa tracking do mouse move
-  document.addEventListener('mousemove', handleMouseMove);
-  document.addEventListener('mouseup', handleMouseUp);
-});
-
-function handleMouseMove(e) {
-  if (!isDragging) return;
-  handleCarinho(e);
-}
-
-function handleMouseUp(e) {
-  if (isDragging) {
-    stopPurr();
-    isDragging = false;
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  }
-}
-
-// Toque em mobile (opcional)
-let isTouching = false;
-gatinhoBox.addEventListener('touchstart', (e) => {
-  isTouching = true;
-  // Pega a primeira posição do toque
-  const touch = e.touches[0];
-  handleCarinho({
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-});
-
-gatinhoBox.addEventListener('touchmove', (e) => {
-  if (!isTouching) return;
-  const touch = e.touches[0];
-  handleCarinho({
-    clientX: touch.clientX,
-    clientY: touch.clientY
-  });
-});
-
-gatinhoBox.addEventListener('touchend', () => {
-  stopPurr();
-  isTouching = false;
-});
-
-// ───── 🍵 JOGUINHO DO CHÁ ─────
-const ingredientes = document.querySelectorAll('.ingrediente-item');
-const ingredientesDentro = document.getElementById('ingredientes-dentro');
-const chaFeedback = document.getElementById('cha-feedback');
-const chaReceita = document.getElementById('cha-receita');
-const audioDrop = document.getElementById('audio-drop');
-const audioSteam = document.getElementById('audio-steam');
-
-let ingredientesAtuais = new Set();
-
-// Drag events para cada ingrediente
-ingredientes.forEach(item => {
-  let offsetX, offsetY;
-
-  item.addEventListener('dragstart', (e) => {
-    item.classList.add('dragging');
-    // Armazena offset do clique dentro do item
-    const rect = item.getBoundingClientRect();
-    offsetX = e.clientX - rect.left;
-    offsetY = e.clientY - rect.top;
-    e.dataTransfer.effectAllowed = 'copy';
-    e.dataTransfer.setData('text/plain', item.dataset.ing);
-  });
-
-  item.addEventListener('dragend', () => {
-    setTimeout(() => item.classList.remove('dragging'), 50);
-  });
-});
-
-const xicaraBox = document.querySelector('.xicara-box');
-
-xicaraBox.addEventListener('dragover', (e) => {
-  e.preventDefault();
-  e.dataTransfer.dropEffect = 'copy';
-  // Efeito visual: leve brilho na xícara
-  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 16px #ffb6c1aa)';
-});
-
-xicaraBox.addEventListener('dragleave', () => {
-  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))';
-});
-
-xicaraBox.addEventListener('drop', (e) => {
-  e.preventDefault();
-  document.querySelector('.xicara-base').style.filter = 'drop-shadow(0 4px 12px rgba(0,0,0,0.08))';
-  
-  const ing = e.dataTransfer.getData('text/plain');
-  if (ingredientesAtuais.has(ing)) {
-    // Já está na xícara — feedback diferente
-    showFeedback('Esse ingrediente já está na xícara! 🥄');
-    return;
-  }
-
-  // Adiciona ingrediente
-  ingredientesAtuais.add(ing);
-  playDropSound();
-
-  // Renderiza os ingredientes dentro da xícara
-  renderIngredientesNaXicara();
-
-  // Feedback contextual
-  const nomes = {
-    'camomila': '🌼 Camomila',
-    'mel': '🍯 Mel',
-    'marshmallow': '🍡 Marshmallow',
-    'hortela': '🍃 Hortelã'
-  };
-  showFeedback(`${nomes[ing]} adicionado(a) à xícara! ☕`);
-
-  // Receita especial se combinação interessante
-  checkReceitaEspecial();
-});
-
-// Tocar em mobile (alternativa ao drag)
-ingredientes.forEach(item => {
-  item.addEventListener('click', () => {
-    // Simula drop na xícara
-    const ing = item.dataset.ing;
-    if (ingredientesAtuais.has(ing)) {
-      showFeedback('Esse ingrediente já está na xícara! 🥄');
-      return;
+    // ======== PROGRESSO DE SCROLL ========
+    const progressBar = document.getElementById('progress-bar');
+    function updateProgressBar() {
+      const winScroll = window.pageYOffset;
+      const height = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+      progressBar.style.width = `${scrolled}%`;
+      progressBar.hidden = scrolled <= 0 || scrolled >= 99.5;
     }
-    ingredientesAtuais.add(ing);
-    playDropSound();
-    renderIngredientesNaXicara();
-    showFeedback(`${ing[0].toUpperCase() + ing.slice(1)} adicionado(a) à xícara! ☕`);
-    checkReceitaEspecial();
-  });
-});
+    window.addEventListener('scroll', updateProgressBar);
+    window.addEventListener('DOMContentLoaded', updateProgressBar);
 
-function renderIngredientesNaXicara() {
-  // Limpa
-  ingredientesDentro.innerHTML = '';
-  // Converte set para array e renderiza
-  const arr = Array.from(ingredientesAtuais);
-  // Distribui em até 2 linhas (3 por linha)
-  let html = '';
-  arr.forEach((ing, idx) => {
-    // Posicionamento aleatório dentro do círculo
-    const angle = (idx / arr.length) * 360 + Math.random()*30;
-    const r = 26 + Math.random()*8;
-    const x = 36 + r * Math.cos(angle * Math.PI/180);
-    const y = 36 + r * Math.sin(angle * Math.PI/180);
-    html += `<span class="ingrediente-na-xicara" style="position:absolute; left:${x}px; top:${y}px; font-size:1.65rem">${getIngEmoji(ing)}</span>`;
-  });
-  ingredientesDentro.innerHTML = html;
-}
+    // ======== MENU HAMBÚRGUER (mobile) ========
+    const menuBtn = document.querySelector('.menu-btn');
+    const navMobile = document.getElementById('nav-mobile');
+    const navBackdrop = document.getElementById('nav-mobile-backdrop');
+    const mainNav = document.getElementById('main-nav');
 
-function getIngEmoji(ing) {
-  const map = {
-    'camomila': '🌼', 'mel': '🍯', 'marshmallow': '🍡', 'hortela': '🍃'
-  };
-  return map[ing] || '❓';
-}
+    function openMobileMenu() {
+      navMobile.classList.add('open');
+      navBackdrop.classList.add('open');
+      menuBtn.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';
+    }
+    function closeMobileMenu() {
+      navMobile.classList.remove('open');
+      navBackdrop.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+    }
 
-function showFeedback(texto) {
-  chaFeedback.innerHTML = texto;
-  chaFeedback.classList.remove('show');
-  setTimeout(() => chaFeedback.classList.add('show'), 30);
-  // Esconde após 2s
-  setTimeout(() => chaFeedback.classList.remove('show'), 2300);
-}
+    menuBtn.addEventListener('click', () => {
+      if (navMobile.classList.contains('open')) {
+        closeMobileMenu();
+      } else {
+        openMobileMenu();
+      }
+    });
+    navBackdrop.addEventListener('click', closeMobileMenu);
+    // Fechar ao redimensionar tela grande
+    window.addEventListener('resize', () => {
+      if (window.innerWidth >= 900) {
+        closeMobileMenu();
+      }
+    });
 
-function playDropSound() {
-  // Toca som de gota
-  audioDrop.currentTime = 0;
-  audioDrop.play().catch(()=>{});
-  // Efeito de vapor
-  audioSteam.currentTime = 0;
-  audioSteam.play().catch(()=>{});
-}
+    // ======== MIMI INTERATIVO ========
+    const mimiSvgContainer = document.getElementById('mimi-svg-container');
+    const mimiMeterFill = document.getElementById('mimi-meter-fill');
+    const mimiHumorText = document.getElementById('mimi-humor-text');
+    const mimiLevelText = document.getElementById('mimi-level-text');
+    const mimiTip = document.getElementById('mimi-tip');
+    const hearts = [
+      document.getElementById('heart1'),
+      document.getElementById('heart2'),
+      document.getElementById('heart3'),
+      document.getElementById('heart4'),
+      document.getElementById('heart5')
+    ];
 
-function checkReceitaEspecial() {
-  const arr = Array.from(ingredientesAtuais);
-  // Combinações especiais
-  if (arr.includes('camomila') && arr.includes('mel')) {
-    showFeedback('✨ Chá relaxante pronto! Camomila + Mel = conforto');
-  } else if (arr.includes('hortela') && arr.includes('mel')) {
-    showFeedback('🌿✨ Chá refrescante com mel — bom para respirar melhor!');
-  } else if (arr.includes('marshmallow') && arr.includes('camomila')) {
-    showFeedback('🍡🌼 Chá doce com marshmallow — para dias difíceis');
-  } else if (arr.length >= 3) {
-    showFeedback('🎉 Receita criativa completa! Parabéns, mestre-chá 🫖');
-  }
-}
+    // Estados do humor
+    const humorLevels = [
+      { level: 0, value: 0, text: "muito triste", eyes: "sad", mouth: "sad", hearts: 0 },
+      { level: 1, value: 20, text: "triste", eyes: "neutral", mouth: "neutral", hearts: 1 },
+      { level: 2, value: 40, text: "neutro", eyes: "happy", mouth: "smile", hearts: 2 },
+      { level: 3, value: 60, text: "feliz", eyes: "very-happy", mouth: "big-smile", hearts: 3 },
+      { level: 4, value: 80, text: "muito feliz", eyes: "sparkle", mouth: "big-smile", hearts: 4 },
+      { level: 5, value: 100, text: "zen 🧡", eyes: "zen", mouth: "peace", hearts: 5 }
+    ];
 
-// Botão "Limpar xícara"
-const limparBtn = document.createElement('button');
-limparBtn.className = 'btn-main';
-limparBtn.style.marginTop = '0.8rem';
-limparBtn.textContent = 'Limpar xícara';
-limparBtn.addEventListener('click', () => {
-  if (ingredientesAtuais.size === 0) {
-    showFeedback('A xícara já está limpa! ☕✨');
-    return;
-  }
-  ingredientesAtuais.clear();
-  renderIngredientesNaXicara();
-  showFeedback('Xícara limpa! Que tal preparar um novo chá?');
-  chaFeedback.classList.add('show');
-});
-// Adiciona ao card do chá (se não existir)
-if (!document.querySelector('.cha-container .btn-main')) {
-  const container = document.querySelector('.cha-container');
-  container.appendChild(limparBtn);
-}
+    let mimiScore = 20; // começa em "triste" (nível 1)
+    let lastTouchTime = 0;
 
-// ───── INICIALIZAÇÃO ─────
-// Garante que a página inicial esteja visível
-route();
+    function updateMimi() {
+      // Encontrar o nível correspondente
+      const levelObj = humorLevels.find(h => mimiScore <= h.value) || humorLevels[humorLevels.length-1];
+      mimiMeterFill.style.width = `${mimiScore}%`;
+      mimiHumorText.textContent = levelObj.text;
+      mimiLevelText.textContent = `${levelObj.level}/5`;
 
-// Se vier de volta do hash, atualiza barra de felicidade
-updateFelizBar();
+      // Atualizar expressão do Mimi (olhos e boca via SVG)
+      updateMimiFace(levelObj.eyes, levelObj.mouth);
 
-// ───── DADOS LOCAIS ─────
-// (Os dados de CAPS Guarapuava já estão no HTML acima)
+      // Atualizar corações
+      for (let i = 0; i < 5; i++) {
+        hearts[i].classList.remove('active');
+        if (i < levelObj.hearts) {
+          setTimeout(() => hearts[i].classList.add('active'), i * 80);
+        }
+      }
 
-</script>
+      // Dica contextual
+      switch(levelObj.level) {
+        case 0: mimiTip.innerHTML = " 💡 Mimi precisa de carinho. Que tal dar alguns toques nele? 🧡"; break;
+        case 1: mimiTip.innerHTML = " 💡 Um pouco de atenção já ajuda! Continue fazendo carinho."; break;
+        case 2: mimiTip.innerHTML = " 💡 Mimi está melhor! Cada carinho conta."; break;
+        case 3: mimiTip.innerHTML = " 🧡 Mimi está sorrindo! Ele adora sua companhia."; break;
+        case 4: mimiTip.innerHTML = " 🌈 Mimi está muito feliz! Você fez um ótimo trabalho."; break;
+        case 5: mimiTip.innerHTML = " 🧡✨ Mimi está em paz. Vocês dois merecem esse momento."; break;
+      }
+    }
+
+    function updateMimiFace(eyeStyle, mouthStyle) {
+      // Olhos
+      const leftEye = document.getElementById('mimi-eye-left');
+      const rightEye = document.getElementById('mimi-eye-right');
+      const leftPupil = document.getElementById('mimi-pupil-left');
+      const rightPupil = document.getElementById('mimi-pupil-right');
+
+      // Boca
+      const mouth = document.getElementById('mimi-mouth');
+
+      switch(eyeStyle) {
+        case "sad":
+          leftEye.setAttribute('r', '7');
+          rightEye.setAttribute('r', '7');
+          leftPupil.setAttribute('r', '2.8');
+          rightPupil.setAttribute('r', '2.8');
+          mouth.setAttribute('d', 'M98,120 Q110,112 122,120');
+          break;
+        case "neutral":
+          leftEye.setAttribute('r', '7');
+          rightEye.setAttribute('r', '7');
+          leftPupil.setAttribute('r', '2.8');
+          rightPupil.setAttribute('r', '2.8');
+          mouth.setAttribute('d', 'M98,114 Q110,118 122,114');
+          break;
+        case "happy":
+          leftEye.setAttribute('r', '8');
+          rightEye.setAttribute('r', '8');
+          leftPupil.setAttribute('r', '3');
+          rightPupil.setAttribute('r', '3');
+          mouth.setAttribute('d', 'M98,114 Q110,122 122,114');
+          break;
+        case "very-happy":
+          leftEye.setAttribute('r', '9');
+          rightEye.setAttribute('r', '9');
+          leftPupil.setAttribute('r', '3.2');
+          rightPupil.setAttribute('r', '3.2');
+          mouth.setAttribute('d', 'M95,118 Q110,128 125,118');
+          break;
+        case "sparkle":
+          // Olho com brilho extra
+          leftEye.setAttribute('r', '9');
+          rightEye.setAttribute('r', '9');
+          leftPupil.innerHTML = ''; // SVG não permite innerHTML em circle, então fazemos truque via JS abaixo
+          // Vamos adicionar um pequeno brilho com um círculo extra sobre a pupila usando um <circle> adicional
+          // (adicionado dinamicamente se não existir)
+          let leftGlitter = document.getElementById('mimi-glitter-left');
+          let rightGlitter = document.getElementById('mimi-glitter-right');
+          if (!leftGlitter) {
+            leftGlitter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            leftGlitter.setAttribute('id', 'mimi-glitter-left');
+            leftGlitter.setAttribute('cx', '98');
+            leftGlitter.setAttribute('cy', '85');
+            leftGlitter.setAttribute('r', '2');
+            leftGlitter.setAttribute('fill', '#fff');
+            leftGlitter.setAttribute('opacity', '0.8');
+            leftEye.parentNode.insertBefore(leftGlitter, leftEye.nextSibling);
+          }
+          if (!rightGlitter) {
+            rightGlitter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+            rightGlitter.setAttribute('id', 'mimi-glitter-right');
+            rightGlitter.setAttribute('cx', '128');
+            rightGlitter.setAttribute('cy', '85');
+            rightGlitter.setAttribute('r', '2');
+            rightGlitter.setAttribute('fill', '#fff');
+            rightGlitter.setAttribute('opacity', '0.8');
+            rightEye.parentNode.insertBefore(rightGlitter, rightEye.nextSibling);
+          }
+          mouth.setAttribute('d', 'M95,118 Q110,128 125,118');
+          break;
+        case "zen":
+          // Olhos semicerrados (linhas)
+          leftEye.setAttribute('r', '7');
+          rightEye.setAttribute('r', '7');
+          leftPupil.setAttribute('r', '0.5');
+          rightPupil.setAttribute('r', '0.5');
+          mouth.setAttribute('d', 'M105,116 Q110,114 115,116');
+          // Remover glitter se existir
+          const lg = document.getElementById('mimi-glitter-left');
+          const rg = document.getElementById('mimi-glitter-right');
+          if (lg) lg.remove();
+          if (rg) rg.remove();
+          break;
+        default:
+          // happy padrão
+          leftEye.setAttribute('r', '8');
+          rightEye.setAttribute('r', '8');
+          leftPupil.setAttribute('r', '3');
+          rightPupil.setAttribute('r', '3');
+          mouth.setAttribute('d', 'M98,114 Q110,122 122,114');
+      }
+      // Para "sparkle" manter glitter; para outros remover
+      if (eyeStyle !== "sparkle") {
+        const lg = document.getElementById('mimi-glitter-left');
+        const rg = document.getElementById('mimi-glitter-right');
+        if (lg) lg.remove();
+        if (rg) rg.remove();
+      }
+    }
+
+    // Evento de carinho (mouse ou toque)
+    function addAffection(amount = 8) {
+      // Evitar spam: mínimo 200ms entre toques
+      const now = Date.now();
+      if (now - lastTouchTime < 180) return;
+      lastTouchTime = now;
+
+      mimiScore = Math.min(mimiScore + amount, 100);
+      updateMimi();
+
+      // Animação de coração aparecendo e sumindo
+      // Escolher um coração aleatório que ainda não esteja ativo
+      const inactive = hearts.filter(h => !h.classList.contains('active'));
+      if (inactive.length > 0) {
+        const heart = inactive[Math.floor(Math.random() * inactive.length)];
+        heart.classList.add('active');
+        setTimeout(() => heart.classList.remove('active'), 800);
+      }
+    }
+
+    // Mouse
+    mimiSvgContainer.addEventListener('mousedown', (e) => {
+      if (e.button === 0) { // apenas botão esquerdo
+        addAffection();
+      }
+    });
+    mimiSvgContainer.addEventListener('mousemove', () => {
+      // Opcional: efeito de carinho contínuo ao arrastar
+      // (implementado abaixo no touch)
+    });
+
+    // Toque (mobile)
+    let touchActive = false;
+    mimiSvgContainer.addEventListener('touchstart', (e) => {
+      e.preventDefault();
+      touchActive = true;
+      addAffection();
+      // Toque contínuo: a cada 300ms enquanto o dedo se mover
+      let lastY = e.touches[0].clientY;
+      function continuousTouch(ev) {
+        if (!touchActive) return;
+        // Se o dedo se moveu mais de 10px, contar como novo carinho
+        const newY = ev.touches[0].clientY;
+        if (Math.abs(newY - lastY) > 12) {
+          addAffection();
+          lastY = newY;
+        }
+      }
+      // Limpar intervalo anterior se existir
+      if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+      window._mimiTouchInterval = setInterval(() => continuousTouch(window._lastTouchEvent), 300);
+      window._lastTouchEvent = e;
+    });
+    mimiSvgContainer.addEventListener('touchend', () => {
+      touchActive = false;
+      if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+    });
+    mimiSvgContainer.addEventListener('touchcancel', () => {
+      touchActive = false;
+      if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+    });
+
+    // Ativação por teclado (acessibilidade)
+    mimiSvgContainer.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        addAffection();
+      }
+    });
+
+    // Inicializar estado visual
+    updateMimi();
+
+    // ======== ESTAÇÃO DO CHÁ ========
+    const ingredients = document.querySelectorAll('.ingredient');
+    const cup = document.getElementById('cha-cup');
+    const liquid = document.getElementById('cha-liquid');
+    const steam = document.getElementById('cha-steam');
+    const steamBubbles = [
+      document.getElementById('steam1'),
+      document.getElementById('steam2'),
+      document.getElementById('steam3')
+    ];
+    const dragHint = document.getElementById('cha-drag-hint');
+    const recipeBox = document.getElementById('cha-recipe');
+    const clearBtn = document.getElementById('cha-clear-btn');
+
+    // Receitas por ingrediente
+    const recipes = {
+      camomila: {
+        title: "🌼 Chá de Camomila",
+        text: "Camomila acalma a mente e ajuda no sono. <br><strong>Receita:</strong> 1 colher de flores secas em 200ml de água quente. Deixe em infusão por 5 min.",
+        color: "#f5e8d6"
+      },
+      mel: {
+        title: "🍯 Chá com Mel",
+        text: "Mel traz conforto e alivia a garganta. <br><strong>Receita:</strong> Adicione 1 colher de mel ao chá morno (não ferva o mel!).",
+        color: "#ffe6b4"
+      },
+      hortela: {
+        title: "🍃 Chá de Hortelã",
+        text: "Hortelã ajuda na respiração e digestão. <br><strong>Receita:</strong> 5 folhas frescas em 200ml de água quente. Infusão de 5 min.",
+        color: "#eaf8ef"
+      },
+      marshmallow: {
+        title: "🍡 Chá com Marshmallow",
+        text: "Para adoçar o dia com um toque de infância. <br><strong>Receita:</strong> Coloque um marshmallow na xícara — ele derrete no chá quente e deixa tudo mais doce.",
+        color: "#ffdde9"
+      }
+    };
+
+    // Combinações especiais
+    function getCombinationRecipe(selected) {
+      if (selected.length === 0) return {
+        title: "Receitas que o Mimi aprova",
+        text: "Escolha um ingrediente para ver a receita.<br><span style='color:var(--cor-texto-suave);font-size:0.95rem;'>Combine até 4 ingredientes e descubra seu chá personalizado!</span>",
+        color: "#f5e8d6"
+      };
+      if (selected.includes('camomila') && selected.includes('mel')) {
+        return {
+          title: "🌼🍯 Camomila com Mel",
+          text: "O clássico do conforto! Camomila acalma e o mel adoça e alivia. <br><strong>Receita:</strong> Infusão de camomila + 1 colher de mel.",
+          color: "#f9e3c8"
+        };
+      }
+      if (selected.includes('hortela') && selected.includes('mel')) {
+        return {
+          title: "🍃🍯 Hortelã com Mel",
+          text: "Refrescante e reconfortante. <br><strong>Receita:</strong> Infusão de hortelã + mel. Ótimo para congestão.",
+          color: "#eaf8e5"
+        };
+      }
+      if (selected.includes('camomila') && selected.includes('marshmallow')) {
+        return {
+          title: "🌼🍡 Camomila com Marshmallow",
+          text: "Chá suave com um toque doce e nostálgico. <br><strong>Receita:</strong> Camomila + marshmallow derretido.",
+          color: "#f9dfe8"
+        };
+      }
+      if (selected.length >= 3) {
+        return {
+          title: "✨ Chá Misto Especial",
+          text: "Você criou uma combinação única! <br><strong>Receita:</strong> Misture os ingredientes escolhidos e prove com calma. O importante é o ritual.",
+          color: "#f7e8f5"
+        };
+      }
+      // Retornar a receita do primeiro ingrediente se nada especial
+      const first = selected[0];
+      return recipes[first];
+    }
+
+    // Estado atual
+    let currentChá = new Set();
+
+    // Drag events
+    ingredients.forEach(ing => {
+      ing.addEventListener('dragstart', (e) => {
+        ing.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'copy';
+        e.dataTransfer.setData('text/plain', ing.dataset.ingredient);
+        // Efeito visual: diminuir opacidade
+        ing.style.opacity = '0.6';
+      });
+
+      ing.addEventListener('dragend', (e) => {
+        ing.classList.remove('dragging');
+        ing.style.opacity = '1';
+      });
+    });
+
+    // Área da xícara
+    cup.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      cup.style.borderColor = 'var(--cor-secundaria)';
+      cup.style.background = '#f7faff';
+      dragHint.textContent = "🟢 Solte para adicionar ao chá!";
+      dragHint.style.color = 'var(--cor-secundaria)';
+    });
+
+    cup.addEventListener('dragleave', (e) => {
+      e.preventDefault();
+      cup.style.borderColor = '#e6d6f0';
+      cup.style.background = '#fff';
+      dragHint.textContent = " 🤲 Arraste um ingrediente para dentro da xícara acima";
+      dragHint.style.color = 'var(--cor-texto-suave)';
+    });
+
+    cup.addEventListener('drop', (e) => {
+      e.preventDefault();
+      cup.style.borderColor = '#e6d6f0';
+      cup.style.background = '#fff';
+      dragHint.textContent = " 🤲 Arraste um ingrediente para dentro da xícara acima";
+      dragHint.style.color = 'var(--cor-texto-suave)';
+      
+      const ing = e.dataTransfer.getData('text/plain');
+      if (!currentChá.has(ing)) {
+        currentChá.add(ing);
+        updateChá();
+        showSteamAnimation();
+      }
+    });
+
+    // Clique nos ingredientes como alternativa (para mobile)
+    ingredients.forEach(ing => {
+      ing.addEventListener('click', () => {
+        const ingName = ing.dataset.ingredient;
+        if (!currentChá.has(ingName)) {
+          currentChá.add(ingName);
+          updateChá();
+          showSteamAnimation();
+        }
+      });
+    });
+
+    // Limpar xícara
+    clearBtn.addEventListener('click', () => {
+      currentChá.clear();
+      updateChá();
+      liquid.style.opacity = '0';
+      liquid.style.height = '0px';
+      steam.style.opacity = '0';
+      steamBubbles.forEach(b => b.classList.remove('active'));
+    });
+
+    function updateChá() {
+      // Atualizar lista de ingredientes na xícara
+      const arr = Array.from(currentChá);
+      
+      // Cor do líquido baseada na combinação
+      const recipe = getCombinationRecipe(arr);
+      liquid.style.background = recipe.color;
+      liquid.style.opacity = '1';
+      liquid.style.height = arr.length > 0 ? '85px' : '0px';
+
+      // Animação de enchimento
+      liquid.animate([
+        { height: '0px', opacity: 0 },
+        { height: '85px', opacity: 1 }
+      ], {
+        duration: 400,
+        easing: 'cubic-bezier(0.6,0,0.4,1)'
+      });
+
+      // Atualizar receita
+      recipeBox.innerHTML = `
+        <span class="cha-recipe-title">${recipe.title}</span>
+        ${recipe.text}
+      `;
+
+      // Atualizar dica
+      if (arr.length === 0) {
+        dragHint.textContent = " 🤲 Arraste um ingrediente para dentro da xícara acima";
+        dragHint.style.color = 'var(--cor-texto-suave)';
+      } else {
+        dragHint.textContent = " ✅ Ingredientes adicionados: " + arr.map(i => ({
+          camomila: "🌼 Camomila",
+          mel: "🍯 Mel",
+          marshmallow: "🍡 Marshmallow",
+          hortela: "🍃 Hortelã"
+        }[i])).join(", ");
+        dragHint.style.color = 'var(--cor-secundaria)';
+      }
+    }
+
+    function showSteamAnimation() {
+      steam.style.opacity = '1';
+      // Animar bolhas de vapor
+      steamBubbles.forEach((b, i) => {
+        setTimeout(() => {
+          b.classList.add('active');
+          setTimeout(() => b.classList.remove('active'), 1100);
+        }, i * 220);
+      });
+      // Manter vapor visível por 2s
+      setTimeout(() => {
+        if (!Array.from(currentChá).length) {
+          steam.style.opacity = '0';
+        }
+      }, 2000);
+    }
+
+    // Inicializar com xícara vazia
+    liquid.style.height = '0px';
+    liquid.style.opacity = '0';
+    steam.style.opacity = '0';
+
+    // ======== MODO ESCURO ========
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+
+    // Verificar preferência do usuário (localStorage + prefers-color-scheme)
+    function getPreferredTheme() {
+      if (localStorage.getItem('theme')) {
+        return localStorage.getItem('theme');
+      }
+      // Detectar preferência do sistema
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+
+    function setTheme(theme) {
+      if (theme === 'dark') {
+        body.classList.add('theme-dark');
+        themeToggle.innerHTML = '☀️';
+        themeToggle.title = 'Alternar para modo claro';
+        localStorage.setItem('theme', 'dark');
+      } else {
+        body.classList.remove('theme-dark');
+        themeToggle.innerHTML = '🌙';
+        themeToggle.title = 'Alternar para modo escuro';
+        localStorage.setItem('theme', 'light');
+      }
+    }
+
+    // Inicializar tema
+    setTheme(getPreferredTheme() === 'dark' ? 'dark' : 'light');
+
+    themeToggle.addEventListener('click', () => {
+      const current = getPreferredTheme();
+      setTheme(current === 'dark' ? 'light' : 'dark');
+    });
+
+    // ======== ACESSIBILIDADE: SALTAR PARA CONTEÚDO ========
+    // (navegação já é acessível via teclado)
+
+    // ======== SCROLL PARA SEÇÃO AO CLICAR NO MENU ========
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        // Fechar menu mobile se aberto
+        closeMobileMenu();
+      });
+    });
+
+    // ======== TOOLTIP DE ACESSIBILIDADE PARA ÍCONES ========
+    // (SVGs já têm aria-label; ingredientes têm role implicita)
+  </script>
 </body>
 </html>
