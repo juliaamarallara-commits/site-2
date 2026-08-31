@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-br" dir="ltr">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Pacote de Bem-Estar do Colégio Estadual Visconde de Guarapuava — atividades de acolhimento, relaxamento e recursos de ajuda para adolescentes.">
-  <title>Pacote de Bem-Estar 🌈 — Colégio Visconde de Guarapuava</title>
+  <meta name="description" content="Espaço de acolhimento e bem-estar para estudantes do Colégio Estadual Visconde de Guarapuava. Atividades interativas e recursos de ajuda.">
+  <title>Pacote de Bem-Estar 🌈 — Modelo Perfeito</title>
 
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
@@ -12,7 +12,7 @@
   <style>
     :root {
       --cor-fundo: #f9f6ff;
-      --cor-fundo-card: #ffffffee;
+      --cor-fundo-card: #fffefb;
       --cor-primaria: #b886c9;
       --cor-secundaria: #7fc8a9;
       --cor-acento: #ffd6b4;
@@ -21,7 +21,7 @@
       --cor-texto-suave: #6b6482;
       --cor-shadow: 0 4px 24px 0 rgba(184,134,201,0.12);
       --cor-header: #fffaf6ee;
-      --cor-progress: linear-gradient(90deg, var(--cor-primaria), var(--cor-secundaria));
+      --font-display: 'Baloo 2', cursive, fantasy;
       --font-base: 'Quicksand', Arial, sans-serif;
     }
     .theme-dark {
@@ -29,59 +29,75 @@
       --cor-fundo-card: #2d294a;
       --cor-primaria: #d4a6f2;
       --cor-secundaria: #9fd4be;
-      --cor-acento: #443c5a;
+      --cor-acento: #363254;
       --cor-destaque: #ffbebe;
       --cor-texto: #f0eaf6;
       --cor-texto-suave: #b8b0d0;
       --cor-header: #23203aee;
       --cor-shadow: 0 4px 24px 0 rgba(184,134,201,0.22);
     }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { font-family: var(--font-base); background: var(--cor-fundo); color: var(--cor-texto); min-height: 100vh; scroll-behavior: smooth; }
-    body { position: relative; }
-    .progress-bar { position: fixed; top: 0; left: 0; right: 0; height: 4px; background: var(--cor-progress); z-index: 100; opacity: 0.8; pointer-events: none; transition: opacity 0.2s; }
-    .progress-bar:hidden { opacity: 0; }
+    
+    /* Progresso de scroll */
+    .progress-bar {
+      position: fixed; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--cor-primaria), var(--cor-secundaria));
+      z-index: 100; opacity: 0.8; pointer-events: none; transition: opacity 0.2s;
+    }
+    .progress-bar[hidden] { opacity: 0; }
 
+    /* Header fixo */
     header {
-      position: fixed; top: 0; left: 0; right: 0; width: 100%; background: var(--cor-header);
-      box-shadow: var(--cor-shadow); z-index: 99; border-bottom-left-radius: 16px; border-bottom-right-radius: 16px;
-      padding: 0.5rem 0; backdrop-filter: blur(6px);
+      position: fixed; top: 0; left: 0; right: 0; background: var(--cor-header); box-shadow: var(--cor-shadow);
+      border-bottom-left-radius: 16px; border-bottom-right-radius: 16px; z-index: 99; padding: 0.5rem 0;
+      backdrop-filter: blur(6px);
     }
     .container-header {
-      max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; padding: 0 1.5rem;
+      max-width: 1100px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem;
     }
     .logo {
-      display: flex; align-items: center; gap: 0.5rem; font-family: 'Baloo 2', cursive; font-size: 1.6rem;
-      color: var(--cor-primaria); text-decoration: none; font-weight: 700; letter-spacing: 1px; transition: color 0.2s;
+      display: flex; align-items: center; gap: 0.5rem; font-family: var(--font-display); font-size: 1.6rem;
+      color: var(--cor-primaria); text-decoration: none; font-weight: 700; letter-spacing: 1px;
+      transition: color 0.2s;
     }
     .logo:hover { color: var(--cor-secundaria); }
-    nav { display: flex; gap: 0.8rem; }
-    nav a {
-      text-decoration: none; color: var(--cor-texto); font-weight: 600; font-size: 1rem; padding: 0.5rem 1rem;
-      border-radius: 24px; transition: background 0.2s, color 0.2s; outline: none;
-    }
-    nav a:hover, nav a:focus { background: var(--cor-acento); color: var(--cor-primaria); }
 
+    nav {
+      display: flex; gap: 0.8rem;
+    }
+    nav a {
+      text-decoration: none; color: var(--cor-texto); font-weight: 600; font-size: 1rem;
+      padding: 0.5rem 1rem; border-radius: 24px; transition: background 0.2s, color 0.2s; outline: none;
+    }
+    nav a:hover, nav a:focus {
+      background: var(--cor-acento); color: var(--cor-primaria);
+    }
+
+    /* Menu mobile */
     .menu-btn { display: none; background: none; border: none; font-size: 2.2rem; color: var(--cor-primaria);
-      cursor: pointer; padding: 0.5rem; margin-left: 1rem; }
-    .nav-mobile { display: none; }
-    .nav-mobile-backdrop { display: none; }
+      cursor: pointer; padding: 0.5rem; margin-left: 1rem;
+    }
+    .nav-mobile {
+      display: none; position: fixed; top: 65px; right: 0; width: 220px; height: calc(100vh - 65px);
+      background: var(--cor-header); box-shadow: -2px 0 16px rgba(184,134,201,0.15); z-index: 98;
+      padding: 2rem 1rem; flex-direction: column; gap: 1.2rem; transform: translateX(100%);
+      transition: transform 0.25s; border-bottom-left-radius: 18px; border-top-left-radius: 18px;
+    }
+    .nav-mobile.open { transform: translateX(0); }
+    .nav-mobile-backdrop {
+      display: none; position: fixed; top: 65px; right: 0; left: 0; bottom: 0; background: rgba(58,52,84,0.18);
+      z-index: 97; opacity: 0; transition: opacity 0.2s;
+    }
+    .nav-mobile-backdrop.open { opacity: 1; pointer-events: auto; }
 
     @media (max-width: 900px) {
       .menu-btn { display: block; }
-      .nav-mobile { position: fixed; top: 65px; right: 0; width: 220px; height: calc(100vh - 65px);
-        background: var(--cor-header); box-shadow: -2px 0 16px rgba(184,134,201,0.15); z-index: 98;
-        padding: 2rem 1rem; flex-direction: column; gap: 1.2rem; transform: translateX(100%);
-        transition: transform 0.25s; border-bottom-left-radius: 18px; border-top-left-radius: 18px;
-      }
-      .nav-mobile.open { transform: translateX(0); }
-      .nav-mobile-backdrop { position: fixed; top: 65px; right: 0; left: 0; bottom: 0;
-        background: rgba(58,52,84,0.18); z-index: 97; opacity: 0; pointer-events: none; transition: opacity 0.2s;
-      }
-      .nav-mobile-backdrop.open { opacity: 1; pointer-events: auto; }
-      nav { gap: 1.2rem; }
+      nav { display: none; }
     }
 
+    /* Seções */
     section {
       scroll-margin-top: 70px; padding: 6rem 1.5rem 4rem 1.5rem; max-width: 1100px; margin: 0 auto;
     }
@@ -90,219 +106,1101 @@
 
     /* Home */
     #home { text-align: center; padding-top: 8rem; padding-bottom: 3rem; }
-    .home-title { font-family: 'Baloo 2', cursive; font-size: 2.6rem; color: var(--cor-primaria); margin-bottom: 1rem; }
-    .home-subtitle { font-size: 1.2rem; color: var(--cor-texto-suave); margin-bottom: 1.5rem; }
-    .cta-btn { display: inline-block; background: var(--cor-primaria); color: white; font-family: 'Baloo 2', cursive;
+    .home-title { font-family: var(--font-display); font-size: 2.4rem; color: var(--cor-primaria); margin-bottom: 1rem; }
+    .home-subtitle { color: var(--cor-texto-suave); font-size: 1.15rem; margin-bottom: 1.5rem; }
+    .cta-btn {
+      display: inline-block; background: var(--cor-primaria); color: white; font-family: var(--font-display);
       font-size: 1.1rem; font-weight: 700; padding: 0.8rem 2rem; border: none; border-radius: 32px;
       box-shadow: 0 2px 12px rgba(184,134,201,0.15); cursor: pointer; margin-top: 1.2rem;
-      transition: background 0.2s, transform 0.2s; outline: none; }
+      transition: background 0.2s, transform 0.2s; outline: none;
+    }
     .cta-btn:hover, .cta-btn:focus { background: var(--cor-secundaria); transform: translateY(-3px) scale(1.05); }
 
     /* Mimi */
-    #mimi { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px;
-      padding: 2.5rem 1.5rem 3rem 1.5rem; margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 2rem; }
-    @media (min-width: 700px) { #mimi { flex-direction: row; align-items: flex-start; gap: 3.5rem; } }
-    .mimi-col-left { flex: 1 1 0; min-width: 260px; max-width: 340px; width: 100%; display: flex; flex-direction: column; align-items: center; }
-    .mimi-svg-container {
-      width: 220px; height: 220px; margin-bottom: 1rem; position: relative; cursor: pointer;
-      filter: drop-shadow(0 4px 12px rgba(184,134,201,0.10)); transition: transform 0.15s; border-radius: 50%; overflow: visible;
+    #mimi {
+      background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px;
+      padding: 2.2rem 1.2rem 2.8rem 1.2rem; margin-top: 2rem; display: flex; flex-direction: column; align-items: center;
     }
-    .mimi-svg-container:active { transform: scale(0.97); }
-    .mimi-svg { width: 220px; height: 220px; display: block; }
-    .mimi-hearts { position: absolute; top: -30px; left: 0; width: 100%; display: flex; justify-content: center; gap: 6px; pointer-events: none; }
-    .mimi-heart { opacity: 0; transform: translateY(10px) scale(0.8); transition: opacity 0.3s, transform 0.3s; color: #ff6b9d; font-size: 1.5rem; }
+    @media (min-width: 700px) {
+      #mimi { flex-direction: row; align-items: flex-start; gap: 3rem; }
+    }
+    .mimi-col-left { width: 100%; max-width: 300px; display: flex; flex-direction: column; align-items: center; }
+    .mimi-svg-container {
+      width: 180px; height: 180px; margin-bottom: 0.8rem; position: relative; cursor: pointer;
+      filter: drop-shadow(0 4px 12px rgba(184,134,201,0.10)); transition: transform 0.12s;
+      border-radius: 50%; background: none;
+    }
+    .mimi-svg-container:active { transform: scale(0.96); }
+    .mimi-hearts { position: absolute; top: -26px; left: 0; width: 100%; display: flex; justify-content: center; gap: 5px; pointer-events: none; }
+    .mimi-heart { opacity: 0; transform: translateY(8px) scale(0.8); transition: opacity 0.25s, transform 0.25s; color: #ff6b9d; font-size: 1.3rem; }
     .mimi-heart.active { opacity: 1; transform: translateY(0) scale(1.15); }
-    .mimi-info { flex: 2 1 0; min-width: 240px; max-width: 420px; width: 100%; }
-    .mimi-title { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--cor-primaria); margin-bottom: 0.5rem; text-align: left; }
-    .mimi-desc { color: var(--cor-texto-suave); font-size: 1.08rem; margin-bottom: 1.2rem; text-align: left; }
-    .mimi-humor { display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.5rem; }
+    .mimi-svg { width: 180px; height: 180px; display: block; }
+    .mimi-info { flex: 1 1 0; min-width: 240px; max-width: 400px; width: 100%; }
+    .mimi-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-primaria); margin-bottom: 0.3rem; text-align: left; }
+    .mimi-desc { color: var(--cor-texto-suave); font-size: 1.02rem; margin-bottom: 0.8rem; text-align: left; }
+    .mimi-humor { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.3rem; }
     .mimi-humor-label { font-weight: 600; color: var(--cor-secundaria); }
-    .mimi-meter { width: 160px; height: 14px; background: #f0e8f6; border-radius: 7px; overflow: hidden; border: 1.5px solid #e6d6f0; }
-    .mimi-meter-fill { height: 100%; background: var(--cor-progress); width: 0%; transition: width 0.4s cubic-bezier(.4,2,.6,1); border-radius: 7px; }
-    .mimi-tip { background: var(--cor-acento); color: var(--cor-texto); padding: 0.5rem 1rem; border-radius: 16px; font-size: 0.98rem; margin-top: 1rem; text-align: left; box-shadow: 0 2px 8px rgba(255,214,180,0.10); }
+    .mimi-meter { width: 130px; height: 11px; background: #f0e8f6; border-radius: 6px; overflow: hidden; border: 1.2px solid #e6d6f0; }
+    .mimi-meter-fill { height: 100%; background: linear-gradient(90deg, var(--cor-primaria), var(--cor-secundaria)); width: 0%; transition: width 0.35s cubic-bezier(.4,2,.6,1); border-radius: 6px; }
+    .mimi-tip { background: var(--cor-acento); color: var(--cor-texto); padding: 0.4rem 0.9rem; border-radius: 12px; font-size: 0.94rem; margin-top: 0.7rem; text-align: left; box-shadow: 0 1px 4px rgba(255,214,180,0.10); }
 
-    /* Chá */
-    #chá { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px; padding: 2.5rem 1.5rem 3rem 1.5rem; margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 2.5rem; }
-    @media (min-width: 700px) { #chá { flex-direction: row; align-items: flex-start; gap: 3.5rem; } }
-    .cha-title { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--cor-secundaria); margin-bottom: -1.2rem; width: 100%; text-align: center; }
-    .cha-ingredients { display: flex; flex-direction: column; gap: 1.1rem; margin-right: 1.5rem; }
-    .ingredient { display: flex; align-items: center; gap: 0.7rem; background: #f5f9ff; padding: 0.7rem 1.2rem;
-      border-radius: 18px; border: 1.5px dashed #e0d6f6; cursor: grab; user-select: none; transition: background 0.18s, box-shadow 0.18s, transform 0.15s;
-      font-size: 1.05rem; color: var(--cor-texto); box-shadow: 0 2px 8px rgba(184,134,201,0.06); }
-    .ingredient.dragging { background: var(--cor-acento); box-shadow: 0 6px 24px rgba(255,214,180,0.18); transform: scale(1.06) rotate(-2deg); cursor: grabbing; }
-    .ingredient-icon { font-size: 1.6rem; }
-    .cha-cup-area { display: flex; flex-direction: column; align-items: center; gap: 1rem; min-width: 220px; }
-    .cha-cup-container { position: relative; width: 160px; height: 180px; margin-bottom: 0.5rem; }
-    .cha-cup { position: absolute; top: 0; left: 0; width: 160px; height: 180px; background: #fff; border-radius: 50% 50% 60% 60% / 60% 60% 80% 80%;
-      border: 4px solid #e6d6f0; box-shadow: 0 6px 24px rgba(184,134,201,0.12); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-    .cha-liquid { position: absolute; bottom: 18px; left: 18px; right: 18px; height: 0px; background: #f5e8d6;
-      border-radius: 40% 40% 60% 60%; transition: height 0.3s, background 0.3s, opacity 0.3s; opacity: 0; }
-    .cha-steam { position: absolute; top: -40px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: none; opacity: 0; transition: opacity 0.3s; }
-    .cha-steam-bubble { width: 10px; height: 10px; background: rgba(255,255,255,0.85); border-radius: 50%; margin-bottom: 6px; opacity: 0; transition: opacity 0.3s, transform 0.4s; }
-    .cha-steam-bubble.active { opacity: 1; animation: float-up 1.2s ease-in-out infinite; }
-    @keyframes float-up { 0% { transform: translateY(0px) scale(1); opacity: 1; } 40% { opacity: 1; } 70% { transform: translateY(-18px) scale(1.12); opacity: 0.8; } 100% { transform: translateY(-32px) scale(0.9); opacity: 0; } }
-    .cha-drag-hint { color: var(--cor-texto-suave); font-size: 0.98rem; margin-top: 0.5rem; min-width: 180px; text-align: center; transition: color 0.2s; }
-    .cha-recipe { margin-top: 1.2rem; padding: 1rem 1.3rem; background: #f0f8f4; border-radius: 16px; border-left: 6px solid var(--cor-secundaria); color: var(--cor-texto); font-size: 1rem; box-shadow: 0 2px 8px rgba(127,200,169,0.08); text-align: left; }
-    .cha-recipe-title { font-weight: 700; color: var(--cor-secundaria); margin-bottom: 0.3rem; font-family: 'Baloo 2', cursive; }
-    .cha-clear-btn { background: none; border: none; color: var(--cor-destaque); font-size: 0.98rem; margin-top: 0.5rem; cursor: pointer; padding: 0.3rem 1rem; border-radius: 16px; transition: background 0.18s; }
+    /* Estação do Chá */
+    #chá {
+      background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px;
+      padding: 2.2rem 1.2rem 2.8rem 1.2rem; margin-top: 2rem; display: flex; flex-direction: column; align-items: center;
+    }
+    @media (min-width: 700px) { #chá { flex-direction: row; align-items: flex-start; gap: 3rem; } }
+    .cha-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-secundaria); margin-bottom: -0.6rem; width: 100%; text-align: center; }
+    .cha-ingredients { display: flex; flex-direction: column; gap: 0.9rem; margin-right: 1.2rem; width: 100%; max-width: 200px; }
+    .ingredient {
+      display: flex; align-items: center; gap: 0.6rem; background: #f5f9ff; padding: 0.6rem 1rem;
+      border-radius: 15px; border: 1.2px dashed #e0d6f6; cursor: grab; user-select: none;
+      font-size: 1.02rem; color: var(--cor-texto); box-shadow: 0 2px 6px rgba(184,134,201,0.06);
+      transition: background 0.15s, box-shadow 0.15s, transform 0.12s;
+    }
+    .ingredient.dragging {
+      background: var(--cor-acento); box-shadow: 0 5px 18px rgba(255,214,180,0.15); transform: scale(1.04) rotate(-2deg); cursor: grabbing;
+    }
+    .ingredient-icon { font-size: 1.4rem; }
+    .cha-cup-area { display: flex; flex-direction: column; align-items: center; gap: 0.8rem; min-width: 180px; }
+    .cha-cup-container { position: relative; width: 130px; height: 150px; margin-bottom: 0.3rem; }
+    .cha-cup {
+      position: absolute; top: 0; left: 0; width: 130px; height: 150px; background: #fff;
+      border-radius: 50% 50% 60% 60% / 60% 60% 80% 80%; border: 3.5px solid #e6d6f0;
+      box-shadow: 0 5px 18px rgba(184,134,201,0.10); display: flex; align-items: center; justify-content: center;
+      overflow: hidden; transition: border-color 0.2s, background 0.2s;
+    }
+    .cha-liquid { position: absolute; bottom: 14px; left: 14px; right: 14px; height: 0px; background: #f5e8d6; border-radius: 40% 40% 60% 60%; transition: height 0.28s, background 0.28s, opacity 0.28s; opacity: 0; }
+    .cha-steam { position: absolute; top: -34px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; pointer-events: none; opacity: 0; transition: opacity 0.2s; }
+    .cha-steam-bubble { width: 8px; height: 8px; background: rgba(255,255,255,0.88); border-radius: 50%; margin-bottom: 5px; opacity: 0; transition: opacity 0.25s, transform 0.32s; }
+    .cha-steam-bubble.active { opacity: 1; animation: float-up 1s ease-in-out infinite; }
+    @keyframes float-up { 0% { transform: translateY(0px) scale(1); opacity: 1; } 45% { opacity: 1; } 75% { transform: translateY(-14px) scale(1.10); opacity: 0.8; } 100% { transform: translateY(-24px) scale(0.9); opacity: 0; } }
+    .cha-drag-hint { color: var(--cor-texto-suave); font-size: 0.92rem; margin-top: 0.3rem; min-width: 160px; text-align: center; transition: color 0.2s; }
+    .cha-recipe { margin-top: 0.9rem; padding: 0.8rem 1rem; background: #f0f8f4; border-radius: 13px; border-left: 5px solid var(--cor-secundaria); color: var(--cor-texto); font-size: 0.98rem; box-shadow: 0 2px 7px rgba(127,200,169,0.07); text-align: left; }
+    .cha-recipe-title { font-weight: 700; color: var(--cor-secundaria); margin-bottom: 0.2rem; font-family: var(--font-display); }
+    .cha-clear-btn { background: none; border: none; color: var(--cor-destaque); font-size: 0.92rem; margin-top: 0.3rem; cursor: pointer; padding: 0.2rem 1rem; border-radius: 13px; transition: background 0.15s; }
     .cha-clear-btn:hover { background: #fff0ee; }
 
-    /* Novas atividades */
-    .activity-card { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 20px; padding: 1.8rem 1.3rem 1.5rem 1.8rem;
-      margin-top: 2rem; display: flex; flex-direction: column; align-items: center; gap: 1.2rem; border: 1.5px solid #f0e8f6; }
-    @media (min-width: 700px) { .activity-card { flex-direction: row; align-items: flex-start; gap: 2.5rem; } }
-    .activity-icon { font-size: 3.2rem; margin-bottom: 0.3rem; filter: drop-shadow(0 4px 12px rgba(184,134,201,0.15)); }
-    .activity-content { flex: 2; }
-    .activity-title { font-family: 'Baloo 2', cursive; font-size: 1.6rem; color: var(--cor-primaria); margin-bottom: 0.4rem; }
-    .activity-desc { color: var(--cor-texto-suave); font-size: 1.05rem; margin-bottom: 0.8rem; }
-    .activity-actions { width: 100%; display: flex; flex-direction: column; gap: 0.8rem; }
-
     /* Diário */
-    .diario-form { display: flex; flex-direction: column; gap: 0.8rem; width: 100%; }
-    .diario-emojis { display: flex; gap: 0.7rem; justify-content: center; margin-bottom: 0.3rem; }
-    .diario-emoji-btn { background: none; border: 2px solid #e6d6f0; border-radius: 50%; width: 44px; height: 44px;
-      font-size: 1.8rem; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.15s; outline: none; }
-    .diario-emoji-btn.selected { border-color: var(--cor-primaria); background: var(--cor-acento); transform: scale(1.08); }
-    .diario-input { width: 100%; padding: 0.7rem 1rem; border-radius: 16px; border: 1.5px solid #e6d6f0;
-      font-size: 1rem; resize: vertical; min-height: 60px; max-height: 120px; transition: border 0.2s; }
-    .diario-btn { background: var(--cor-primaria); color: white; border: none; border-radius: 24px; padding: 0.6rem 1.5rem; font-weight: 600; font-size: 1rem; cursor: pointer; margin-top: 0.3rem; transition: background 0.2s, transform 0.15s; outline: none; }
-    .diario-btn:hover { background: var(--cor-secundaria); transform: translateY(-2px) scale(1.04); }
-    .diario-entries { margin-top: 1.2rem; width: 100%; }
-    .diario-entry { background: #f6effa; border-radius: 14px; padding: 0.8rem 1.1rem; margin-bottom: 0.6rem; display: flex; gap: 0.8rem; box-shadow: 0 1px 6px rgba(184,134,201,0.06); }
-    .diario-entry-emoji { font-size: 2rem; min-width: 32px; }
-    .diario-entry-text { flex: 1; color: var(--cor-texto); font-size: 1rem; }
-    .diario-entry-time { font-size: 0.85rem; color: var(--cor-texto-suave); margin-left: 0.4rem; white-space: nowrap; }
+    #diario { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 20px; padding: 1.8rem 1.2rem 2.4rem 1.8rem; margin-top: 2rem; }
+    .diario-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-primaria); margin-bottom: 0.3rem; }
+    .diario-desc { color: var(--cor-texto-suave); font-size: 1.02rem; margin-bottom: 0.7rem; }
+    .diario-form { display: flex; flex-direction: column; gap: 0.6rem; width: 100%; }
+    .diario-emojis { display: flex; gap: 0.55rem; justify-content: center; margin-bottom: 0.2rem; }
+    .diario-emoji-btn { background: none; border: 2px solid #e6d6f0; border-radius: 50%; width: 38px; height: 38px; font-size: 1.5rem; cursor: pointer; transition: border-color 0.2s, background 0.2s, transform 0.12s; outline: none; }
+    .diario-emoji-btn.selected { border-color: var(--cor-primaria); background: var(--cor-acento); transform: scale(1.06); }
+    .diario-input { width: 100%; padding: 0.6rem 0.9rem; border-radius: 13px; border: 1.2px solid #e6d6f0; font-size: 0.98rem; resize: vertical; min-height: 55px; max-height: 110px; transition: border 0.2s; }
+    .diario-btn { background: var(--cor-primaria); color: white; border: none; border-radius: 20px; padding: 0.5rem 1.2rem; font-weight: 600; font-size: 0.98rem; cursor: pointer; margin-top: 0.2rem; transition: background 0.2s, transform 0.14s; outline: none; }
+    .diario-btn:hover { background: var(--cor-secundaria); transform: translateY(-2px) scale(1.03); }
+    .diario-entries { margin-top: 1rem; width: 100%; }
+    .diario-entry { background: #f6effa; border-radius: 12px; padding: 0.6rem 0.9rem; margin-bottom: 0.5rem; display: flex; gap: 0.6rem; box-shadow: 0 1px 5px rgba(184,134,201,0.06); }
+    .diario-entry-emoji { font-size: 1.7rem; min-width: 26px; }
+    .diario-entry-text { flex: 1; color: var(--cor-texto); font-size: 0.98rem; }
+    .diario-entry-time { font-size: 0.82rem; color: var(--cor-texto-suave); margin-left: 0.3rem; white-space: nowrap; }
 
     /* Afirmações */
-    .affirmation-box { background: linear-gradient(135deg, var(--cor-acento), #f0e8f6); border-radius: 18px; padding: 1.3rem 1rem 1.3rem 1.5rem; text-align: center; box-shadow: 0 4px 16px rgba(255,214,180,0.10); }
-    .affirmation-text { font-family: 'Baloo 2', cursive; font-size: 1.3rem; color: var(--cor-primaria); margin-bottom: 0.8rem; min-height: 54px; display: flex; align-items: center; justify-content: center; }
-    .affirmation-btn { background: var(--cor-secundaria); color: white; border: none; border-radius: 24px; padding: 0.6rem 2rem; font-weight: 700; font-size: 1rem; cursor: pointer; transition: background 0.2s, transform 0.18s; outline: none; }
-    .affirmation-btn:hover { background: var(--cor-primaria); transform: scale(1.05); }
+    #afirmacoes { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 20px; padding: 1.8rem 1.2rem 2.4rem 1.8rem; margin-top: 2rem; text-align: center; }
+    .affirmation-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-secundaria); margin-bottom: 0.3rem; }
+    .affirmation-box { background: linear-gradient(135deg, var(--cor-acento), #f0e8f6); border-radius: 14px; padding: 1rem 0.8rem; display: flex; flex-direction: column; align-items: center; box-shadow: 0 3px 12px rgba(255,214,180,0.09); }
+    .affirmation-text { font-family: var(--font-display); font-size: 1.18rem; color: var(--cor-primaria); margin-bottom: 0.6rem; min-height: 44px; display: flex; align-items: center; }
+    .affirmation-btn { background: var(--cor-secundaria); color: white; border: none; border-radius: 20px; padding: 0.5rem 1.6rem; font-weight: 700; font-size: 0.98rem; cursor: pointer; transition: background 0.2s, transform 0.15s; outline: none; }
+    .affirmation-btn:hover { background: var(--cor-primaria); transform: scale(1.04); }
 
     /* Respiração */
-    .breath-container { display: flex; flex-direction: column; align-items: center; gap: 1.2rem; }
-    .breath-circle { width: 140px; height: 140px; border-radius: 50%; border: 6px solid var(--cor-primaria); display: flex; align-items: center; justify-content: center; font-size: 2.2rem; color: var(--cor-primaria); font-family: 'Baloo 2', cursive; box-shadow: 0 4px 20px rgba(184,134,201,0.12); transition: border-width 0.3s, box-shadow 0.3s; }
-    .breath-in { border-width: 8px !important; box-shadow: 0 8px 32px rgba(184,134,201,0.18); color: var(--cor-secundaria); }
-    .breath-hold { border-width: 6px !important; box-shadow: 0 4px 20px rgba(184,134,201,0.12); }
-    .breath-out { border-width: 4px !important; box-shadow: 0 2px 10px rgba(184,134,201,0.08); color: #b886c988; }
-    .breath-instruction { color: var(--cor-texto-suave); font-size: 1.1rem; margin-top: 0.5rem; min-height: 28px; }
-    .breath-start-btn { background: var(--cor-primaria); color: white; border: none; border-radius: 24px; padding: 0.6rem 2rem; font-weight: 700; font-size: 1rem; cursor: pointer; margin-top: 0.8rem; transition: background 0.2s, transform 0.18s; outline: none; }
-    .breath-start-btn:hover { background: var(--cor-secundaria); transform: scale(1.05); }
+    #respiracao { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 20px; padding: 1.8rem 1.2rem 2.4rem 1.8rem; margin-top: 2rem; text-align: center; }
+    .breath-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-primaria); margin-bottom: 0.3rem; }
+    .breath-container { display: flex; flex-direction: column; align-items: center; gap: 0.9rem; }
+    .breath-circle { width: 110px; height: 110px; border-radius: 50%; border: 6px solid var(--cor-primaria); display: flex; align-items: center; justify-content: center; font-size: 1.7rem; color: var(--cor-primaria); font-family: var(--font-display); box-shadow: 0 4px 16px rgba(184,134,201,0.10); transition: border-width 0.25s, box-shadow 0.25s, color 0.25s; background: #fff; }
+    .breath-in { border-width: 9px !important; box-shadow: 0 8px 28px rgba(184,134,201,0.17); color: var(--cor-secundaria); background: #f0f8f4; }
+    .breath-hold { border-width: 6px !important; box-shadow: 0 4px 16px rgba(184,134,201,0.10); background: #fff; }
+    .breath-out { border-width: 4px !important; box-shadow: 0 2px 8px rgba(184,134,201,0.06); color: #b886c9aa !important; background: #fff; }
+    .breath-instruction { color: var(--cor-texto-suave); font-size: 0.98rem; margin-top: 0.3rem; min-height: 24px; }
+    .breath-start-btn { background: var(--cor-primaria); color: white; border: none; border-radius: 20px; padding: 0.5rem 1.5rem; font-weight: 700; font-size: 0.98rem; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s, transform 0.16s; outline: none; }
+    .breath-start-btn:hover { background: var(--cor-secundaria); transform: scale(1.04); }
 
     /* Recursos */
     #recursos { margin-top: 2rem; }
-    .recursos-title { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--cor-destaque); text-align: center; margin-bottom: 1.5rem; }
-    .cards-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; }
-    @media (min-width: 600px) { .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem; } }
+    .recursos-title { font-family: var(--font-display); font-size: 1.7rem; color: var(--cor-destaque); text-align: center; margin-bottom: 1.2rem; }
+    .cards-grid { display: grid; grid-template-columns: 1fr; gap: 1.2rem; }
+    @media (min-width: 600px) { .cards-grid { grid-template-columns: repeat(2, 1fr); gap: 1.6rem; } }
     @media (min-width: 900px) { .cards-grid { grid-template-columns: repeat(3, 1fr); } }
-    .resource-card { background: var(--cor-fundo-card); border-radius: 20px; box-shadow: var(--cor-shadow); padding: 1.5rem 1.3rem 1.3rem 1.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.8rem; transition: transform 0.15s, box-shadow 0.15s; border: 1.5px solid #f0e8f6; }
-    .resource-card:hover, .resource-card:focus-within { transform: translateY(-6px) scale(1.03); box-shadow: 0 8px 32px rgba(184,134,201,0.18); outline: 2px solid var(--cor-acento); outline-offset: -2px; }
-    .card-icon { font-size: 2.8rem; margin-bottom: 0.3rem; }
-    .card-title { font-family: 'Baloo 2', cursive; font-size: 1.2rem; color: var(--cor-primaria); margin-bottom: 0.3rem; text-align: center; }
-    .card-desc { color: var(--cor-texto-suave); font-size: 0.98rem; text-align: center; min-height: 48px; }
-    .card-links { display: flex; flex-direction: column; gap: 0.4rem; width: 100%; align-items: center; }
-    .card-btn { display: inline-block; background: var(--cor-primaria); color: white; font-weight: 600; font-size: 0.98rem; padding: 0.5rem 1.3rem; border: none; border-radius: 24px; cursor: pointer; text-decoration: none; box-shadow: 0 2px 8px rgba(184,134,201,0.10); transition: background 0.2s, transform 0.15s; margin-bottom: 0.15rem; }
-    .card-btn:hover, .card-btn:focus { background: var(--cor-secundaria); color: #fff; transform: scale(1.04); }
+    .resource-card { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 16px; padding: 1.2rem 1rem 1.2rem 1.4rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; transition: transform 0.14s, box-shadow 0.14s; border: 1.2px solid #f0e8f6; }
+    .resource-card:hover, .resource-card:focus-within { transform: translateY(-5px) scale(1.02); box-shadow: 0 7px 26px rgba(184,134,201,0.15); outline: 2px solid var(--cor-acento); outline-offset: -2px; }
+    .card-icon { font-size: 2.2rem; margin-bottom: 0.2rem; }
+    .card-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--cor-primaria); margin-bottom: 0.2rem; text-align: center; }
+    .card-desc { color: var(--cor-texto-suave); font-size: 0.92rem; text-align: center; min-height: 40px; }
+    .card-links { display: flex; flex-direction: column; gap: 0.3rem; width: 100%; align-items: center; }
+    .card-btn { display: inline-block; background: var(--cor-primaria); color: white; font-weight: 600; font-size: 0.92rem; padding: 0.4rem 1.1rem; border: none; border-radius: 18px; cursor: pointer; text-decoration: none; box-shadow: 0 2px 6px rgba(184,134,201,0.08); transition: background 0.18s, transform 0.12s; margin-bottom: 0.1rem; outline: none; }
+    .card-btn:hover, .card-btn:focus { background: var(--cor-secundaria); color: #fff; transform: scale(1.03); }
 
     /* Sobre */
-    #sobre { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px; padding: 2.5rem 1.5rem 3rem 1.5rem; margin-top: 2rem; max-width: 800px; text-align: center; }
-    .sobre-title { font-family: 'Baloo 2', cursive; font-size: 2rem; color: var(--cor-secundaria); margin-bottom: 1rem; }
-    .sobre-text { color: var(--cor-texto-suave); font-size: 1.1rem; line-height: 1.7; margin-bottom: 1.5rem; }
-    .sobre-quote { font-style: italic; color: var(--cor-primaria); margin: 1.2rem 0; font-size: 1.15rem; padding: 0.5rem 1.5rem; border-left: 4px solid var(--cor-primaria); background: #f6effa; border-radius: 0 8px 8px 0; display: inline-block; }
+    #sobre { background: var(--cor-fundo-card); box-shadow: var(--cor-shadow); border-radius: 24px; padding: 2.2rem 1.4rem 2.6rem 1.4rem; margin-top: 2rem; max-width: 800px; text-align: center; }
+    .sobre-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--cor-secundaria); margin-bottom: 0.8rem; }
+    .sobre-text { color: var(--cor-texto-suave); font-size: 1.08rem; line-height: 1.7; margin-bottom: 1.2rem; }
+    .sobre-quote { font-style: italic; color: var(--cor-primaria); padding: 0.4rem 1.2rem; border-left: 4px solid var(--cor-primaria); background: #f6effa; border-radius: 0 8px 8px 0; display: inline-block; margin: 1rem 0; font-size: 1.08rem; }
 
     /* Footer */
-    footer { text-align: center; padding: 2rem 1.5rem 1.2rem 1.5rem; color: var(--cor-texto-suave); font-size: 0.95rem; margin-top: 2rem; border-top: 1px solid #eee6fa; }
-    .footer-links a { color: var(--cor-primaria); text-decoration: none; margin: 0 0.5rem; font-weight: 500; transition: color 0.2s; }
+    footer { text-align: center; padding: 1.6rem 1.5rem 1rem 1.5rem; color: var(--cor-texto-suave); font-size: 0.92rem; margin-top: 2rem; border-top: 1px solid #eee6fa; }
+    .footer-links { margin-top: 0.3rem; }
+    .footer-links a { color: var(--cor-primaria); text-decoration: none; margin: 0 0.4rem; font-weight: 500; transition: color 0.2s; }
     .footer-links a:hover { color: var(--cor-secundaria); text-decoration: underline; }
 
     /* Botão tema */
-    .theme-toggle { position: fixed; bottom: 2rem; right: 2rem; background: var(--cor-acento); color: var(--cor-primaria); border: none; border-radius: 50%; width: 52px; height: 52px; font-size: 1.8rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(184,134,201,0.15); cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.2s; z-index: 90; outline: none; }
-    .theme-toggle:hover { background: var(--cor-primaria); color: #fff; transform: scale(1.08) rotate(-15deg); }
+    .theme-toggle { position: fixed; bottom: 2rem; right: 2rem; background: var(--cor-acento); color: var(--cor-primaria); border: none; border-radius: 50%; width: 48px; height: 48px; font-size: 1.6rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 14px rgba(184,134,201,0.13); cursor: pointer; transition: background 0.2s, color 0.2s, transform 0.18s; z-index: 90; outline: none; }
+    .theme-toggle:hover { background: var(--cor-primaria); color: #fff; transform: scale(1.07) rotate(-12deg); }
 
-    /* Scrollbar */
-    ::-webkit-scrollbar { width: 8px; background: #f0e8f6; }
-    ::-webkit-scrollbar-thumb { background: var(--cor-primaria); border-radius: 4px; opacity: 0.3; }
-    ::-webkit-scrollbar-thumb:hover { opacity: 0.6; }
-
-    /* Prefers-reduced-motion */
+    /* Acessibilidade */
+    a:focus, button:focus, input:focus { outline: 3px solid var(--cor-primaria); outline-offset: 2px; z-index: 10; }
     @media (prefers-reduced-motion: reduce) { * { transition-duration: 0s !important; animation-duration: 0s !important; } }
-    @media (max-width: 600px) { section { padding: 5.2rem 0.8rem 3.2rem 0.8rem; } #mimi, #chá { flex-direction: column; gap: 1.5rem; align-items: center; } .activity-card { flex-direction: column; gap: 1.5rem; align-items: center; } }
+
+    /* Responsividade mobile */
+    @media (max-width: 600px) {
+      section { padding: 5rem 0.7rem 3rem 0.7rem; }
+      #home { padding-top: 7rem; }
+      #mimi, #chá { flex-direction: column; align-items: center; gap: 1.2rem; }
+      .activity-card { flex-direction: column; align-items: center; gap: 1rem; }
+      .theme-toggle { right: 1rem; bottom: 1rem; width: 42px; height: 42px; font-size: 1.2rem; }
+    }
   </style>
 </head>
 <body class="fade-in-section">
 
-  <!-- Progresso de scroll -->
-  <div class="progress-bar" id="progress-bar" hidden></div>
+<!-- Progresso de scroll -->
+<div class="progress-bar" id="progress-bar" hidden></div>
 
-  <!-- Header -->
-  <header>
-    <div class="container-header">
-      <a href="#home" class="logo" aria-label="Ir para a página inicial">🌈 Pacote de Bem-Estar</a>
-      <nav aria-label="Navegação principal" id="main-nav">
-        <a href="#mimi">Mimi</a>
-        <a href="#chá">Estação do Chá</a>
-        <a href="#diario">Diário</a>
-        <a href="#afirmacoes">Afirmações</a>
-        <a href="#respiracao">Respiração</a>
-        <a href="#recursos">Recursos</a>
-        <a href="#sobre">Sobre</a>
-      </nav>
-      <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-mobile">&#9776;</button>
+<!-- Header -->
+<header>
+  <div class="container-header">
+    <a href="#home" class="logo" aria-label="Ir para a página inicial">🌈 Pacote de Bem-Estar</a>
+    <nav aria-label="Navegação principal" id="main-nav">
+      <a href="#mimi">Mimi</a>
+      <a href="#chá">Estação do Chá</a>
+      <a href="#diario">Diário</a>
+      <a href="#afirmacoes">Afirmações</a>
+      <a href="#respiracao">Respiração</a>
+      <a href="#recursos">Recursos</a>
+      <a href="#sobre">Sobre</a>
+    </nav>
+    <button class="menu-btn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav-mobile">&#9776;</button>
+  </div>
+</header>
+
+<!-- Menu mobile -->
+<nav class="nav-mobile" id="nav-mobile" aria-label="Menu mobile"></nav>
+<div class="nav-mobile-backdrop" id="nav-mobile-backdrop"></div>
+
+<!-- Home -->
+<section id="home" class="fade-in-section">
+  <h1 class="home-title">Um cantinho de acolhimento para você, estudante do Visconde</h1>
+  <p class="home-subtitle">
+    Atividades para relaxar, se expressar e encontrar apoio — feito com carinho para os adolescentes do<br>
+    <strong>Colégio Estadual Visconde de Guarapuava</strong>.
+  </p>
+  <a href="#mimi" class="cta-btn">Comece pelo Mimi 🐱</a>
+</section>
+
+<!-- Mimi -->
+<section id="mimi" class="fade-in-section">
+  <div class="mimi-col-left">
+    <!-- O container externo é quem recebe o clique, NÃO o SVG -->
+    <div class="mimi-svg-container" tabindex="0" role="button" aria-label="Faça carinho no Mimi clicando ou tocando">
+      <div class="mimi-hearts" id="mimi-hearts">
+        <span class="mimi-heart" id="heart1">💖</span>
+        <span class="mimi-heart" id="heart2">💖</span>
+        <span class="mimi-heart" id="heart3">💖</span>
+        <span class="mimi-heart" id="heart4">💖</span>
+        <span class="mimi-heart" id="heart5">💖</span>
+      </div>
+      <svg class="mimi-svg" id="mimi-svg" viewBox="0 0 180 180" role="img" aria-label="Mimi, o gatinho">
+        <!-- Corpo -->
+        <ellipse cx="90" cy="112" rx="62" ry="44" fill="#f9d6b4" stroke="#b886c9" stroke-width="2.6"/>
+        <!-- Cabeça -->
+        <ellipse cx="90" cy="70" rx="48" ry="38" fill="#f9d6b4" stroke="#b886c9" stroke-width="2.6"/>
+        <!-- Orelhas -->
+        <polygon points="72,44 80,60 64,58" fill="#f9d6b4" stroke="#b886c9" stroke-width="1.6"/>
+        <polygon points="108,44 100,60 116,58" fill="#f9d6b4" stroke="#b886c9" stroke-width="1.6"/>
+        <!-- Bochechas -->
+        <ellipse cx="74" cy="76" rx="5.5" ry="4" fill="#ffd6b4" opacity="0.8"/>
+        <ellipse cx="106" cy="76" rx="5.5" ry="4" fill="#ffd6b4" opacity="0.8"/>
+        <!-- Olhos -->
+        <circle cx="80" cy="72" r="6" fill="#5b4b8a" id="mimi-eye-left"/>
+        <circle cx="100" cy="72" r="6" fill="#5b4b8a" id="mimi-eye-right"/>
+        <!-- Pupilas -->
+        <circle cx="80" cy="72" r="2.3" fill="#fff" id="mimi-pupil-left"/>
+        <circle cx="100" cy="72" r="2.3" fill="#fff" id="mimi-pupil-right"/>
+        <!-- Nariz -->
+        <polygon points="90,82 86,87 94,87" fill="#b886c9"/>
+        <!-- Boca -->
+        <path d="M83,92 Q90,97 97,92" stroke="#5b4b8a" stroke-width="2.6" fill="none" id="mimi-mouth"/>
+        <!-- Rabo -->
+        <path d="M135,112 Q148,96 155,82" stroke="#b886c9" stroke-width="3.2" fill="none" stroke-linecap="round"/>
+        <!-- Patas -->
+        <ellipse cx="70" cy="130" rx="13" ry="8" fill="#f9d6b4" stroke="#b886c9" stroke-width="1.6"/>
+        <ellipse cx="110" cy="130" rx="13" ry="8" fill="#f9d6b4" stroke="#b886c9" stroke-width="1.6"/>
+      </svg>
     </div>
-  </header>
+    <div class="mimi-tip" id="mimi-tip">
+      💡 <strong>Dica:</strong> Clique ou toque no corpo do Mimi para dar carinho.<br>
+      Cada toque aumenta o humor dele! 🧡
+    </div>
+  </div>
+  <div class="mimi-info">
+    <div class="mimi-title">Mimi, o Gatinho</div>
+    <div class="mimi-desc">Mimi adora carinho no ritmo dele. Cada toque conta — sem pressa. Veja o humor dele mudar conforme você interage.</div>
+    <div class="mimi-humor">
+      <span class="mimi-humor-label">Humor:</span>
+      <span id="mimi-humor-text" style="font-weight:600;color:var(--cor-secundaria);">neutro</span>
+    </div>
+    <div class="mimi-meter">
+      <div class="mimi-meter-fill" id="mimi-meter-fill" style="width:40%"></div>
+    </div>
+    <div style="margin-top:0.5rem;color:var(--cor-texto-suave);font-size:0.92rem;">
+      Nível: <span id="mimi-level-text">2/5</span>
+    </div>
+  </div>
+</section>
 
-  <!-- Menu mobile -->
-  <nav class="nav-mobile" id="nav-mobile" aria-label="Menu mobile"></nav>
-  <div class="nav-mobile-backdrop" id="nav-mobile-backdrop"></div>
-
-  <!-- Home -->
-  <section id="home" class="fade-in-section">
-    <h1 class="home-title">Um cantinho de acolhimento para você, estudante do Visconde 🌈</h1>
-    <p class="home-subtitle">
-      Atividades para relaxar, se expressar e encontrar apoio — feito com carinho para os adolescentes do<br>
-      <strong>Colégio Estadual Visconde de Guarapuava</strong>.
-    </p>
-    <a href="#mimi" class="cta-btn">Comece pelo Mimi 🐱</a>
-  </section>
-
-  <!-- Mimi -->
-  <section id="mimi" class="fade-in-section">
-    <div class="mimi-col-left">
-      <div class="mimi-svg-container" tabindex="0" role="button" aria-label="Faça carinho no Mimi clicando ou tocando">
-        <div class="mimi-hearts" id="mimi-hearts">
-          <span class="mimi-heart" id="heart1">💖</span>
-          <span class="mimi-heart" id="heart2">💖</span>
-          <span class="mimi-heart" id="heart3">💖</span>
-          <span class="mimi-heart" id="heart4">💖</span>
-          <span class="mimi-heart" id="heart5">💖</span>
+<!-- Estação do Chá -->
+<section id="chá" class="fade-in-section">
+  <div>
+    <div class="cha-title">Estação do Chá ☕</div>
+    <div class="cha-ingredients" id="cha-ingredients">
+      <div class="ingredient" draggable="true" data-ingredient="camomila">
+        <span class="ingredient-icon">🌼</span> Camomila
+      </div>
+      <div class="ingredient" draggable="true" data-ingredient="mel">
+        <span class="ingredient-icon">🍯</span> Mel
+      </div>
+      <div class="ingredient" draggable="true" data-ingredient="marshmallow">
+        <span class="ingredient-icon">🍡</span> Marshmallow
+      </div>
+      <div class="ingredient" draggable="true" data-ingredient="hortela">
+        <span class="ingredient-icon">🍃</span> Hortelã
+      </div>
+    </div>
+  </div>
+  <div class="cha-cup-area">
+    <div class="cha-cup-container">
+      <div class="cha-cup" id="cha-cup">
+        <div class="cha-liquid" id="cha-liquid"></div>
+        <div class="cha-steam" id="cha-steam">
+          <span class="cha-steam-bubble" id="steam1"></span>
+          <span class="cha-steam-bubble" id="steam2"></span>
+          <span class="cha-steam-bubble" id="steam3"></span>
         </div>
-        <svg class="mimi-svg" id="mimi-svg" viewBox="0 0 220 220" role="img" aria-label="Mimi, o gatinho">
-          <!-- Corpo -->
-          <ellipse cx="110" cy="135" rx="75" ry="55" fill="#f9d6b4" stroke="#b886c9" stroke-width="3"/>
-          <!-- Cabeça -->
-          <ellipse cx="110" cy="85" rx="58" ry="48" fill="#f9d6b4" stroke="#b886c9" stroke-width="3"/>
-          <!-- Orelhas -->
-          <polygon points="85,55 95,75 75,72" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
-          <polygon points="135,55 125,75 145,72" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
-          <!-- Bochechas -->
-          <ellipse cx="88" cy="95" rx="7" ry="5" fill="#ffd6b4" opacity="0.8"/>
-          <ellipse cx="132" cy="95" rx="7" ry="5" fill="#ffd6b4" opacity="0.8"/>
-          <!-- Olhos -->
-          <circle cx="95" cy="88" r="7" fill="#5b4b8a" id="mimi-eye-left"/>
-          <circle cx="125" cy="88" r="7" fill="#5b4b8a" id="mimi-eye-right"/>
-          <!-- Pupilas -->
-          <circle cx="95" cy="88" r="2.8" fill="#fff" id="mimi-pupil-left"/>
-          <circle cx="125" cy="88" r="2.8" fill="#fff" id="mimi-pupil-right"/>
-          <!-- Nariz -->
-          <polygon points="110,102 105,108 115,108" fill="#b886c9"/>
-          <!-- Boca -->
-          <path d="M98,114 Q110,122 122,114" stroke="#5b4b8a" stroke-width="3" fill="none" id="mimi-mouth"/>
-          <!-- Rabo -->
-          <path d="M165,135 Q180,115 188,98" stroke="#b886c9" stroke-width="4" fill="none" stroke-linecap="round"/>
-          <!-- Patas -->
-          <ellipse cx="85" cy="165" rx="16" ry="10" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
-          <ellipse cx="135" cy="165" rx="16" ry="10" fill="#f9d6b4" stroke="#b886c9" stroke-width="2"/>
-        </svg>
-        <!-- Ronronar animado (só aparece no nível máximo) -->
-        <div id="mimi-purr" style="display:none;position:absolute;top:180px;left:0;width:220px;text-align:center;">
-          <span style="color:var(--cor-primaria);font-size:1.1rem;font-family:'Baloo 2',cursive;letter-spacing:1px;">
+      </div>
+    </div>
+    <div class="cha-drag-hint" id="cha-drag-hint">
+      🤲 Clique ou arraste um ingrediente para a xícara
+    </div>
+    <button class="cha-clear-btn" id="cha-clear-btn" type="button">🧽 Limpar xícara</button>
+    <div class="cha-recipe" id="cha-recipe">
+      <span class="cha-recipe-title">Receitas que o Mimi aprova</span><br>
+      Escolha um ingrediente para ver a receita.<br>
+      <span style="color:var(--cor-texto-suave);font-size:0.92rem;">Combine até 4 ingredientes e descubra seu chá!</span>
+    </div>
+  </div>
+</section>
+
+<!-- Diário de Emoções -->
+<section id="diario" class="fade-in-section">
+  <div class="diario-title">📝 Diário de Emoções</div>
+  <div class="diario-desc">Registre como você está se sentindo hoje. É rápido, privado e fica só no seu navegador.</div>
+  <form class="diario-form" id="diario-form" autocomplete="off">
+    <div class="diario-emojis">
+      <button type="button" class="diario-emoji-btn" data-emoji="😌" aria-label="Tranquilo">😌</button>
+      <button type="button" class="diario-emoji-btn" data-emoji="😊" aria-label="Feliz">😊</button>
+      <button type="button" class="diario-emoji-btn" data-emoji="😐" aria-label="Neutro">😐</button>
+      <button type="button" class="diario-emoji-btn" data-emoji="😔" aria-label="Triste">😔</button>
+      <button type="button" class="diario-emoji-btn" data-emoji="😡" aria-label="Bravo">😡</button>
+      <button type="button" class="diario-emoji-btn" data-emoji="🤔" aria-label="Pensativo">🤔</button>
+    </div>
+    <textarea class="diario-input" id="diario-input" placeholder="Escreva como está se sentindo hoje... (opcional)" maxlength="300"></textarea>
+    <button class="diario-btn" type="submit">Salvar registro</button>
+  </form>
+  <div class="diario-entries" id="diario-entries"></div>
+</section>
+
+<!-- Afirmações Positivas -->
+<section id="afirmacoes" class="fade-in-section">
+  <div class="affirmation-title">💬 Afirmações Positivas</div>
+  <div class="affirmation-box">
+    <div class="affirmation-text" id="affirmation-text">
+      "Você é mais forte do que pensa. Cada pequeno passo conta."
+    </div>
+    <button class="affirmation-btn" id="affirmation-btn">Gerar nova afirmação</button>
+  </div>
+</section>
+
+<!-- Cantinho da Respiração -->
+<section id="respiracao" class="fade-in-section">
+  <div class="breath-title">🫁 Cantinho da Respiração</div>
+  <div class="breath-container">
+    <div class="breath-circle" id="breath-circle">Inspire</div>
+    <div class="breath-instruction" id="breath-instruction">Inale pelo nariz por 4 segundos</div>
+    <button class="breath-start-btn" id="breath-start-btn">Iniciar exercício</button>
+  </div>
+</section>
+
+<!-- Recursos de Ajuda -->
+<section id="recursos" class="fade-in-section">
+  <div class="recursos-title">🆘 Recursos de Ajuda</div>
+  <div class="cards-grid">
+    <!-- CVV -->
+    <div class="resource-card">
+      <span class="card-icon">☎️</span>
+      <div class="card-title">CVV – Centro de Valorização da Vida</div>
+      <div class="card-desc">Atendimento sigiloso por voluntários treinados.<br><strong>Ligue 188</strong> — gratuito, 24h por dia.</div>
+      <div class="card-links">
+        <a class="card-btn" href="tel:188">📞 Ligar 188</a>
+        <a class="card-btn" href="https://cvv.org.br/chat/" target="_blank" rel="noopener noreferrer">💬 Chat online</a>
+      </div>
+    </div>
+    <!-- Pode Falar -->
+    <div class="resource-card">
+      <span class="card-icon">💬</span>
+      <div class="card-title">Pode Falar (UNICEF)</div>
+      <div class="card-desc">Canal de escuta acolhedora gratuito e anônimo para jovens de 13 a 24 anos.<br>Atendimento por chat e WhatsApp.</div>
+      <div class="card-links">
+        <a class="card-btn" href="https://www.podefalar.org.br/" target="_blank" rel="noopener noreferrer">Acessar site</a>
+      </div>
+    </div>
+    <!-- Disque 100 -->
+    <div class="resource-card">
+      <span class="card-icon">🚨</span>
+      <div class="card-title">Disque 100</div>
+      <div class="card-desc">Denúncia de violações de direitos de crianças e adolescentes.<br>Gratuito e anônimo, 24h.</div>
+      <div class="card-links">
+        <a class="card-btn" href="tel:100">📞 Ligar 100</a>
+      </div>
+    </div>
+    <!-- CAPS Guarapuava -->
+    <div class="resource-card">
+      <span class="card-icon">🏥</span>
+      <div class="card-title">CAPS – Saúde Mental</div>
+      <div class="card-desc">Serviço público de saúde mental para adultos e infantojuvenil em Guarapuava.</div>
+      <div class="card-links">
+        <div style="width:100%;text-align:left;font-size:0.90rem;color:var(--cor-texto-suave);margin-bottom:0.1rem;">
+          <strong>CAPS AD III</strong><br>R. Profª Leonídia, 1203 – Centro<br>☎️ (42) 3622-1427
+        </div>
+        <div style="width:100%;text-align:left;font-size:0.90rem;color:var(--cor-texto-suave);">
+          <strong>CAPS Unificado</strong><br>R. Brigadeiro Rocha, 2777 – Centro<br>☎️ (42) 3142-1000
+        </div>
+      </div>
+    </div>
+    <!-- Recursos do Colégio -->
+    <div class="resource-card">
+      <span class="card-icon">🏫</span>
+      <div class="card-title">Apoio no Colégio Visconde</div>
+      <div class="card-desc">Converse com a equipe de orientação educacional ou com o grêmio estudantil. Você não está sozinho(a) na escola.</div>
+      <div class="card-links">
+        <div style="width:100%;text-align:left;font-size:0.90rem;color:var(--cor-texto-suave);">
+          <strong>Orientação Educacional</strong><br>Procure na secretaria pedagógica
+        </div>
+      </div>
+    </div>
+    <!-- Mapa da Saúde Mental -->
+    <div class="resource-card">
+      <span class="card-icon">🗺️</span>
+      <div class="card-title">Mapa da Saúde Mental</div>
+      <div class="card-desc">Encontre CAPS, ambulatórios e outros serviços de saúde mental em todo o Brasil.</div>
+      <div class="card-links">
+        <a class="card-btn" href="https://mapasaudemental.com.br/" target="_blank" rel="noopener noreferrer">Abrir mapa</a>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top:1.2rem;text-align:center;color:var(--cor-texto-suave);font-size:0.92rem;">
+    ⚠️ <strong>Emergência:</strong> se você ou alguém corre risco imediato, ligue <strong>190</strong> (Polícia) ou <strong>192</strong> (SAMU).
+  </div>
+</section>
+
+<!-- Sobre -->
+<section id="sobre" class="fade-in-section">
+  <div class="sobre-title">Sobre o Projeto</div>
+  <div class="sobre-text">
+    O <strong>Pacote de Bem-Estar</strong> nasceu para criar um espaço seguro e acolhedor para os estudantes do<br>
+    <strong>Colégio Estadual Visconde de Guarapuava</strong>.<br><br>
+    Aqui você encontra atividades que ajudam a relaxar, se expressar e respirar fundo nos dias difíceis.<br>
+    Também reunimos recursos de ajuda confiáveis — do CVV ao apoio dentro da própria escola.<br><br>
+    <span class="sobre-quote">
+      "Você não está sozinho(a). Cuidar de si é um ato de coragem." 🧡
+    </span>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div>
+    &copy; 2026 Pacote de Bem-Estar 🌈 — Colégio Estadual Visconde de Guarapuava
+  </div>
+  <div class="footer-links">
+    <a href="#home">Início</a> •
+    <a href="#mimi">Mimi</a> •
+    <a href="#chá">Estação do Chá</a> •
+    <a href="#diario">Diário</a> •
+    <a href="#afirmacoes">Afirmações</a> •
+    <a href="#respiracao">Respiração</a> •
+    <a href="#recursos">Recursos</a> •
+    <a href="#sobre">Sobre</a>
+  </div>
+</footer>
+
+<!-- Botão de tema -->
+<button class="theme-toggle" id="theme-toggle" aria-label="Alternar modo escuro/claro">🌙</button>
+
+<!-- SCRIPT PRINCIPAL -->
+<script>
+// ======== FADE-IN AO SCROLL ========
+function onScrollFadeIn() {
+  document.querySelectorAll('.fade-in-section:not(.visible)').forEach(section => {
+    const rect = section.getBoundingClientRect();
+    const windowHeight = window.innerHeight;
+    if (rect.top <= windowHeight - 120 || rect.bottom >= 80) {
+      section.classList.add('visible');
+    }
+  });
+}
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => { onScrollFadeIn(); document.querySelectorAll('.fade-in-section').forEach(s => s.classList.add('visible')); }, 80);
+});
+window.addEventListener('scroll', onScrollFadeIn);
+
+// ======== PROGRESSO DE SCROLL ========
+const progressBar = document.getElementById('progress-bar');
+function updateProgressBar() {
+  const winScroll = window.pageYOffset;
+  const height = document.documentElement.scrollHeight - window.innerHeight;
+  const scrolled = height > 0 ? (winScroll / height) * 100 : 0;
+  progressBar.style.width = `${scrolled}%`;
+  progressBar.hidden = scrolled <= 0 || scrolled >= 99.5;
+}
+window.addEventListener('scroll', updateProgressBar);
+window.addEventListener('DOMContentLoaded', updateProgressBar);
+
+// ======== MENU HAMBÚRGUER ========
+const menuBtn = document.querySelector('.menu-btn');
+const navMobile = document.getElementById('nav-mobile');
+const navBackdrop = document.getElementById('nav-mobile-backdrop');
+const navHtml = `
+  <a href="#home" onclick="closeMobileMenu()">Início</a>
+  <a href="#mimi" onclick="closeMobileMenu()">Mimi</a>
+  <a href="#chá" onclick="closeMobileMenu()">Estação do Chá</a>
+  <a href="#diario" onclick="closeMobileMenu()">Diário</a>
+  <a href="#afirmacoes" onclick="closeMobileMenu()">Afirmações</a>
+  <a href="#respiracao" onclick="closeMobileMenu()">Respiração</a>
+  <a href="#recursos" onclick="closeMobileMenu()">Recursos</a>
+  <a href="#sobre" onclick="closeMobileMenu()">Sobre</a>
+`;
+navMobile.innerHTML = navHtml;
+
+function openMobileMenu() {
+  navMobile.classList.add('open');
+  navBackdrop.classList.add('open');
+  menuBtn.setAttribute('aria-expanded', 'true');
+  document.body.style.overflow = 'hidden';
+}
+function closeMobileMenu() {
+  navMobile.classList.remove('open');
+  navBackdrop.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded', 'false');
+  document.body.style.overflow = '';
+}
+menuBtn.addEventListener('click', () => {
+  if (navMobile.classList.contains('open')) closeMobileMenu();
+  else openMobileMenu();
+});
+navBackdrop.addEventListener('click', closeMobileMenu);
+window.addEventListener('resize', () => {
+  if (window.innerWidth >= 900) closeMobileMenu();
+});
+
+// ======== MIMI INTERATIVO ========
+const mimiSvgContainer = document.getElementById('mimi-svg-container');
+const mimiMeterFill = document.getElementById('mimi-meter-fill');
+const mimiHumorText = document.getElementById('mimi-humor-text');
+const mimiLevelText = document.getElementById('mimi-level-text');
+const mimiTip = document.getElementById('mimi-tip');
+const hearts = [
+  document.getElementById('heart1'),
+  document.getElementById('heart2'),
+  document.getElementById('heart3'),
+  document.getElementById('heart4'),
+  document.getElementById('heart5')
+];
+
+// Estados de humor com expressões faciais
+const humorLevels = [
+  { level: 0, value: 0, text: "muito triste", hearts: 0 },
+  { level: 1, value: 20, text: "triste", hearts: 1 },
+  { level: 2, value: 40, text: "neutro", hearts: 2 },
+  { level: 3, value: 60, text: "feliz", hearts: 3 },
+  { level: 4, value: 80, text: "muito feliz", hearts: 4 },
+  { level: 5, value: 100, text: "zen 🧡", hearts: 5 }
+];
+
+let mimiScore = 40; // começa em neutro
+let lastTouchTime = 0;
+
+function updateMimi() {
+  const levelObj = humorLevels.find(h => mimiScore <= h.value) || humorLevels[humorLevels.length-1];
+  mimiMeterFill.style.width = `${mimiScore}%`;
+  mimiHumorText.textContent = levelObj.text;
+  mimiLevelText.textContent = `${levelObj.level}/5`;
+
+  // Atualizar expressão facial
+  updateMimiFace(levelObj.level);
+
+  // Corações
+  for (let i = 0; i < 5; i++) {
+    hearts[i].classList.remove('active');
+    if (i < levelObj.hearts) {
+      setTimeout(() => hearts[i].classList.add('active'), i * 70);
+    }
+  }
+
+  // Dica contextual
+  switch(levelObj.level) {
+    case 0: mimiTip.innerHTML = "💡 Mimi está precisando de carinho. Dê alguns toques nele! 🧡"; break;
+    case 1: mimiTip.innerHTML = "💡 Um pouco mais de atenção e ele melhora!"; break;
+    case 2: mimiTip.innerHTML = "💡 Mimi está neutro. Continue interagindo!"; break;
+    case 3: mimiTip.innerHTML = "🧡 Mimi está sorrindo! Você está fazendo a diferença."; break;
+    case 4: mimiTip.innerHTML = "🌈 Mimi está muito feliz! Que tal um chá agora?"; break;
+    case 5: mimiTip.innerHTML = "✨ Mimi está em paz. Vocês dois merecem esse momento."; break;
+  }
+}
+
+function updateMimiFace(level) {
+  const leftEye = document.getElementById('mimi-eye-left');
+  const rightEye = document.getElementById('mimi-eye-right');
+  const mouth = document.getElementById('mimi-mouth');
+  // Remover glitter se existir
+  const lg = document.getElementById('mimi-glitter-left');
+  const rg = document.getElementById('mimi-glitter-right');
+  if (lg) lg.remove(); if (rg) rg.remove();
+
+  if (level <= 1) {
+    // Triste: olhos caídos, boca para baixo
+    leftEye.setAttribute('r', '6');
+    rightEye.setAttribute('r', '6');
+    mouth.setAttribute('d', 'M83,98 Q90,92 97,98');
+  } else if (level === 2) {
+    // Neutro: olhos normais, boca reta
+    leftEye.setAttribute('r', '6');
+    rightEye.setAttribute('r', '6');
+    mouth.setAttribute('d', 'M83,93 Q90,93 97,93');
+  } else if (level === 3) {
+    // Feliz: olhos maiores, boca sorrindo
+    leftEye.setAttribute('r', '7');
+    rightEye.setAttribute('r', '7');
+    mouth.setAttribute('d', 'M83,91 Q90,96 97,91');
+  } else if (level === 4) {
+    // Muito feliz: olhos brilhantes com glitter
+    leftEye.setAttribute('r', '7.5');
+    rightEye.setAttribute('r', '7.5');
+    mouth.setAttribute('d', 'M80,94 Q90,100 100,94');
+    // Adicionar glitter sobre as pupilas
+    addGlitter();
+  } else {
+    // Zen: olhos semicerrados, boca de paz
+    leftEye.setAttribute('r', '6');
+    rightEye.setAttribute('r', '6');
+    mouth.setAttribute('d', 'M85,94 Q90,92 95,94');
+  }
+}
+
+function addGlitter() {
+  // Adiciona um pequeno círculo brilhante sobre cada pupila
+  let leftGlitter = document.getElementById('mimi-glitter-left');
+  let rightGlitter = document.getElementById('mimi-glitter-right');
+  if (!leftGlitter) {
+    leftGlitter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    leftGlitter.setAttribute('id', 'mimi-glitter-left');
+    leftGlitter.setAttribute('cx', '83');
+    leftGlitter.setAttribute('cy', '70');
+    leftGlitter.setAttribute('r', '1.8');
+    leftGlitter.setAttribute('fill', '#fff');
+    leftGlitter.setAttribute('opacity', '0.9');
+    document.getElementById('mimi-svg').appendChild(leftGlitter);
+  }
+  if (!rightGlitter) {
+    rightGlitter = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    rightGlitter.setAttribute('id', 'mimi-glitter-right');
+    rightGlitter.setAttribute('cx', '103');
+    rightGlitter.setAttribute('cy', '70');
+    rightGlitter.setAttribute('r', '1.8');
+    rightGlitter.setAttribute('fill', '#fff');
+    rightGlitter.setAttribute('opacity', '0.9');
+    document.getElementById('mimi-svg').appendChild(rightGlitter);
+  }
+}
+
+// Evento de carinho — funciona em mouse E touch
+function addAffection(amount = 8) {
+  const now = Date.now();
+  if (now - lastTouchTime < 160) return;
+  lastTouchTime = now;
+
+  mimiScore = Math.min(mimiScore + amount, 100);
+  updateMimi();
+
+  // Animação de coração
+  const inactive = hearts.filter(h => !h.classList.contains('active'));
+  if (inactive.length > 0) {
+    const heart = inactive[Math.floor(Math.random() * inactive.length)];
+    heart.classList.add('active');
+    setTimeout(() => heart.classList.remove('active'), 600);
+  }
+}
+
+// Clique no container (não no SVG)
+mimiSvgContainer.addEventListener('mousedown', (e) => {
+  if (e.button === 0) addAffection();
+});
+mimiSvgContainer.addEventListener('touchstart', (e) => {
+  e.preventDefault();
+  addAffection();
+  // Toque contínuo: a cada 250ms enquanto o dedo se mover
+  let lastY = e.touches[0].clientY;
+  function onTouchMove(ev) {
+    const newY = ev.touches[0].clientY;
+    if (Math.abs(newY - lastY) > 10) {
+      addAffection();
+      lastY = newY;
+    }
+  }
+  if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+  window._mimiTouchInterval = setInterval(() => onTouchMove(window._lastTouchEvent), 250);
+  window._lastTouchEvent = e;
+}, { passive: false });
+
+mimiSvgContainer.addEventListener('touchend', () => {
+  if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+});
+mimiSvgContainer.addEventListener('touchcancel', () => {
+  if (window._mimiTouchInterval) clearInterval(window._mimiTouchInterval);
+});
+
+// Acessibilidade: teclado
+mimiSvgContainer.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter' || e.key === ' ') {
+    e.preventDefault();
+    addAffection();
+  }
+});
+
+// Inicializar
+updateMimi();
+
+// ======== ESTAÇÃO DO CHÁ ========
+const ingredients = document.querySelectorAll('.ingredient');
+const cup = document.getElementById('cha-cup');
+const liquid = document.getElementById('cha-liquid');
+const steam = document.getElementById('cha-steam');
+const steamBubbles = [
+  document.getElementById('steam1'),
+  document.getElementById('steam2'),
+  document.getElementById('steam3')
+];
+const dragHint = document.getElementById('cha-drag-hint');
+const recipeBox = document.getElementById('cha-recipe');
+const clearBtn = document.getElementById('cha-clear-btn');
+
+const recipes = {
+  camomila: {
+    title: "🌼 Chá de Camomila",
+    text: "Calma e ajuda no sono. <br><strong>Receita:</strong> 1 colher de flores secas em 200ml de água quente. Infusão: 5 min.",
+    color: "#f5e8d6"
+  },
+  mel: {
+    title: "🍯 Chá com Mel",
+    text: "Conforto e alívio para a garganta. <br><strong>Receita:</strong> 1 colher de mel em chá morno (não ferva o mel!).",
+    color: "#ffe6b4"
+  },
+  marshmallow: {
+    title: "🍡 Chá com Marshmallow",
+    text: "Para adoçar o dia com nostalgia. <br><strong>Receita:</strong> Coloque um marshmallow na xícara — ele derrete e deixa tudo mais doce.",
+    color: "#ffdde9"
+  },
+  hortela: {
+    title: "🍃 Chá de Hortelã",
+    text: "Refrescante e ajuda na respiração. <br><strong>Receita:</strong> 5 folhas frescas em 200ml de água quente. Infusão: 5 min.",
+    color: "#eaf8ef"
+  }
+};
+
+function getCombinationRecipe(selected) {
+  if (selected.length === 0) return {
+    title: "Receitas que o Mimi aprova",
+    text: "Escolha um ingrediente para ver a receita.<br><span style='color:var(--cor-texto-suave);font-size:0.92rem;'>Combine até 4 ingredientes e descubra seu chá!</span>",
+    color: "#f5e8d6"
+  };
+  if (selected.includes('camomila') && selected.includes('mel')) {
+    return {
+      title: "🌼🍯 Camomila com Mel",
+      text: "O clássico do conforto! <br><strong>Receita:</strong> Infusão de camomila + 1 colher de mel.",
+      color: "#f9e3c8"
+    };
+  }
+  if (selected.includes('hortela') && selected.includes('mel')) {
+    return {
+      title: "🍃🍯 Hortelã com Mel",
+      text: "Refrescante e reconfortante. <br><strong>Receita:</strong> Infusão de hortelã + mel.",
+      color: "#eaf8e5"
+    };
+  }
+  if (selected.includes('camomila') && selected.includes('marshmallow')) {
+    return {
+      title: "🌼🍡 Camomila com Marshmallow",
+      text: "Suave com um toque doce. <br><strong>Receita:</strong> Camomila + marshmallow derretido.",
+      color: "#f9dfe8"
+    };
+  }
+  if (selected.length >= 3) {
+    return {
+      title: "✨ Chá Misto Especial",
+      text: "Você criou uma combinação única! <br><strong>Receita:</strong> Misture os ingredientes e prove com calma. O ritual é o mais importante.",
+      color: "#f7e8f5"
+    };
+  }
+  const first = selected[0];
+  return recipes[first];
+}
+
+let currentChá = new Set();
+
+// Drag events (desktop)
+ingredients.forEach(ing => {
+  ing.addEventListener('dragstart', (e) => {
+    ing.classList.add('dragging');
+    e.dataTransfer.effectAllowed = 'copy';
+    e.dataTransfer.setData('text/plain', ing.dataset.ingredient);
+    ing.style.opacity = '0.65';
+  });
+  ing.addEventListener('dragend', (e) => {
+    ing.classList.remove('dragging');
+    ing.style.opacity = '1';
+  });
+});
+
+// Área da xícara (drag-and-drop)
+cup.addEventListener('dragover', (e) => {
+  e.preventDefault();
+  cup.style.borderColor = 'var(--cor-secundaria)';
+  cup.style.background = '#f7faff';
+  dragHint.textContent = "🟢 Solte para adicionar ao chá!";
+  dragHint.style.color = 'var(--cor-secundaria)';
+});
+
+cup.addEventListener('dragleave', (e) => {
+  e.preventDefault();
+  cup.style.borderColor = '#e6d6f0';
+  cup.style.background = '#fff';
+  dragHint.textContent = "🤲 Clique ou arraste um ingrediente para a xícara";
+  dragHint.style.color = 'var(--cor-texto-suave)';
+});
+
+cup.addEventListener('drop', (e) => {
+  e.preventDefault();
+  cup.style.borderColor = '#e6d6f0';
+  cup.style.background = '#fff';
+  dragHint.textContent = "🤲 Clique ou arraste um ingrediente para a xícara";
+  dragHint.style.color = 'var(--cor-texto-suave)';
+  
+  const ing = e.dataTransfer.getData('text/plain');
+  if (ing && !currentChá.has(ing)) {
+    currentChá.add(ing);
+    updateChá();
+    showSteam();
+  }
+});
+
+// Clique nos ingredientes (mobile e fallback universal)
+ingredients.forEach(ing => {
+  ing.addEventListener('click', () => {
+    const ingName = ing.dataset.ingredient;
+    if (!currentChá.has(ingName)) {
+      currentChá.add(ingName);
+      updateChá();
+      showSteam();
+      // Animação de ping no ingrediente
+      ing.style.transform = 'scale(1.08)';
+      setTimeout(() => ing.style.transform = '', 200);
+    }
+  });
+});
+
+// Limpar xícara
+clearBtn.addEventListener('click', () => {
+  currentChá.clear();
+  updateChá();
+  liquid.style.opacity = '0';
+  liquid.style.height = '0px';
+  steam.style.opacity = '0';
+  steamBubbles.forEach(b => b.classList.remove('active'));
+});
+
+function updateChá() {
+  const arr = Array.from(currentChá);
+  const recipe = getCombinationRecipe(arr);
+
+  // Encher a xícara com animação
+  liquid.style.background = recipe.color;
+  liquid.style.opacity = '1';
+  liquid.style.height = arr.length > 0 ? '72px' : '0px';
+  liquid.animate([
+    { height: arr.length > 0 ? '0px' : '72px', opacity: arr.length > 0 ? 0 : 1 },
+    { height: arr.length > 0 ? '72px' : '0px', opacity: arr.length > 0 ? 1 : 0 }
+  ], { duration: 320, easing: 'cubic-bezier(0.6,0,0.4,1)' });
+
+  // Atualizar receita
+  recipeBox.innerHTML = `<span class="cha-recipe-title">${recipe.title}</span><br>${recipe.text}`;
+
+  // Atualizar dica
+  if (arr.length === 0) {
+    dragHint.textContent = "🤲 Clique ou arraste um ingrediente para a xícara";
+    dragHint.style.color = 'var(--cor-texto-suave)';
+  } else {
+    dragHint.textContent = "✅ Ingredientes: " + arr.map(i => ({
+      camomila: "🌼 Camomila",
+      mel: "🍯 Mel",
+      marshmallow: "🍡 Marshmallow",
+      hortela: "🍃 Hortelã"
+    }[i])).join(", ");
+    dragHint.style.color = 'var(--cor-secundaria)';
+  }
+}
+
+function showSteam() {
+  steam.style.opacity = '1';
+  steamBubbles.forEach((b, i) => {
+    setTimeout(() => {
+      b.classList.add('active');
+      setTimeout(() => b.classList.remove('active'), 900);
+    }, i * 180);
+  });
+  setTimeout(() => {
+    if (currentChá.size) {
+      steam.style.opacity = '1';
+    } else {
+      steam.style.opacity = '0';
+    }
+  }, 1600);
+}
+
+// Inicializar xícara vazia
+liquid.style.height = '0px'; liquid.style.opacity = '0';
+
+// ======== DIÁRIO DE EMOÇÕES ========
+const diarioForm = document.getElementById('diario-form');
+const diarioInput = document.getElementById('diario-input');
+const diarioEntries = document.getElementById('diario-entries');
+const emojiBtns = document.querySelectorAll('.diario-emoji-btn');
+
+// Carregar entradas do localStorage
+function loadDiario() {
+  const entries = JSON.parse(localStorage.getItem('diario-entries')) || [];
+  diarioEntries.innerHTML = '';
+  entries.slice().reverse().forEach(entry => {
+    const div = document.createElement('div');
+    div.className = 'diario-entry';
+    div.innerHTML = `
+      <span class="diario-entry-emoji">${entry.emoji}</span>
+      <span class="diario-entry-text">${entry.text ? entry.text : '<em>(sem anotação)</em>'}</span>
+      <span class="diario-entry-time">${formatTime(entry.time)}</span>
+    `;
+    diarioEntries.appendChild(div);
+  });
+}
+
+function saveEntry(emoji, text) {
+  const entries = JSON.parse(localStorage.getItem('diario-entries')) || [];
+  const entry = { emoji, text: text.trim(), time: Date.now() };
+  entries.push(entry);
+  localStorage.setItem('diario-entries', JSON.stringify(entries));
+  loadDiario();
+}
+
+function formatTime(timestamp) {
+  const d = new Date(timestamp);
+  return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+}
+
+// Seleção de emoji visual
+let selectedEmoji = null;
+emojiBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    selectedEmoji = btn.dataset.emoji;
+    emojiBtns.forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  });
+});
+
+diarioForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  if (!selectedEmoji) {
+    alert('Por favor, escolha um emoji primeiro.');
+    return;
+  }
+  saveEntry(selectedEmoji, diarioInput.value);
+  diarioInput.value = '';
+  selectedEmoji = null;
+  emojiBtns.forEach(b => b.classList.remove('selected'));
+});
+
+loadDiario(); // carregar ao iniciar
+
+// ======== AFIRMAÇÕES POSITIVAS ========
+const affirmations = [
+  "Você é mais forte do que pensa. Cada pequeno passo conta.",
+  "Seus sentimentos são válidos. Não há nada de errado em sentir.",
+  "Você merece descanso, carinho e respeito — sempre.",
+  "Mesmo nos dias difíceis, existe algo em você que resiste e persiste.",
+  "Pedir ajuda é um sinal de coragem, não de fraqueza.",
+  "Você não está sozinho(a). Há pessoas que se importam com você.",
+  "Seu valor não depende do que os outros pensam de você.",
+  "Respira fundo. Este momento vai passar.",
+  "Você tem o direito de dizer 'não' quando precisar.",
+  "Cuidar de si não é egoísmo — é sobrevivência.",
+  "Você é digno(a) de amor, acolhimento e paz.",
+  "Não existe 'certo' ou 'errado' em sentir. Existe sentir.",
+  "Mesmo que pareça invisível, sua presença importa.",
+  "Você já superou dias difíceis antes. Pode de novo.",
+  "O mundo é melhor com você nele."
+];
+
+const affirmationText = document.getElementById('affirmation-text');
+const affirmationBtn = document.getElementById('affirmation-btn');
+
+function getRandomAffirmation() {
+  const idx = Math.floor(Math.random() * affirmations.length);
+  return affirmations[idx];
+}
+
+affirmationBtn.addEventListener('click', () => {
+  affirmationText.innerHTML = getRandomAffirmation();
+  // Animação de fade
+  affirmationText.style.opacity = '0';
+  setTimeout(() => { affirmationText.style.opacity = '1'; }, 80);
+});
+
+// ======== RESPIRAÇÃO 4-7-8 ========
+const breathCircle = document.getElementById('breath-circle');
+const breathInstruction = document.getElementById('breath-instruction');
+const breathBtn = document.getElementById('breath-start-btn');
+
+let breathActive = false;
+
+function resetBreathUI() {
+  breathCircle.className = 'breath-circle';
+  breathCircle.textContent = 'Inspire';
+  breathInstruction.textContent = 'Inale pelo nariz por 4 segundos';
+  breathCircle.style.borderColor = 'var(--cor-primaria)';
+  breathCircle.style.color = 'var(--cor-primaria)';
+  breathCircle.style.boxShadow = '0 4px 16px rgba(184,134,201,0.10)';
+}
+
+function breathSequence() {
+  breathActive = true;
+  breathBtn.disabled = true;
+  breathBtn.style.opacity = '0.6';
+
+  // Fase 1: Inspire (4s)
+  breathCircle.className = 'breath-circle breath-in';
+  breathCircle.textContent = '4';
+  breathInstruction.textContent = 'Inale pelo nariz';
+  breathCircle.style.borderColor = 'var(--cor-secundaria)';
+  breathCircle.style.color = 'var(--cor-secundaria)';
+
+  setTimeout(() => {
+    if (!breathActive) return;
+    // Fase 2: Segure (7s)
+    breathCircle.className = 'breath-circle breath-hold';
+    breathCircle.textContent = '7';
+    breathInstruction.textContent = 'Segure o ar';
+    breathCircle.style.borderColor = 'var(--cor-primaria)';
+    breathCircle.style.color = 'var(--cor-primaria)';
+
+    setTimeout(() => {
+      if (!breathActive) return;
+      // Fase 3: Expire (8s)
+      breathCircle.className = 'breath-circle breath-out';
+      breathCircle.textContent = '8';
+      breathInstruction.textContent = 'Expire devagar pela boca';
+      breathCircle.style.borderColor = '#b886c988';
+      breathCircle.style.color = '#b886c9aa';
+
+      setTimeout(() => {
+        if (breathActive) {
+          resetBreathUI();
+          breathBtn.disabled = false;
+          breathBtn.style.opacity = '1';
+        }
+      }, 8000);
+    }, 7000);
+  }, 4000);
+}
+
+breathBtn.addEventListener('click', () => {
+  if (breathActive) {
+    breathActive = false;
+    resetBreathUI();
+    breathBtn.disabled = false;
+    breathBtn.style.opacity = '1';
+    breathBtn.textContent = 'Iniciar exercício';
+  } else {
+    breathActive = true;
+    resetBreathUI();
+    breathBtn.textContent = 'Parar exercício';
+    breathSequence();
+  }
+});
+
+// Inicializar UI
+resetBreathUI();
+
+// ======== MODO ESCURO ========
+const themeToggle = document.getElementById('theme-toggle');
+const body = document.body;
+
+function getPreferredTheme() {
+  if (localStorage.getItem('theme')) {
+    return localStorage.getItem('theme');
+  }
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+}
+
+function setTheme(theme) {
+  if (theme === 'dark') {
+    body.classList.add('theme-dark');
+    themeToggle.innerHTML = '☀️';
+    themeToggle.title = 'Alternar para modo claro';
+    localStorage.setItem('theme', 'dark');
+  } else {
+    body.classList.remove('theme-dark');
+    themeToggle.innerHTML = '🌙';
+    themeToggle.title = 'Alternar para modo escuro';
+    localStorage.setItem('theme', 'light');
+  }
+}
+
+setTheme(getPreferredTheme());
+themeToggle.addEventListener('click', () => {
+  const current = getPreferredTheme();
+  setTheme(current === 'dark' ? 'light' : 'dark');
+});
+
+// ======== ANIMAÇÕES DE ENTRADA DAS SEÇÕES ========
+window.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    document.querySelectorAll('section').forEach(sec => {
+      sec.classList.add('visible');
+    });
+  }, 100);
+});
+
+</script>
+</body>
+</html>
